@@ -1,1 +1,21 @@
-Résu art2
+Résumé "Robus Sentiment Detection on Twitter from Biased and Noisy Data"
+
+
+Cet article traite de la façon de détecter automatique les "sentiments" émis dans un tweet
+
+-> Du boulot a déjà été abattu pour détécter des sentiments en utilisant des modèles n-grammes (cf blogs + Pang et al.,2002 ; Pang et Lee,2004 ; Wiebe et Riloff,2005 ; Glance et al.,2005 ; Wilson et al.,2005).
+
+-> DataSources : tweets de Twendz, Twitter Sentiment, TweetFeel, qui sont des sites proposant de la détéction de sentiments en temps réels de tweets.
+
+-> L'idée est de procéder de la façon suivante
+
+                texte
+                  |
+                 /  \
+                /    \
+               /      \
+      subjectif        objectif
+          |
+        /  \
+       /    \
+       +    -
