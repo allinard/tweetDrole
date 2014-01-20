@@ -2,6 +2,8 @@ Réalisation d’un classifier selon le type et le sujet du tweet humoristique  
 
 Evaluation d’un tweet humoristique c’est trouver le type ou le sujet pour pouvoir classer le tweet
 
+On peut prendre en compte les différences d'humour suivantes : anecdotes, insultes, ironie, autodérision, blagues, citations, phrases vulgaires et grasses, jeux de mots, etc. 
+
 L’examen peut se faire à plusieurs niveaux que voici :
 -	Syntaxe : observation du verbe, recherche d amibiguité
 -	Patron
