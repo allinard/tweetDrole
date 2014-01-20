@@ -19,3 +19,10 @@ Cet article traite de la façon de détecter automatique les "sentiments" émis 
         /  \
        /    \
        +    -
+
+-> Deux features possibles :
+     > utilisation du POS tagging (messages d'opinion contiennent + d'adj. et interj. par exemple) ET polarité (opinion négative/positive)
+     > syntaxe spécifique du tweet (links, ponctuation, emoticons, case...)
+     
+     
+-> Classification du niveau de subjectivité (en gal. : + un utilisateur émet + il ses tweets sont objectifs ; mot véhiculant fortement l'opinion : craint, cool, génial, naze...)
