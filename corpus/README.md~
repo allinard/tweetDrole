@@ -21,12 +21,7 @@ Quick Start
 
 
 3) Run
-	java -Dtwitter4j.debug=true
-    	-Dtwitter4j.oauth.consumerKey=7OLCYqpSKU4ULvYkwXFtxw
-   	-Dtwitter4j.oauth.consumerSecret=I0k2MZJ646IsN4fYpAr2y1SmUjQrrBSIMpaUvBGdLc
-   	-Dtwitter4j.oauth.accessToken=2308182841-BowFdlhc9taP1pwG1k9IuYms20IMHow0A7xDMaf
-    	-Dtwitter4j.oauth.accessTokenSecret=7eLheEqqkddrYYpN6sqzjvsl5vQQzGE3EII03Zmdk9hQC
-    	-cp twitter4j-core-3.0.5.jar:tweetHoover.jar tweetHoover.GetTweet
+	java -Dtwitter4j.debug=true -Dtwitter4j.oauth.consumerKey=7OLCYqpSKU4ULvYkwXFtxw -Dtwitter4j.oauth.consumerSecret=I0k2MZJ646IsN4fYpAr2y1SmUjQrrBSIMpaUvBGdLc -Dtwitter4j.oauth.accessToken=2308182841-BowFdlhc9taP1pwG1k9IuYms20IMHow0A7xDMaf -Dtwitter4j.oauth.accessTokenSecret=7eLheEqqkddrYYpN6sqzjvsl5vQQzGE3EII03Zmdk9hQC -cp lib/twitter4j-core-3.0.5.jar bin/tweetHoover/GetTweet
 
 
 4) Results
