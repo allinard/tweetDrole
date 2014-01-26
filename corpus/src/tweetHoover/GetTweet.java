@@ -31,10 +31,10 @@ public class GetTweet {
 
 	public static Document DOC;
 	public static Element ROOT_ELEMENT;
-	public static String FILE_INPUT_QUERIES_DROLE = "input/drole.txt";
-	public static String FILE_INPUT_QUERIES_PAS_DROLE = "input/pasDrole.txt";
-	public static String FILE_OUTPUT_XML_DROLE = "output/tweetsDroles.xml";
-	public static String FILE_OUTPUT_XML_PAS_DROLE = "output/tweetsPasDroles.xml";
+	public static String FILE_INPUT_QUERIES_DROLE = "corpus/input/drole.txt";
+	public static String FILE_INPUT_QUERIES_PAS_DROLE = "corpus/input/pasDrole.txt";
+	public static String FILE_OUTPUT_XML_DROLE = "corpus/output/tweetsDroles.xml";
+	public static String FILE_OUTPUT_XML_PAS_DROLE = "corpus/output/tweetsPasDroles.xml";
 
 	
 	
@@ -236,7 +236,7 @@ public class GetTweet {
 	private static List<String> getEachFunnyQuery()
 	{
 		try {
-			return Files.readAllLines(Paths.get("input/drole.txt"), Charset.forName("UTF-8"));
+			return Files.readAllLines(Paths.get(FILE_INPUT_QUERIES_DROLE), Charset.forName("UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(-1);
@@ -248,7 +248,7 @@ public class GetTweet {
 	private static List<String> getEachNonFunnyQuery()
 	{
 		try {
-			return Files.readAllLines(Paths.get("input/pasDrole.txt"), Charset.forName("UTF-8"));
+			return Files.readAllLines(Paths.get(FILE_INPUT_QUERIES_PAS_DROLE), Charset.forName("UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(-1);

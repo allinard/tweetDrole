@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racine du doc XML -->
+<!ELEMENT tweets (tweet)*>
+
+<!-- Un tweet est composé des elements suivants -->
+<!ELEMENT tweet (user,text,hashtags,retweet,retweeted,retweetCount)>
+
+<!-- Nom de l'utilisateur ayant tweeté -->
+<!ELEMENT user (#PCDATA) >
+
+<!-- texte du tweet -->
+<!ELEMENT text (#PCDATA) >
+
+<!-- #'s correspondants (optionnels) -->
+<!ELEMENT hashtags (hashtag)? >
+<!ELEMENT hashtag (#PCDATA) >
+
+<!-- Si le tweet est un retweet -->
+<!ELEMENT retweet (#PCDATA) >
+
+<!-- SI le tweet a été retweeté -->
+<!ELEMENT retweeted (#PCDATA) >
+
+<!-- Nombre de retweets -->
+<!ELEMENT retweetCount (#PCDATA) >
+
+
