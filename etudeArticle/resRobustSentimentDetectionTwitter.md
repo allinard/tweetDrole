@@ -28,11 +28,12 @@ L'idée est de procéder de la façon suivante
        
        
 Deux features possibles :
-     * utilisation du POS tagging (messages d'opinion contiennent + d'adj. et interj. par exemple) ET polarité (opinion négative/positive)
-     * syntaxe spécifique du tweet (links, ponctuation, emoticons, case...)
+* Utilisation du POS tagging (messages d'opinion contiennent plus d'adjectifs et d'interjections par exemple)
+* Polarité (opinion négative/positive)
+* Syntaxe spécifique du tweet (links, ponctuation, emoticons, case...)
      
      
 Classification du niveau de subjectivité :
-	* En général plus un utilisateur émet, plus ses tweets sont objectifs
-	* Certains mots véhiculent fortement l'opinion (ex: craint, cool, génial, naze...)
+* En général plus un utilisateur émet, plus ses tweets sont objectifs
+* Certains mots véhiculent fortement l'opinion (ex: craint, cool, génial, naze...)
        
