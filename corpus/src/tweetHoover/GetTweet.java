@@ -130,6 +130,16 @@ public class GetTweet {
 				for (Status tweet : tweets) {
 					buildXML(tweet);
 				}
+				
+				//First param of Paging() is the page number, second is the number per page (this is capped around 200 I think.
+				Paging paging = new Paging(1, 100);
+				List<Status> statuses = twitter.getUserTimeline(q,paging);
+				
+				//build the xml part for each tweet
+				for (Status tweet : statuses) {
+					buildXML(tweet);
+				}
+				
 			} while ((query = result.nextQuery()) != null);
 		
 			
@@ -195,7 +205,7 @@ public class GetTweet {
 
 		// source element
 		Element user = DOC.createElement("user");
-		user.appendChild(DOC.createTextNode(tweet.getUser().getName()));
+		user.appendChild(DOC.createTextNode(tweet.getUser().getScreenName()));
 		tweetEl.appendChild(user);
 		
 		// text element
