@@ -3,20 +3,85 @@
 
 
 Compte tweet humoristique : 
-*	https://twitter.com/100_blagues
-*	https://twitter.com/search?q=%23humour&src=hash  ( #humour ) 
-*	http://i.imgur.com/leOeE.jpg (les  20 comptes twitter les plus « drole » des gens connu français) http://www.lesinrocks.com/2012/09/13/medias/le-top-20-des-comptes-twitter-les-plus-droles-de-france-11303271/
-*	https://twitter.com/viedemerde
-*	https://twitter.com/search?q=%23contrep%C3%A9trie&src=hash ( #contrepétrie) 
-*	http://michel.buze.perso.neuf.fr/lavache/perles_twitter_tweets_droles_bashtweet.htm (les perles de tweeter ) 
-*	https://twitter.com/search?q=%23blague&src=hash ( #blague)
-*	https://twitter.com/search?q=%23XD&src=hash (#XD) 
-*	https://twitter.com/search?q=%23ptdrrrr&src=hash (#ptdrrr ) 
+* @iTweetYouLol
+* @gadelmaleh
+* @omar_fred
+* @Humour
+* @HumourForHumans
+* @trop_dhumour
+* @CitationsHumour
+* @HuMoUr_Con
+* @100_blagues
+* @HumourSMS
+* @humourdhomme
+* @Huamour
+* @HumourPourFemme
+* @FootyHumour
+* @humour_de_fille
+* @humour_noir_
+* @viedemerde
+* @funnyhumour
+* @humourdedroite
+* @blagues
+* @Blague_du_matin
+* @BestBlague_Ados
+* @BlaguesCarambar
+* @BlagueJour
+* @Blague_Du_Jour
+* @blagalacon
+* @PleinDeBlague
+* @Blague_du_Jour
+* @blagueme
+* @blaguedemerde
+* @Blague_Marrante
+* @funpam
+* @carambar_blague
+* @1blague_com
+* @ubpj
+* @blague
+* @BlagueduJour
+* @bjrcontrepetrie
+* @IAMblague
+* @contrepetrie
+* #humour
+* #contrepétrie
+* #blague
+* #XD
+* #ptdrrr 
+
 
 
 Compte tweet pas drole :
-*	https://twitter.com/lemondefr 
-*	https://twitter.com/LesEchos
-*	https://twitter.com/nantesfr
-*   https://twitter.com/Conforama
-*   https://twitter.com/Tele7
+* @lemondefr 
+* @LesEchos
+* @nantesfr
+* @Conforama
+* @Tele7
+* @Elysee
+* @fhollande
+* @TF1
+* @restosducoeur
+* @TheVoice
+* @m6
+* @netapsys
+* @Minist_Travail
+* @_Bercy_
+* @Place_Beauvau
+* @Ministere_DD
+* @MinistereESR
+* @UniversiteLyon
+* @UnivNantes
+* @UNIGEnews
+* @Lille3
+* #ivg
+* @freebox
+* @Orange_France
+* @SFR_Groupe
+* @REDdeSFR
+* @SFR_SAV
+* @lequipe
+* @journalsudouest
+* @liberation_info
+* @lesteclair
+* @VilledeTROYES
+
