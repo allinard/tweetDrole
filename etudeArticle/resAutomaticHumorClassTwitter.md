@@ -17,22 +17,49 @@ Des exemples sont fournis sur comment identifier des tweets humouristiques :
 * La phonologie peut être une source d'humour (mais necessite de la connaissance) 
 
 ## Le travail réalisé
-On peut prendre en compte les différences d'humour suivantes : anecdotes, insultes, ironie, autodérision, blagues, citations, phrases vulgaires et grasses, jeux de mots, etc.
+La principale tache est de classifier les tweets selon les différents type d'humour ainsi que leur sous-catégories : 
+
+* anecdotes ex: les VDM (vie de merde 
+* insultes
+** homophobe
+** xénophobe ex blague belge
+** misogyne ex http://www.slate.fr/france/54807/salviac-rtl-trierweiler 
+* ironie
+* autodérision 
+* blagues
+* citations ex: phrase humouristique tiré d'une émission #tpmp 
+* phrases vulgaires et grasses
+* jeux de mots
+** homophone 
+** contrepétrie
+* les autres ...
 
 
 ## Les données
+Twitter en quelque mots c'est plus de 200 millions messages par jour, une limite de 140 caractères par message, un utilisateur peut s'abonner pour suivre d'autres comptes, les messages peuvent contenir des url des hashtag et des références à d'autres utilisateurs.
+(L'API tweeter permet de les récupérer) 
 
+## Evaluation 
+Ils ont utilisé le site http://www.funny-tweets.com pour collecter un ensemble de tweet "drole" ce qui leur a évité de faire le tri entre les tweets drôles et ce qui ne le sont pas.
+La catégorisation est très dificile et subjectif donc un message peut appartenir à plusieurs sujets et types d'humours. Pour avoir les meilleurs résultats, il faut le faire à la main ce qui peut être fait en utilisant une mécanique Turc (???). 
 
 ## Classification de l'humour
+Ils utilisent un algorithme semi supervisé qui prend en entrée des tweets annotés pour produire des ensembles avec des caractéristiques propres au classifieur.
 L’examen peut se faire à plusieurs niveaux que voici :
--        Syntaxe : observation du verbe, recherche d amibiguité
--        Patron
--        Lexique : quel lexique de mot est représenté, existence d’une entité nommé, ambiguité du lexique
--        Morphologie : verbe
--        Phonologie : homophone
--        Pragmatique
--        Style : smiley, ponctuation, hashtag
+*	Syntaxique : 
+**	Transitivité du verbe (regarder COD, COI)
+**	Recherche d amibiguité
+*	Patrons prenant en compte les mots les plus fréquents
+*	Caractéristiques lexicales : 
+**	quel lexique de mot est représenté (ex : lexique gay)
+**	existence d’une entité nommé (ex : Facebook, Starbucks) 
+**	ambiguité du lexique 
+*	Caractéristiques morphologiques :
+**	le temps du verbe
+**	mot qui n'existe pas
+*	Phonologie : mot provenant d'une liste d'homophone
+*	Style : smiley, ponctuation ( grand nombre de !!!!!), hashtag
 
-## A faire 
+
 
 
