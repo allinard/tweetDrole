@@ -4,8 +4,6 @@
 
 Compte tweet humoristique : 
 * @iTweetYouLol
-* @gadelmaleh
-* @omar_fred
 * @Humour
 * @HumourForHumans
 * @trop_dhumour
@@ -43,6 +41,12 @@ Compte tweet humoristique :
 * @bjrcontrepetrie
 * @IAMblague
 * @contrepetrie
+* @BCitation
+* @_BlaguesBlondes 
+* @BlondesBlagues 
+* @BlagueBlondesfr 
+* @blaguesblondess 
+* @BlagueRaciste
 * #humour
 * #contrepétrie
 * #blague

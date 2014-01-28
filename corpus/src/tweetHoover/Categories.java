@@ -3,7 +3,7 @@ package tweetHoover;
 public enum Categories {
 
 	// Objets directement construits
-	HOMOPHOBE("Homophobe"), PASDROLE("PasDrole"), CONTREPETRIE("Contrepetrie"), DROLE("Drole");
+	PASDROLE("PasDrole"), DROLE("Drole"), HOMOPHOBE("Homophobe"), CONTREPETRIE("Contrepetrie"), AUTODERISION("Autoderision"), RACISTE("Raciste"), HUMOURNOIR("HumourNoir"), XENOPHOBE("Xenophobe"), VULGAIRE("Vulgaire"), MYSOGYNE("Mysogyne");
 
 	private String name = "";
 

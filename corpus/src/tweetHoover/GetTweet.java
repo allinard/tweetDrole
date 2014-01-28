@@ -30,6 +30,7 @@ import org.w3c.dom.Element;
  */
 public class GetTweet {
 
+	private static final int MAXCAPTEDTWEETS = 300;
 	public static Document DOC;
 	public static Element ROOT_ELEMENT;
 	public static String FILE_INPUT_QUERIES_DROLE = "corpus/input/drole.txt";
@@ -77,17 +78,46 @@ public class GetTweet {
 
 			List<Categories> listeCategories = new ArrayList<Categories>();
 			listeCategories.add(Categories.PASDROLE);
+
+			try{
+				// First param of Paging() is the page number, second is the number
+				// per page (this is capped around 200 I think.
+				Paging paging = new Paging(1, MAXCAPTEDTWEETS);
+				List<Status> statuses = twitter.getUserTimeline(q, paging);
+	
+				// build the xml part for each tweet
+				for (Status tweet : statuses) {
+					buildXML(tweet, listeCategories);
+				}
+
 			
-			// First param of Paging() is the page number, second is the number
-			// per page (this is capped around 200 I think.
-			Paging paging = new Paging(1, 100);
-			List<Status> statuses = twitter.getUserTimeline(q, paging);
-
-			// build the xml part for each tweet
-			for (Status tweet : statuses) {
-				buildXML(tweet,listeCategories);
+			
 			}
+			//si il s'agit de #
+			catch (TwitterException e) {
+				// The query for getting tweets
+				Query query = new Query(q);
 
+				// The result of the query
+				QueryResult result;
+
+				do {
+					// the query is executed here
+					result = twitter.search(query);
+
+					// gets all the tweets from results
+					List<Status> tweets = result.getTweets();
+
+					// build the xml part for each tweet
+					for (Status tweet : tweets) {
+						buildXML(tweet, listeCategories);
+					}
+				} while ((query = result.nextQuery()) != null);
+			}
+			
+			
+			
+			
 		}
 
 		// write le XML file and exit
@@ -104,26 +134,63 @@ public class GetTweet {
 		for (String q : getEachFunnyQuery()) {
 
 			List<Categories> listeCategories = new ArrayList<Categories>();
-			
-			//TODO remplacer par les bonnes catégories
-			listeCategories.add(Categories.HOMOPHOBE);
-			
-			
-			// First param of Paging() is the page number, second is the number
-			// per page (this is capped around 200 I think.
-			Paging paging = new Paging(1, 100);
-			List<Status> statuses = twitter.getUserTimeline(q, paging);
+			listeCategories.add(Categories.DROLE);
 
-			// build the xml part for each tweet
-			for (Status tweet : statuses) {
-				buildXML(tweet,listeCategories);
+			if (q.contains("BCitation") || q.contains("Blonde")
+					|| q.contains("blonde")) {
+				listeCategories.add(Categories.MYSOGYNE);
 			}
+			if (q.contains("viedemerde")) {
+				listeCategories.add(Categories.AUTODERISION);
+			}
+			if (q.contains("contrepetrie") || q.contains("contrepétrie")) {
+				listeCategories.add(Categories.CONTREPETRIE);
+			}
+			if (q.contains("Raciste")) {
+				listeCategories.add(Categories.RACISTE);
+			}
+
+			//pour les @
+			try {
+				// First param of Paging() is the page number, second is the
+				// number per page.
+				Paging paging = new Paging(1, MAXCAPTEDTWEETS);
+				List<Status> statuses = twitter.getUserTimeline(q, paging);
+				// build the xml part for each tweet
+				for (Status tweet : statuses) {
+					buildXML(tweet, listeCategories);
+				}
+			} 
+			//si il s'agit de #
+			catch (TwitterException e) {
+				// The query for getting tweets
+				Query query = new Query(q);
+
+				// The result of the query
+				QueryResult result;
+
+				do {
+					// the query is executed here
+					result = twitter.search(query);
+
+					// gets all the tweets from results
+					List<Status> tweets = result.getTweets();
+
+					// build the xml part for each tweet
+					for (Status tweet : tweets) {
+						buildXML(tweet, listeCategories);
+					}
+				} while ((query = result.nextQuery()) != null);
+			}
+
 
 		}
 
 		// write le XML file and exit
 		writeXMLFile(FILE_OUTPUT_XML_DROLE);
 	}
+
+
 
 	/**
 	 * 
@@ -210,7 +277,7 @@ public class GetTweet {
 		retweetCount.appendChild(DOC.createTextNode(String.valueOf(tweet
 				.getRetweetCount())));
 		tweetEl.appendChild(retweetCount);
-		
+
 		// categories element
 		Element categories = DOC.createElement("categories");
 		for (Categories c : listeCategories) {
@@ -219,7 +286,6 @@ public class GetTweet {
 			categories.appendChild(cat);
 		}
 		tweetEl.appendChild(categories);
-
 
 	}
 
