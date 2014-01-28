@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -36,24 +37,22 @@ public class GetTweet {
 	public static String FILE_OUTPUT_XML_DROLE = "corpus/output/tweetsDroles.xml";
 	public static String FILE_OUTPUT_XML_PAS_DROLE = "corpus/output/tweetsPasDroles.xml";
 
-	
-	
 	/**
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
-		//Instance of twitter researcher
+		// Instance of twitter researcher
 		Twitter twitter = new TwitterFactory().getInstance();
 		try {
-			
+
 			processFunnyRequests(twitter);
-			
+
 			processNonFunnyRequests(twitter);
-			
+
 			System.exit(0);
-			
+
 		} catch (TwitterException te) {
 			te.printStackTrace();
 			System.out.println("Failed to search tweets: " + te.getMessage());
@@ -67,88 +66,64 @@ public class GetTweet {
 		}
 	}
 
-
 	private static void processNonFunnyRequests(Twitter twitter)
 			throws ParserConfigurationException, TwitterException,
 			TransformerFactoryConfigurationError,
 			TransformerConfigurationException, TransformerException {
-		//Initalization for XML output file
+		// Initalization for XML output file
 		initializeXMLOutput();
-		
-		for(String q : getEachNonFunnyQuery()){
+
+		for (String q : getEachNonFunnyQuery()) {
+
+			List<Categories> listeCategories = new ArrayList<Categories>();
+			listeCategories.add(Categories.PASDROLE);
 			
-			//The query for getting tweets
-			Query query = new Query(q);
-			
-			//The result of the query
-			QueryResult result;
-			
-			do {
-				//the query is executed here
-				result = twitter.search(query);
-				
-				//gets all the tweets from results
-				List<Status> tweets = result.getTweets();
-				
-				//build the xml part for each tweet
-				for (Status tweet : tweets) {
-					buildXML(tweet);
-				}
-			} while ((query = result.nextQuery()) != null);
-		
-			
+			// First param of Paging() is the page number, second is the number
+			// per page (this is capped around 200 I think.
+			Paging paging = new Paging(1, 100);
+			List<Status> statuses = twitter.getUserTimeline(q, paging);
+
+			// build the xml part for each tweet
+			for (Status tweet : statuses) {
+				buildXML(tweet,listeCategories);
+			}
+
 		}
-		
-		//write le XML file and exit
+
+		// write le XML file and exit
 		writeXMLFile(FILE_OUTPUT_XML_PAS_DROLE);
 	}
-
 
 	private static void processFunnyRequests(Twitter twitter)
 			throws ParserConfigurationException, TwitterException,
 			TransformerFactoryConfigurationError,
 			TransformerConfigurationException, TransformerException {
-		//Initalization for XML output file
+		// Initalization for XML output file
 		initializeXMLOutput();
-		
-		for(String q : getEachFunnyQuery()){
+
+		for (String q : getEachFunnyQuery()) {
+
+			List<Categories> listeCategories = new ArrayList<Categories>();
 			
-			//The query for getting tweets
-			Query query = new Query(q);
+			//TODO remplacer par les bonnes catégories
+			listeCategories.add(Categories.HOMOPHOBE);
 			
-			//The result of the query
-			QueryResult result;
 			
-			do {
-				//the query is executed here
-				result = twitter.search(query);
-				
-				//gets all the tweets from results
-				List<Status> tweets = result.getTweets();
-				
-				//build the xml part for each tweet
-				for (Status tweet : tweets) {
-					buildXML(tweet);
-				}
-				
-				//First param of Paging() is the page number, second is the number per page (this is capped around 200 I think.
-				Paging paging = new Paging(1, 100);
-				List<Status> statuses = twitter.getUserTimeline(q,paging);
-				
-				//build the xml part for each tweet
-				for (Status tweet : statuses) {
-					buildXML(tweet);
-				}
-				
-			} while ((query = result.nextQuery()) != null);
-		
-			
+			// First param of Paging() is the page number, second is the number
+			// per page (this is capped around 200 I think.
+			Paging paging = new Paging(1, 100);
+			List<Status> statuses = twitter.getUserTimeline(q, paging);
+
+			// build the xml part for each tweet
+			for (Status tweet : statuses) {
+				buildXML(tweet,listeCategories);
+			}
+
 		}
-		
-		//write le XML file and exit
+
+		// write le XML file and exit
 		writeXMLFile(FILE_OUTPUT_XML_DROLE);
 	}
-
 
 	/**
 	 * 
@@ -170,8 +145,6 @@ public class GetTweet {
 		transformer.transform(source, resultXml);
 	}
 
-
-
 	/**
 	 * 
 	 * @return
@@ -188,14 +161,12 @@ public class GetTweet {
 		ROOT_ELEMENT = DOC.createElement("tweets");
 		DOC.appendChild(ROOT_ELEMENT);
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param tweet
 	 */
-	private static void buildXML(Status tweet)
-	{
+	private static void buildXML(Status tweet, List<Categories> listeCategories) {
 		// tweet elements
 		Element tweetEl = DOC.createElement("tweet");
 		ROOT_ELEMENT.appendChild(tweetEl);
@@ -207,58 +178,66 @@ public class GetTweet {
 		Element user = DOC.createElement("user");
 		user.appendChild(DOC.createTextNode(tweet.getUser().getScreenName()));
 		tweetEl.appendChild(user);
-		
+
 		// text element
 		Element text = DOC.createElement("text");
 		text.appendChild(DOC.createTextNode(tweet.getText()));
 		tweetEl.appendChild(text);
-		
+
 		// hashtags element
 		Element hashtags = DOC.createElement("hashtags");
-		for(HashtagEntity hE : tweet.getHashtagEntities())
-		{
+		for (HashtagEntity hE : tweet.getHashtagEntities()) {
 			Element hashtag = DOC.createElement("hashtag");
 			hashtag.appendChild(DOC.createTextNode(hE.getText()));
 			hashtags.appendChild(hashtag);
 		}
 		tweetEl.appendChild(hashtags);
-		
+
 		// is retweet element
 		Element retweet = DOC.createElement("retweet");
-		retweet.appendChild(DOC.createTextNode(tweet.isRetweet()?"true":"false"));
+		retweet.appendChild(DOC.createTextNode(tweet.isRetweet() ? "true"
+				: "false"));
 		tweetEl.appendChild(retweet);
-		
+
 		// is retweeted element
 		Element retweeted = DOC.createElement("retweeted");
-		retweeted.appendChild(DOC.createTextNode(tweet.isRetweeted()?"true":"false"));
+		retweeted.appendChild(DOC.createTextNode(tweet.isRetweeted() ? "true"
+				: "false"));
 		tweetEl.appendChild(retweeted);
-		
+
 		// retweetCount element
 		Element retweetCount = DOC.createElement("retweetCount");
-		retweetCount.appendChild(DOC.createTextNode(String.valueOf(tweet.getRetweetCount())));
+		retweetCount.appendChild(DOC.createTextNode(String.valueOf(tweet
+				.getRetweetCount())));
 		tweetEl.appendChild(retweetCount);
 		
+		// categories element
+		Element categories = DOC.createElement("categories");
+		for (Categories c : listeCategories) {
+			Element cat = DOC.createElement("categorie");
+			cat.appendChild(DOC.createTextNode(c.toString()));
+			categories.appendChild(cat);
+		}
+		tweetEl.appendChild(categories);
+
+
 	}
-	
-	
-	
-	
-	private static List<String> getEachFunnyQuery()
-	{
+
+	private static List<String> getEachFunnyQuery() {
 		try {
-			return Files.readAllLines(Paths.get(FILE_INPUT_QUERIES_DROLE), Charset.forName("UTF-8"));
+			return Files.readAllLines(Paths.get(FILE_INPUT_QUERIES_DROLE),
+					Charset.forName("UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(-1);
 		}
 		return null;
 	}
-	
-	
-	private static List<String> getEachNonFunnyQuery()
-	{
+
+	private static List<String> getEachNonFunnyQuery() {
 		try {
-			return Files.readAllLines(Paths.get(FILE_INPUT_QUERIES_PAS_DROLE), Charset.forName("UTF-8"));
+			return Files.readAllLines(Paths.get(FILE_INPUT_QUERIES_PAS_DROLE),
+					Charset.forName("UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(-1);
