@@ -19,14 +19,14 @@ Des exemples sont fournis sur comment identifier des tweets humouristiques :
 ## Le travail réalisé
 La principale tache est de classifier les tweets selon les différents type d'humour ainsi que leur sous-catégories : 
 
-* anecdotes ex: les VDM (vie de merde 
+* anecdotes ex: les VDM (vie de merde) 
 * insultes
 	* homophobe
 	* xénophobe ex blague belge
-	* misogyne ex http://www.slate.fr/france/54807/salviac-rtl-trierweiler 
+	* misogyne ex http://www.slate.fr/france/54807/salviac-rtl-trierweiler (et #Misogyne)
 * ironie
 * autodérision 
-* blagues
+* blagues ex: https://twitter.com/PleinDeBlague
 * citations ex: phrase humouristique tiré d'une émission #tpmp 
 * phrases vulgaires et grasses
 * jeux de mots
