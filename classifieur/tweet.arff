@@ -1,0 +1,13 @@
+@relation 'tweet'
+
+@attribute 'word' {true,false}
+@attribute 'user' {true,false}
+@attribute 'hashtag' {true,false}
+@attribute 'smiley' {true,false}
+@attribute 'argoInternet' {true,false}
+@attribute 'ponctuation' {'absent', 'regulier', 'surnombre'}
+@attribute 'nbRetweet' NUMERIC
+@attribute 'longeur' NUMERIC
+@attribute 'categorie' {'Drole', 'Contrepetrie', ''}
+@attribute 'tweetDrole' {true,false}
+@attribute 'user' {true,false}
