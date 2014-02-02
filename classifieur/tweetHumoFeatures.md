@@ -5,17 +5,17 @@
 Caractérisitques Tweet Humoristique : 
 * RetweetCount potentiellement élevé
 * Syntaxe du tweet :
-** ponctuation, et répétition de la ponctuation (ex : !!!!!!) 
-** smileys (ex : :) :D ^^)
-** langage tweet (ex : lol, XD, mdr, ptdr...)
+	* ponctuation, et répétition de la ponctuation (ex : !!!!!!) 
+	* smileys (ex : :) :D ^^)
+	* langage tweet (ex : lol, XD, mdr, ptdr...)
 * Hashtags
-** #humour
-** #contrepetrie
-** #lol
-** etc...
+	* #humour
+	* #contrepetrie
+	* #lol
+	* etc...
 * Nom de user :
-** spécialiste de la blague (ex : @blaguesblondes @blaguecarambar ...)
-** pas sérieux (ex : @pouetpouet ...)
+	* spécialiste de la blague (ex : @blaguesblondes @blaguecarambar ...)
+	* pas sérieux (ex : @pouetpouet ...)
 * 
 * 
 * 
@@ -26,7 +26,7 @@ Caractérisitques Tweet Humoristique :
 
 Caractéristiques Tweet pas Drole :
 * RetweetCount pas élevé :
-** sauf actualité
+	* sauf actualité
 * Pas de syntaxe spécifique
 * 
 * 
