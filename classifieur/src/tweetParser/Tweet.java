@@ -12,6 +12,7 @@ public class Tweet {
 	private boolean isRetweeted;
 	private int retweetCount;
 	private List<String> categories;
+	private static List<String> mots = new ArrayList<String>();
 
 	public Tweet() {
 		this.hashtags = new ArrayList<String>();
@@ -81,6 +82,23 @@ public class Tweet {
 	public void addCategorie(String s){
 		this.categories.add(s);
 	}
+	
+	public void addMots(String s){
+		this.mots.add(s);
+	}
+	
+	public List<String> getMots(){
+		return mots;
+	}
+	
+	public void remplirMots (String s){
+		String[] tab_mot = s.split(" ");
+		for (String m : tab_mot) {
+			if (!this.mots.contains(m))
+		       this.addMots(m);
+		}	
+	}
+	
 	
 	@Override
 	public String toString() {

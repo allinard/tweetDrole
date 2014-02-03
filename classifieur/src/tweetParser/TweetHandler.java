@@ -14,7 +14,6 @@ public class TweetHandler extends DefaultHandler {
 	private Tweet tweet;
 	// buffer nous permettant de récupérer les données
 	private StringBuffer buffer;
-
 	// simple constructeur
 	public TweetHandler() {
 		super();
@@ -44,7 +43,7 @@ public class TweetHandler extends DefaultHandler {
 			tweet.setUser(buffer.toString());
 		} else if (qName.equals("text")) {
 			tweet.setText(buffer.toString());
-
+			tweet.remplirMots(buffer.toString());
 		} else if (qName.equals("hashtags")) {
 
 		} else if (qName.equals("hashtag")) {
