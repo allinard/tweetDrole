@@ -94,8 +94,10 @@ public class Tweet {
 	public void remplirMots (String s){
 		String[] tab_mot = s.split(" ");
 		for (String m : tab_mot) {
-			if (!this.mots.contains(m))
-		       this.addMots(m);
+			if (!this.mots.contains(m) && !m.equals("\\s") && !m.equals("\n") && !m.contains("@")&& !m.contains("#") && !m.contains("http://")){
+				m=m.replaceAll("[^a-zA-ZÈËÍ‡ '0-9]", "").toLowerCase();
+		       if (!m.equals("")) this.addMots(m);
+			}
 		}	
 	}
 	
