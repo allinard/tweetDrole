@@ -2,7 +2,6 @@
 
 @ATTRIBUTE user {true,false}
 @ATTRIBUTE word {true,false}
-@ATTRIBUTE user {true,false}
 @ATTRIBUTE hashtag {true,false}
 @ATTRIBUTE smiley {true,false}
 @ATTRIBUTE argoInternet {true,false}
