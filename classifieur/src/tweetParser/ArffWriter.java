@@ -15,7 +15,7 @@ public class ArffWriter {
 	public static List<String> SMILEYS;
 	public static List<String> ARGOT_TWITTER;
 	public static List<String> PONCTUATION;
-
+	public static List<String> MOTS;
 	private List<Tweet> listeTweets;
 
 	public ArffWriter(List<Tweet> tweetoss) {
@@ -55,6 +55,7 @@ public class ArffWriter {
 			PONCTUATION = Files.readAllLines(
 					Paths.get("corpus/input/listePonctuation.txt"),
 					Charset.forName("UTF-8"));
+			MOTS = Tweet.getMots();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -65,8 +66,12 @@ public class ArffWriter {
 		StringBuilder arffContent = new StringBuilder();
 
 		arffContent.append("@RELATION tweet\n\n");
-		arffContent.append("@ATTRIBUTE user {true,false}\n");
-		arffContent.append("@ATTRIBUTE word {true,false}\n");
+		for (String m : MOTS){
+			arffContent.append("@ATTRIBUTE "+m+" {true,false}\n");
+		}
+		
+		//arffContent.append("@ATTRIBUTE user {true,false}\n");
+		//arffContent.append("@ATTRIBUTE word {true,false}\n");
 		arffContent.append("@ATTRIBUTE hashtag {true,false}\n");
 		arffContent.append("@ATTRIBUTE smiley {true,false}\n");
 		arffContent.append("@ATTRIBUTE argoInternet {true,false}\n");
@@ -76,13 +81,14 @@ public class ArffWriter {
 		arffContent.append("@ATTRIBUTE nbRetweet NUMERIC\n");
 		arffContent.append("@ATTRIBUTE longeur NUMERIC\n");
 		arffContent
-				.append("@ATTRIBUTE categorie {Drole, Contrepetrie, PasDrole, Autoderision}\n");
-		arffContent.append("@ATTRIBUTE tweetDrole {true,false}\n\n");
+				.append("@ATTRIBUTE categorie {Contrepetrie, Autoderision, Misogyne, Aucune}\n");
+		arffContent.append("@ATTRIBUTE Drole {true,false}\n\n");
 		arffContent.append("@DATA\n");
 
 		for (Tweet t : listeTweets) {
-			processUserAttribute(arffContent, t);
-			processWordAttribute(arffContent, t);
+			//processUserAttribute(arffContent, t);
+			//processWordAttribute(arffContent, t);
+			processMotsAttribute(arffContent, t);
 			processHashtagAttribute(arffContent, t);
 			processSmileyAttribute(arffContent, t);
 			processArgotAttribute(arffContent, t);
@@ -91,7 +97,7 @@ public class ArffWriter {
 			processNbRetweetAttribute(arffContent, t);
 			processLongeurAttribute(arffContent, t);
 			processCategorieAttribute(arffContent, t);
-			processTweetDroleAttribute(arffContent, t);
+			processDroleAttribute(arffContent, t);
 
 			arffContent.append("\n");
 		}
@@ -99,15 +105,25 @@ public class ArffWriter {
 		return arffContent;
 	}
 
+	
+	private void processMotsAttribute(StringBuilder arffContent, Tweet t){
+		for(String arg : MOTS){
+			if (t.getText().contains(arg)) arffContent.append("true,");
+			else arffContent.append("false,");
+		}
+		
+		
+	}
+	
 	private void processCategorieAttribute(StringBuilder arffContent, Tweet t) {
 		if (t.getCategories().contains("Autodérision")) {
 			arffContent.append("Autoderision,");
 		} else if (t.getCategories().contains("Contrepètrie")) {
 			arffContent.append("Contrepetrie,");
-		} else if (t.getCategories().contains("Drole")) {
-			arffContent.append("Drole,");
+		} else if (t.getCategories().contains("Misogyne")) {
+			arffContent.append("Misogyne,");
 		} else {
-			arffContent.append("PasDrole,");
+			arffContent.append("Aucune,");
 		}
 
 	}
@@ -223,7 +239,7 @@ public class ArffWriter {
 		}
 	}
 
-	private void processTweetDroleAttribute(StringBuilder arffContent, Tweet t) {
+	private void processDroleAttribute(StringBuilder arffContent, Tweet t) {
 		if (t.getCategories().contains("Drole")) {
 			arffContent.append("true");
 		} else {
