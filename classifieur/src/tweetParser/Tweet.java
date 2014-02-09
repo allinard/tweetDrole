@@ -87,7 +87,7 @@ public class Tweet {
 		this.mots.add(s);
 	}
 	
-	public List<String> getMots(){
+	public static List<String> getMots(){
 		return mots;
 	}
 	
