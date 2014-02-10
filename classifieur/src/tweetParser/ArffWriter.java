@@ -7,13 +7,10 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 public class ArffWriter {
 
@@ -24,6 +21,7 @@ public class ArffWriter {
 	public static TreeSet<String> MOTS;
 	public static Map<String, Integer> MAPMOTS;
 	private List<Tweet> listeTweets;
+	private static int NOMBREATTRIBUTS;
 
 	public ArffWriter(List<Tweet> tweetoss) {
 		this.listeTweets = tweetoss;
@@ -67,11 +65,11 @@ public class ArffWriter {
 					Charset.forName("UTF-8"));
 			MOTS = Tweet.getMots();
 			MAPMOTS = new TreeMap<String, Integer>();
-			int i=0;
-			for(String mot : MOTS)
-			{
-				MAPMOTS.put(mot, i);
-				i++;
+			NOMBREATTRIBUTS = 0;
+			for (String mot : MOTS) {
+				MAPMOTS.put(mot, NOMBREATTRIBUTS);
+				NOMBREATTRIBUTS++;
+				
 			}
 
 		} catch (IOException e) {
@@ -84,12 +82,12 @@ public class ArffWriter {
 
 		System.out.println(" --> process attributs");
 		arffContent += "@RELATION tweet\n\n";
-		for (String m : MOTS){
-			arffContent += "@ATTRIBUTE "+m+" {0,1}\n";
+		for (String m : MOTS) {
+			arffContent += "@ATTRIBUTE " + m + " {0,1}\n";
 		}
-		
-		//arffContent += "@ATTRIBUTE user {true,false}\n");
-		//arffContent += "@ATTRIBUTE word {true,false}\n");
+
+		// arffContent += "@ATTRIBUTE user {true,false}\n");
+		// arffContent += "@ATTRIBUTE word {true,false}\n");
 		arffContent += "@ATTRIBUTE hashtag {true,false}\n";
 		arffContent += "@ATTRIBUTE smiley {true,false}\n";
 		arffContent += "@ATTRIBUTE argoInternet {true,false}\n";
@@ -101,23 +99,24 @@ public class ArffWriter {
 		arffContent += "@ATTRIBUTE Drole {true,false}\n\n";
 		arffContent += "@DATA\n";
 
-		System.out.println("il y a "+listeTweets.size()+" tweets a traiter");
+		System.out
+				.println("il y a " + listeTweets.size() + " tweets a traiter");
 		int i = 1;
 		for (Tweet t : listeTweets) {
-			System.out.println("--> tweet "+i);
+			System.out.println("--> tweet " + i);
 			i++;
-			//processUserAttribute(arffContent, t);
-			//processWordAttribute(arffContent, t);
-			processMotsAttribute(arffContent, t);
-			processHashtagAttribute(arffContent, t);
-			processSmileyAttribute(arffContent, t);
-			processArgotAttribute(arffContent, t);
-			processPonctuationAttribute(arffContent, t);
-			processRetweetAttribute(arffContent, t);
-			processNbRetweetAttribute(arffContent, t);
-			processLongeurAttribute(arffContent, t);
-			processCategorieAttribute(arffContent, t);
-			processDroleAttribute(arffContent, t);
+			// processUserAttribute(arffContent, t);
+			// processWordAttribute(arffContent, t);
+			arffContent += processMotsAttribute(arffContent, t);
+			arffContent += processHashtagAttribute(arffContent, t);
+			arffContent += processSmileyAttribute(arffContent, t);
+			arffContent += processArgotAttribute(arffContent, t);
+			arffContent += processPonctuationAttribute(arffContent, t);
+			arffContent += processRetweetAttribute(arffContent, t);
+			arffContent += processNbRetweetAttribute(arffContent, t);
+			arffContent += processLongeurAttribute(arffContent, t);
+			arffContent += processCategorieAttribute(arffContent, t);
+			arffContent += processDroleAttribute(arffContent, t);
 
 			arffContent += "\n";
 		}
@@ -125,170 +124,167 @@ public class ArffWriter {
 		return arffContent;
 	}
 
-	
-	private void processMotsAttribute(String arffContent, Tweet t){
-		arffContent += "{";
+	private String processMotsAttribute(String arffContent, Tweet t) {
+		String truc = "{";
 		String[] motsTexte = t.getText().split(" ");
-		for(String texte : motsTexte)
-		{
-			arffContent += MAPMOTS.get(texte)+" 1,";
+		for (String texte : motsTexte) {
+			texte = texte.toLowerCase();
+			if (MAPMOTS.get(texte) != null) {
+				truc += MAPMOTS.get(texte) + " 1,";
+			}
 		}
-
+		return truc;
 	}
-	
-	private void processCategorieAttribute(String arffContent, Tweet t) {
+
+	private String processCategorieAttribute(String arffContent, Tweet t) {
+		NOMBREATTRIBUTS++;
 		if (t.getCategories().contains("Autodérision")) {
-			arffContent += "Autoderision,";
+			return NOMBREATTRIBUTS+" Autoderision,";
 		} else if (t.getCategories().contains("Contrepètrie")) {
-			arffContent += "Contrepetrie,";
+			return NOMBREATTRIBUTS+" Contrepetrie,";
 		} else if (t.getCategories().contains("Misogyne")) {
-			arffContent += "Misogyne,";
+			return NOMBREATTRIBUTS+" Misogyne,";
 		} else {
-			arffContent += "Aucune,";
+			return NOMBREATTRIBUTS+" Aucune,";
 		}
 
 	}
 
-	private void processLongeurAttribute(String arffContent, Tweet t) {
-		arffContent += t.getText().length()+",";
+	private String processLongeurAttribute(String arffContent, Tweet t) {
+		NOMBREATTRIBUTS++;
+		return NOMBREATTRIBUTS+" "+t.getText().length() + ",";
 	}
 
-	private void processNbRetweetAttribute(String arffContent, Tweet t) {
-		arffContent += t.getRetweetCount()+",";
+	private String processNbRetweetAttribute(String arffContent, Tweet t) {
+		NOMBREATTRIBUTS++;
+		return NOMBREATTRIBUTS+" "+t.getRetweetCount() + ",";
 	}
 
-	private void processRetweetAttribute(String arffContent, Tweet t) {
-		arffContent += t.isRetweet() ? "true," : "false,";
+	private String processRetweetAttribute(String arffContent, Tweet t) {
+		NOMBREATTRIBUTS++;
+		return t.isRetweet() ? NOMBREATTRIBUTS+" true," : NOMBREATTRIBUTS+" false,";
 
 	}
 
-	private void processPonctuationAttribute(String arffContent, Tweet t) {
+	private String processPonctuationAttribute(String arffContent, Tweet t) {
+		NOMBREATTRIBUTS++;
 		if (t.getText().contains("!")) {
 			int count = 0;
 			for (int i = 0; i < t.getText().length(); i++)
 				if (t.getText().charAt(i) == ',')
 					count++;
-			if (count > 0 && count <4) {
-				arffContent += "regulier,";
+			if (count > 0 && count < 4) {
+				return NOMBREATTRIBUTS+" regulier,";
 			} else {
-				arffContent += "surnombre,";
+				return NOMBREATTRIBUTS+" surnombre,";
 			}
 		} else {
-			arffContent += "absent,";
+			return NOMBREATTRIBUTS+" absent,";
 		}
 
 	}
 
-	private void processArgotAttribute(String arffContent, Tweet t) {
-		boolean ok = false;
-		
-		for(String argot : ARGOT_TWITTER)
-		{
-			if(t.getText().toLowerCase().contains(argot))
-				ok=true;
-		}
-		
-		if (ok) {
-			arffContent += "true,";
-		} else {
-			arffContent += "false,";
-		}
-	}
-
-	private void processSmileyAttribute(String arffContent, Tweet t) {
+	private String processArgotAttribute(String arffContent, Tweet t) {
 		boolean ok = false;
 
-		for(String smile : SMILEYS)
-		{
-			if(t.getText().contains(smile))
-				ok=true;
+		for (String argot : ARGOT_TWITTER) {
+			if (t.getText().toLowerCase().contains(argot))
+				ok = true;
 		}
-		
+		NOMBREATTRIBUTS++;
 		if (ok) {
-			arffContent += "true,";
+			return NOMBREATTRIBUTS+" true,";
 		} else {
-			arffContent += "false,";
+			return NOMBREATTRIBUTS+" false,";
 		}
 	}
 
-	private void processHashtagAttribute(String arffContent, Tweet t) {
+	private String processSmileyAttribute(String arffContent, Tweet t) {
+		boolean ok = false;
+
+		for (String smile : SMILEYS) {
+			if (t.getText().contains(smile))
+				ok = true;
+		}
+		NOMBREATTRIBUTS++;
+		if (ok) {
+			return NOMBREATTRIBUTS+" true,";
+		} else {
+			return NOMBREATTRIBUTS+" false,";
+		}
+	}
+
+	private String processHashtagAttribute(String arffContent, Tweet t) {
 		boolean ok = false;
 		for (String hashtag : t.getHashtags()) {
-			for (String arg : ARGOT_TWITTER)
-			{
-				if(hashtag.contains(arg))
-					ok=true;
+			for (String arg : ARGOT_TWITTER) {
+				if (hashtag.contains(arg))
+					ok = true;
 			}
-			for (String arg : MOTS_DROLES)
-			{
-				if(hashtag.contains(arg))
-					ok=true;
+			for (String arg : MOTS_DROLES) {
+				if (hashtag.contains(arg))
+					ok = true;
 			}
-			for (String arg : SMILEYS)
-			{
-				if(hashtag.contains(arg))
-					ok=true;
+			for (String arg : SMILEYS) {
+				if (hashtag.contains(arg))
+					ok = true;
 			}
 		}
-
+		NOMBREATTRIBUTS++;
 		if (ok) {
-			arffContent += "true,";
+			return NOMBREATTRIBUTS+" true,";
 		} else {
-			arffContent += "false,";
+			return NOMBREATTRIBUTS+" false,";
 		}
 	}
 
-	private void processWordAttribute(String arffContent, Tweet t) {
-		
+	private String processWordAttribute(String arffContent, Tweet t) {
+
 		boolean ok = false;
 
-		for(String smile : ARGOT_TWITTER)
-		{
-			if(t.getText().toLowerCase().contains(smile))
-				ok=true;
+		for (String smile : ARGOT_TWITTER) {
+			if (t.getText().toLowerCase().contains(smile))
+				ok = true;
 		}
-		for(String smile : MOTS_DROLES)
-		{
-			if(t.getText().toLowerCase().contains(smile))
-				ok=true;
+		for (String smile : MOTS_DROLES) {
+			if (t.getText().toLowerCase().contains(smile))
+				ok = true;
 		}
-		
+
 		if (ok) {
-			arffContent += "true,";
+			return "true,";
 		} else {
-			arffContent += "false,";
+			return "false,";
 		}
 	}
 
-	private void processDroleAttribute(String arffContent, Tweet t) {
+	private String processDroleAttribute(String arffContent, Tweet t) {
+		NOMBREATTRIBUTS++;
 		if (t.getCategories().contains("Drole")) {
-			arffContent += "true}";
+			return NOMBREATTRIBUTS+" true}";
 		} else {
-			arffContent += "false}";
+			return NOMBREATTRIBUTS+" false}";
 		}
 
 	}
 
 	private void processUserAttribute(String arffContent, Tweet t) {
-		
+
 		boolean ok = false;
 
-		for(String smile : MOTS_DROLES)
-		{
-			if(t.getUser().toLowerCase().contains(smile))
-				ok=true;
+		for (String smile : MOTS_DROLES) {
+			if (t.getUser().toLowerCase().contains(smile))
+				ok = true;
 		}
-		for(String smile : ARGOT_TWITTER)
-		{
-			if(t.getUser().toLowerCase().contains(smile))
-				ok=true;
+		for (String smile : ARGOT_TWITTER) {
+			if (t.getUser().toLowerCase().contains(smile))
+				ok = true;
 		}
-		for(String smile : SMILEYS)
-		{
-			if(t.getUser().contains(smile))
-				ok=true;
+		for (String smile : SMILEYS) {
+			if (t.getUser().contains(smile))
+				ok = true;
 		}
-		
+
 		if (ok) {
 			arffContent += "true,";
 		} else {
