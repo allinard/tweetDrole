@@ -2,6 +2,7 @@ package tweetParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class Tweet {
 
@@ -12,7 +13,7 @@ public class Tweet {
 	private boolean isRetweeted;
 	private int retweetCount;
 	private List<String> categories;
-	private static List<String> mots = new ArrayList<String>();
+	private static TreeSet<String> mots = new TreeSet<String>();
 
 	public Tweet() {
 		this.hashtags = new ArrayList<String>();
@@ -87,16 +88,17 @@ public class Tweet {
 		this.mots.add(s);
 	}
 	
-	public static List<String> getMots(){
+	public static TreeSet<String> getMots(){
 		return mots;
 	}
 	
 	public void remplirMots (String s){
 		String[] tab_mot = s.split(" ");
 		for (String m : tab_mot) {
-			if (!this.mots.contains(m) && !m.equals("\\s") && !m.equals("\n") && !m.contains("@")&& !m.contains("#") && !m.contains("http://")){
-				m=m.replaceAll("[^a-zA-Zéèêà '0-9]", "").toLowerCase();
-		       if (!m.equals("")) this.addMots(m);
+			if (!m.equals("\\s") || !m.equals("\n") || !m.contains("@") || !m.contains("#") || !m.contains("http://") || !m.equals("")){
+				//m=m.replaceAll("[^a-zA-Zï¿½ï¿½ï¿½ï¿½ '0-9]", "").toLowerCase();
+				m = m.toLowerCase();
+				mots.add(m);
 			}
 		}	
 	}

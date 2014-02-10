@@ -8,6 +8,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.TreeSet;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 public class ArffWriter {
 
@@ -15,7 +18,7 @@ public class ArffWriter {
 	public static List<String> SMILEYS;
 	public static List<String> ARGOT_TWITTER;
 	public static List<String> PONCTUATION;
-	public static List<String> MOTS;
+	public static TreeSet<String> MOTS;
 	private List<Tweet> listeTweets;
 
 	public ArffWriter(List<Tweet> tweetoss) {
@@ -24,6 +27,8 @@ public class ArffWriter {
 
 	public void process() throws IOException {
 
+		System.out.println("Début du process tweet to arff");
+		System.out.println(" --> initialisation");
 		init();
 
 		File file = new File("classifieur/corpusTweet.arff");
@@ -36,8 +41,9 @@ public class ArffWriter {
 		FileWriter fw = new FileWriter(file.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
 
-		bw.write(processListeTweets().toString());
+		bw.write(processListeTweets());
 		bw.close();
+		System.out.println(" --> fin");
 
 	}
 
@@ -62,30 +68,33 @@ public class ArffWriter {
 		}
 	}
 
-	private StringBuilder processListeTweets() {
-		StringBuilder arffContent = new StringBuilder();
+	private String processListeTweets() {
+		String arffContent = "";
 
-		arffContent.append("@RELATION tweet\n\n");
+		System.out.println(" --> process attributs");
+		arffContent += "@RELATION tweet\n\n";
 		for (String m : MOTS){
-			arffContent.append("@ATTRIBUTE "+m+" {true,false}\n");
+			arffContent += "@ATTRIBUTE "+m+" {true,false}\n";
 		}
 		
-		//arffContent.append("@ATTRIBUTE user {true,false}\n");
-		//arffContent.append("@ATTRIBUTE word {true,false}\n");
-		arffContent.append("@ATTRIBUTE hashtag {true,false}\n");
-		arffContent.append("@ATTRIBUTE smiley {true,false}\n");
-		arffContent.append("@ATTRIBUTE argoInternet {true,false}\n");
-		arffContent
-				.append("@ATTRIBUTE ponctuation {absent, regulier, surnombre}\n");
-		arffContent.append("@ATTRIBUTE retweet {true,false}\n");
-		arffContent.append("@ATTRIBUTE nbRetweet NUMERIC\n");
-		arffContent.append("@ATTRIBUTE longeur NUMERIC\n");
-		arffContent
-				.append("@ATTRIBUTE categorie {Contrepetrie, Autoderision, Misogyne, Aucune}\n");
-		arffContent.append("@ATTRIBUTE Drole {true,false}\n\n");
-		arffContent.append("@DATA\n");
+		//arffContent += "@ATTRIBUTE user {true,false}\n");
+		//arffContent += "@ATTRIBUTE word {true,false}\n");
+		arffContent += "@ATTRIBUTE hashtag {true,false}\n";
+		arffContent += "@ATTRIBUTE smiley {true,false}\n";
+		arffContent += "@ATTRIBUTE argoInternet {true,false}\n";
+		arffContent += "@ATTRIBUTE ponctuation {absent, regulier, surnombre}\n";
+		arffContent += "@ATTRIBUTE retweet {true,false}\n";
+		arffContent += "@ATTRIBUTE nbRetweet NUMERIC\n";
+		arffContent += "@ATTRIBUTE longeur NUMERIC\n";
+		arffContent += "@ATTRIBUTE categorie {Contrepetrie, Autoderision, Misogyne, Aucune}\n";
+		arffContent += "@ATTRIBUTE Drole {true,false}\n\n";
+		arffContent += "@DATA\n";
 
+		System.out.println("il y a "+listeTweets.size()+" a traiter");
+		int i = 1;
 		for (Tweet t : listeTweets) {
+			System.out.println("--> tweet "+i);
+			i++;
 			//processUserAttribute(arffContent, t);
 			//processWordAttribute(arffContent, t);
 			processMotsAttribute(arffContent, t);
@@ -99,66 +108,66 @@ public class ArffWriter {
 			processCategorieAttribute(arffContent, t);
 			processDroleAttribute(arffContent, t);
 
-			arffContent.append("\n");
+			arffContent += "\n";
 		}
 
 		return arffContent;
 	}
 
 	
-	private void processMotsAttribute(StringBuilder arffContent, Tweet t){
+	private void processMotsAttribute(String arffContent, Tweet t){
 		for(String arg : MOTS){
-			if (t.getText().contains(arg)) arffContent.append("true,");
-			else arffContent.append("false,");
+			if (t.getText().contains(arg)) arffContent += "true,";
+			else arffContent += "false,";
 		}
 		
 		
 	}
 	
-	private void processCategorieAttribute(StringBuilder arffContent, Tweet t) {
+	private void processCategorieAttribute(String arffContent, Tweet t) {
 		if (t.getCategories().contains("Autodérision")) {
-			arffContent.append("Autoderision,");
+			arffContent += "Autoderision,";
 		} else if (t.getCategories().contains("Contrepètrie")) {
-			arffContent.append("Contrepetrie,");
+			arffContent += "Contrepetrie,";
 		} else if (t.getCategories().contains("Misogyne")) {
-			arffContent.append("Misogyne,");
+			arffContent += "Misogyne,";
 		} else {
-			arffContent.append("Aucune,");
+			arffContent += "Aucune,";
 		}
 
 	}
 
-	private void processLongeurAttribute(StringBuilder arffContent, Tweet t) {
-		arffContent.append(t.getText().length()).append(",");
+	private void processLongeurAttribute(String arffContent, Tweet t) {
+		arffContent += t.getText().length()+",";
 	}
 
-	private void processNbRetweetAttribute(StringBuilder arffContent, Tweet t) {
-		arffContent.append(t.getRetweetCount()).append(",");
+	private void processNbRetweetAttribute(String arffContent, Tweet t) {
+		arffContent += t.getRetweetCount()+",";
 	}
 
-	private void processRetweetAttribute(StringBuilder arffContent, Tweet t) {
-		arffContent.append(t.isRetweet() ? "true," : "false,");
+	private void processRetweetAttribute(String arffContent, Tweet t) {
+		arffContent += t.isRetweet() ? "true," : "false,";
 
 	}
 
-	private void processPonctuationAttribute(StringBuilder arffContent, Tweet t) {
+	private void processPonctuationAttribute(String arffContent, Tweet t) {
 		if (t.getText().contains("!")) {
 			int count = 0;
 			for (int i = 0; i < t.getText().length(); i++)
 				if (t.getText().charAt(i) == ',')
 					count++;
 			if (count > 0 && count <4) {
-				arffContent.append("regulier,");
+				arffContent += "regulier,";
 			} else {
-				arffContent.append("surnombre,");
+				arffContent += "surnombre,";
 			}
 		} else {
-			arffContent.append("absent,");
+			arffContent += "absent,";
 		}
 
 	}
 
-	private void processArgotAttribute(StringBuilder arffContent, Tweet t) {
+	private void processArgotAttribute(String arffContent, Tweet t) {
 		boolean ok = false;
 		
 		for(String argot : ARGOT_TWITTER)
@@ -168,13 +177,13 @@ public class ArffWriter {
 		}
 		
 		if (ok) {
-			arffContent.append("true,");
+			arffContent += "true,";
 		} else {
-			arffContent.append("false,");
+			arffContent += "false,";
 		}
 	}
 
-	private void processSmileyAttribute(StringBuilder arffContent, Tweet t) {
+	private void processSmileyAttribute(String arffContent, Tweet t) {
 		boolean ok = false;
 
 		for(String smile : SMILEYS)
@@ -184,13 +193,13 @@ public class ArffWriter {
 		}
 		
 		if (ok) {
-			arffContent.append("true,");
+			arffContent += "true,";
 		} else {
-			arffContent.append("false,");
+			arffContent += "false,";
 		}
 	}
 
-	private void processHashtagAttribute(StringBuilder arffContent, Tweet t) {
+	private void processHashtagAttribute(String arffContent, Tweet t) {
 		boolean ok = false;
 		for (String hashtag : t.getHashtags()) {
 			for (String arg : ARGOT_TWITTER)
@@ -211,13 +220,13 @@ public class ArffWriter {
 		}
 
 		if (ok) {
-			arffContent.append("true,");
+			arffContent += "true,";
 		} else {
-			arffContent.append("false,");
+			arffContent += "false,";
 		}
 	}
 
-	private void processWordAttribute(StringBuilder arffContent, Tweet t) {
+	private void processWordAttribute(String arffContent, Tweet t) {
 		
 		boolean ok = false;
 
@@ -233,22 +242,22 @@ public class ArffWriter {
 		}
 		
 		if (ok) {
-			arffContent.append("true,");
+			arffContent += "true,";
 		} else {
-			arffContent.append("false,");
+			arffContent += "false,";
 		}
 	}
 
-	private void processDroleAttribute(StringBuilder arffContent, Tweet t) {
+	private void processDroleAttribute(String arffContent, Tweet t) {
 		if (t.getCategories().contains("Drole")) {
-			arffContent.append("true");
+			arffContent += "true";
 		} else {
-			arffContent.append("false");
+			arffContent += "false";
 		}
 
 	}
 
-	private void processUserAttribute(StringBuilder arffContent, Tweet t) {
+	private void processUserAttribute(String arffContent, Tweet t) {
 		
 		boolean ok = false;
 
@@ -269,9 +278,9 @@ public class ArffWriter {
 		}
 		
 		if (ok) {
-			arffContent.append("true,");
+			arffContent += "true,";
 		} else {
-			arffContent.append("false,");
+			arffContent += "false,";
 		}
 	}
 

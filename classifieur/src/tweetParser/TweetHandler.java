@@ -76,12 +76,12 @@ public class TweetHandler extends DefaultHandler {
 
 	// début du parsing
 	public void startDocument() throws SAXException {
-		System.out.println("Début du parsing");
+		System.out.println("Début du parsing XML");
 	}
 
 	// fin du parsing
 	public void endDocument() throws SAXException {
-		System.out.println("Fin du parsing");
+		System.out.println("Fin du parsing XML");
 		ArffWriter arffWriter = new ArffWriter(listeTweets);
 		try {
 			arffWriter.process();
