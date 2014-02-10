@@ -12,7 +12,8 @@ Une idée de reconnaissance des blagues "TWSS" est de prendre cela comme une mé
 
 Une blague That's What She Said constitue aussi un double mapping entre deux domaines : le domaine/contexte initial, et le contexte sexuel cible.
 * Comparaison des préférences adjectivales de noms sexuellement explicites avec celles d'autres noms pour déterminer quels noms sont des euphémismes pour des noms sexuellement explicites.
-* Examen des relations entre structures dans les domaines érotique et non érotique.
+( compare les adjectifs à caractères sexuel explicite des noms à d'autres noms pour déterminer quel nom est un euphemisme d'un nom à caractères explicite )
+* Examen des structures dans les domaines érotique et non érotique.
 
 Utilisation d'une approche DEviaNT (Double Entendre via Noun Transfer) 
 
@@ -21,7 +22,7 @@ Utilisation d'une approche DEviaNT (Double Entendre via Noun Transfer)
 Les blagues a double sens (TWSS) ont plusieurs caractéristiques :
 * Les phrases avec des noms euphémismes pour des noms sexuellement explicites ont des chances d'être des TWSS
 	* par ex : "banane", "saucisse", "boule" ...
-* Les phrases initiales peuvent avoir la même structure qu'une phrase du domaine gras
+* Les phrases initiales peuvent avoir la même structure qu'une phrase du domaine erotique
 	* par ex : [sujet] pourrait manger [objet] toute la journée (avec objet = saucisse par ex.)
 
 Une reconnaissance de ces tournures peut être d'identifier si le contexte source dans lequel se situe la potentielle blague à double sens est aussi dans le contexte sexuel
@@ -64,6 +65,14 @@ Apprentissage :
 
 ## Evaluation
 DEviaNT’s precision > 71.4% (pour rappel de < 20%)
+
+
+## corpus sexy/non sexy : 
+* sexy pour apprendre la tournure des phrases, 
+* calculer la sexiness d'un nom qui n'appartient pas au domaine sexy mais qui est un euphemisme ( mesure de similarité )
+* adjectifs sexy : mesure de similarité des adjectifs qui caractérisent un nom (qui n'appartient au domaine sexy), pour ensuite comparer aux vecteurs d'adjectifs associé aux autres noms ( du domaine sexy) 
+* calcul d 'un verbe sexy, mesure la probabilité qu'un verbe apparaisse dans un contexte erotique et non érotique
+
 
 
 
