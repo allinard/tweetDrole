@@ -1,4 +1,4 @@
-package tweetParser;
+﻿package tweetParser;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,10 +15,12 @@ public class Tweet {
 	private int retweetCount;
 	private List<String> categories;
 	private static TreeSet<String> mots = new TreeSet<String>();
+	private static List<String> MOTS_VIDES;
 
 	public Tweet() {
 		this.hashtags = new ArrayList<String>();
 		this.categories = new ArrayList<String>();
+		initMotVide();
 	}
 
 	public String getText() {
@@ -93,13 +95,23 @@ public class Tweet {
 		return mots;
 	}
 	
+	public static void initMotVide(){
+		try {
+			MOTS_VIDES = Files.readAllLines(Paths.get("corpus/input/listeMotsVides.txt"), Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void remplirMots (String s){
+		s = s.replaceAll("[-]", " ");
 		String[] tab_mot = s.split(" ");
 		for (String m : tab_mot) {
-			if (!m.equals("\\s") && !m.equals("\n") && !m.contains("@") && !m.contains("#") && !m.contains("http://") && !m.equals("")){
-				m = m.replaceAll("[^a-zA-Z���� '0-9]", "");
-				m = m.toLowerCase();
-				mots.add(m);
+			m = m.toLowerCase();
+			if ( !m.equals("\\s")&& !m.contains("http://") && !m.equals("\n") && !m.contains("@") && !m.contains("#") && !m.equals("")){
+				m = m.replaceAll("[^a-zA-Zéèêîàùû0-9 ']", "");
+				if(!mots.contains(m) && !m.equals("\n") && !MOTS_VIDES.contains(m)) mots.add(m);
 			}
 		}	
 	}
