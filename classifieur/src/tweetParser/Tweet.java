@@ -1,6 +1,7 @@
 package tweetParser;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -95,8 +96,8 @@ public class Tweet {
 	public void remplirMots (String s){
 		String[] tab_mot = s.split(" ");
 		for (String m : tab_mot) {
-			if (!m.equals("\\s") || !m.equals("\n") || !m.contains("@") || !m.contains("#") || !m.contains("http://") || !m.equals("")){
-				//m=m.replaceAll("[^a-zA-Z���� '0-9]", "").toLowerCase();
+			if (!m.equals("\\s") && !m.equals("\n") && !m.contains("@") && !m.contains("#") && !m.contains("http://") && !m.equals("")){
+				m = m.replaceAll("[^a-zA-Z���� '0-9]", "");
 				m = m.toLowerCase();
 				mots.add(m);
 			}

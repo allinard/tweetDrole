@@ -35,8 +35,10 @@ public class GetTweet {
 	public static Element ROOT_ELEMENT;
 	public static String FILE_INPUT_QUERIES_DROLE = "corpus/input/drole.txt";
 	public static String FILE_INPUT_QUERIES_PAS_DROLE = "corpus/input/pasDrole.txt";
+	public static String FILE_INPUT_CORPUS_TEST = "corpus/input/corpustest.txt";
 	public static String FILE_OUTPUT_XML_DROLE = "corpus/output/tweetsDroles.xml";
 	public static String FILE_OUTPUT_XML_PAS_DROLE = "corpus/output/tweetsPasDroles.xml";
+	public static String FILE_OUTPUT_XML_CORPUS_TEST = "corpus/output/corpusTest.xml";
 
 	/**
 	 * 
@@ -48,9 +50,11 @@ public class GetTweet {
 		Twitter twitter = new TwitterFactory().getInstance();
 		try {
 
-			processFunnyRequests(twitter);
+			//processFunnyRequests(twitter);
 
-			processNonFunnyRequests(twitter);
+			//processNonFunnyRequests(twitter);
+
+			processCorpusTest(twitter);
 
 			System.exit(0);
 
@@ -67,6 +71,32 @@ public class GetTweet {
 		}
 	}
 
+	private static void processCorpusTest(Twitter twitter)
+			throws ParserConfigurationException, TwitterException,
+			TransformerFactoryConfigurationError,
+			TransformerConfigurationException, TransformerException {
+		// Initalization for XML output file
+		initializeXMLOutput();
+
+		for (String q : getEachQuery4CorpusTest()) {
+
+			List<Categories> listeCategories = new ArrayList<Categories>();
+			listeCategories.add(Categories.TEST);
+
+			// First param of Paging() is the page number, second is the number
+			// per page (this is capped around 200 I think.
+			Paging paging = new Paging(1, 100);
+			List<Status> statuses = twitter.getUserTimeline(q, paging);
+
+			// build the xml part for each tweet
+			for (Status tweet : statuses) {
+				buildXML(tweet, listeCategories);
+			}
+			writeXMLFile(FILE_OUTPUT_XML_CORPUS_TEST);
+
+		}
+	}
+
 	private static void processNonFunnyRequests(Twitter twitter)
 			throws ParserConfigurationException, TwitterException,
 			TransformerFactoryConfigurationError,
@@ -79,21 +109,20 @@ public class GetTweet {
 			List<Categories> listeCategories = new ArrayList<Categories>();
 			listeCategories.add(Categories.PASDROLE);
 
-			try{
-				// First param of Paging() is the page number, second is the number
+			try {
+				// First param of Paging() is the page number, second is the
+				// number
 				// per page (this is capped around 200 I think.
 				Paging paging = new Paging(1, MAXCAPTEDTWEETS);
 				List<Status> statuses = twitter.getUserTimeline(q, paging);
-	
+
 				// build the xml part for each tweet
 				for (Status tweet : statuses) {
 					buildXML(tweet, listeCategories);
 				}
 
-			
-			
 			}
-			//si il s'agit de #
+			// si il s'agit de #
 			catch (TwitterException e) {
 				// The query for getting tweets
 				Query query = new Query(q);
@@ -114,10 +143,7 @@ public class GetTweet {
 					}
 				} while ((query = result.nextQuery()) != null);
 			}
-			
-			
-			
-			
+
 		}
 
 		// write le XML file and exit
@@ -150,7 +176,7 @@ public class GetTweet {
 				listeCategories.add(Categories.RACISTE);
 			}
 
-			//pour les @
+			// pour les @
 			try {
 				// First param of Paging() is the page number, second is the
 				// number per page.
@@ -160,8 +186,8 @@ public class GetTweet {
 				for (Status tweet : statuses) {
 					buildXML(tweet, listeCategories);
 				}
-			} 
-			//si il s'agit de #
+			}
+			// si il s'agit de #
 			catch (TwitterException e) {
 				// The query for getting tweets
 				Query query = new Query(q);
@@ -183,14 +209,11 @@ public class GetTweet {
 				} while ((query = result.nextQuery()) != null);
 			}
 
-
 		}
 
 		// write le XML file and exit
 		writeXMLFile(FILE_OUTPUT_XML_DROLE);
 	}
-
-
 
 	/**
 	 * 
@@ -311,4 +334,14 @@ public class GetTweet {
 		return null;
 	}
 
+	private static List<String> getEachQuery4CorpusTest() {
+		try {
+			return Files.readAllLines(Paths.get(FILE_INPUT_CORPUS_TEST),
+					Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		return null;
+	}
 }

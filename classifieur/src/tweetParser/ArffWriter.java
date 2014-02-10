@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
@@ -19,6 +22,7 @@ public class ArffWriter {
 	public static List<String> ARGOT_TWITTER;
 	public static List<String> PONCTUATION;
 	public static TreeSet<String> MOTS;
+	public static Map<String, Integer> MAPMOTS;
 	private List<Tweet> listeTweets;
 
 	public ArffWriter(List<Tweet> tweetoss) {
@@ -62,6 +66,13 @@ public class ArffWriter {
 					Paths.get("corpus/input/listePonctuation.txt"),
 					Charset.forName("UTF-8"));
 			MOTS = Tweet.getMots();
+			MAPMOTS = new TreeMap<String, Integer>();
+			int i=0;
+			for(String mot : MOTS)
+			{
+				MAPMOTS.put(mot, i);
+				i++;
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -74,7 +85,7 @@ public class ArffWriter {
 		System.out.println(" --> process attributs");
 		arffContent += "@RELATION tweet\n\n";
 		for (String m : MOTS){
-			arffContent += "@ATTRIBUTE "+m+" {true,false}\n";
+			arffContent += "@ATTRIBUTE "+m+" {0,1}\n";
 		}
 		
 		//arffContent += "@ATTRIBUTE user {true,false}\n");
@@ -90,7 +101,7 @@ public class ArffWriter {
 		arffContent += "@ATTRIBUTE Drole {true,false}\n\n";
 		arffContent += "@DATA\n";
 
-		System.out.println("il y a "+listeTweets.size()+" a traiter");
+		System.out.println("il y a "+listeTweets.size()+" tweets a traiter");
 		int i = 1;
 		for (Tweet t : listeTweets) {
 			System.out.println("--> tweet "+i);
@@ -116,12 +127,13 @@ public class ArffWriter {
 
 	
 	private void processMotsAttribute(String arffContent, Tweet t){
-		for(String arg : MOTS){
-			if (t.getText().contains(arg)) arffContent += "true,";
-			else arffContent += "false,";
+		arffContent += "{";
+		String[] motsTexte = t.getText().split(" ");
+		for(String texte : motsTexte)
+		{
+			arffContent += MAPMOTS.get(texte)+" 1,";
 		}
-		
-		
+
 	}
 	
 	private void processCategorieAttribute(String arffContent, Tweet t) {
@@ -250,9 +262,9 @@ public class ArffWriter {
 
 	private void processDroleAttribute(String arffContent, Tweet t) {
 		if (t.getCategories().contains("Drole")) {
-			arffContent += "true";
+			arffContent += "true}";
 		} else {
-			arffContent += "false";
+			arffContent += "false}";
 		}
 
 	}
