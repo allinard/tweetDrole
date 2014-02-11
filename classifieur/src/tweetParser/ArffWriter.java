@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -127,11 +128,16 @@ public class ArffWriter {
 	private String processMotsAttribute(String arffContent, Tweet t) {
 		String truc = "{";
 		String[] motsTexte = t.getText().split(" ");
+		TreeSet<Integer> monSet = new TreeSet<Integer>();
 		for (String texte : motsTexte) {
 			texte = texte.toLowerCase();
 			if (MAPMOTS.get(texte) != null) {
-				truc += MAPMOTS.get(texte) + " 1,";
+				monSet.add(MAPMOTS.get(texte));
+				
 			}
+		}
+		for(Integer el : monSet){
+			truc += String.valueOf(el) + " 1,";
 		}
 		return truc;
 	}
@@ -259,11 +265,12 @@ public class ArffWriter {
 	}
 
 	private String processDroleAttribute(String arffContent, Tweet t) {
-		NOMBREATTRIBUTS++;
+		int i = NOMBREATTRIBUTS++;
+		NOMBREATTRIBUTS -= 9;
 		if (t.getCategories().contains("Drole")) {
-			return NOMBREATTRIBUTS+" true}";
+			return i+" true}";
 		} else {
-			return NOMBREATTRIBUTS+" false}";
+			return i+" false}";
 		}
 
 	}
