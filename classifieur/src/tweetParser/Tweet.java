@@ -116,6 +116,7 @@ public class Tweet {
 			if ( !m.equals("\\s")&& !m.contains("http://") && !m.equals("\n") && !m.contains("@") && !m.contains("#") && !m.equals("") && !m.contains("retweet") && !m.contains("hashtag") && !m.contains("'") && !m.contains("\"")  && !m.isEmpty()){
 				m = m.replaceAll("[^a-zA-Zéèêîàùûç0-9 ']", "");
 				m=m.replaceAll("\\s+", " ");
+				m=m.replaceAll("\\s+$", "");
 				if(!mots.contains(m) && !m.equals("\n") && !MOTS_VIDES.contains(m)) mots.add(m);
 			}
 		}	
