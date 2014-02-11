@@ -114,7 +114,7 @@ public class Tweet {
 		for (String m : tab_mot) {
 			m = m.toLowerCase();
 			if ( !m.equals("\\s")&& !m.contains("http://") && !m.equals("\n") && !m.contains("@") && !m.contains("#") && !m.equals("")){
-				m = m.replaceAll("[^a-zA-Zéèêîàùû0-9 ']", "");
+				m = m.replaceAll("[^a-zA-Zéèêîàùûç0-9 ']", "");
 				if(!mots.contains(m) && !m.equals("\n") && !MOTS_VIDES.contains(m)) mots.add(m);
 			}
 		}	
