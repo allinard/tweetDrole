@@ -18,7 +18,7 @@ public class ArffWriter {
 	public static List<String> MOTS_DROLES;
 	public static List<String> SMILEYS;
 	public static List<String> ARGOT_TWITTER;
-	public static List<String> PONCTUATION;
+	public static List<String> EXCLAMATION;
 	public static TreeSet<String> MOTS;
 	public static Map<String, Integer> MAPMOTS;
 	private List<Tweet> listeTweets;
@@ -61,7 +61,7 @@ public class ArffWriter {
 			ARGOT_TWITTER = Files.readAllLines(
 					Paths.get("corpus/input/listeArgotTwitter.txt"),
 					Charset.forName("UTF-8"));
-			PONCTUATION = Files.readAllLines(
+			EXCLAMATION = Files.readAllLines(
 					Paths.get("corpus/input/listePonctuation.txt"),
 					Charset.forName("UTF-8"));
 			MOTS = Tweet.getMots();
@@ -92,11 +92,11 @@ public class ArffWriter {
 		arffContent += "@ATTRIBUTE hashtag {true,false}\n";
 		arffContent += "@ATTRIBUTE smiley {true,false}\n";
 		arffContent += "@ATTRIBUTE argoInternet {true,false}\n";
-		arffContent += "@ATTRIBUTE ponctuation {absent, regulier, surnombre}\n";
+		arffContent += "@ATTRIBUTE exclamation {absent, regulier, surnombre}\n";
 		arffContent += "@ATTRIBUTE retweet {true,false}\n";
 		arffContent += "@ATTRIBUTE nbRetweet NUMERIC\n";
 		arffContent += "@ATTRIBUTE longeur NUMERIC\n";
-		arffContent += "@ATTRIBUTE categorie {Contrepetrie, Autoderision, Misogyne, Aucune}\n";
+		//arffContent += "@ATTRIBUTE categorie {Contrepetrie, Autoderision, Misogyne, Aucune}\n";
 		arffContent += "@ATTRIBUTE Drole {true,false}\n\n";
 		arffContent += "@DATA\n";
 
@@ -116,7 +116,7 @@ public class ArffWriter {
 			arffContent += processRetweetAttribute(arffContent, t);
 			arffContent += processNbRetweetAttribute(arffContent, t);
 			arffContent += processLongeurAttribute(arffContent, t);
-			arffContent += processCategorieAttribute(arffContent, t);
+			//arffContent += processCategorieAttribute(arffContent, t);
 			arffContent += processDroleAttribute(arffContent, t);
 
 			arffContent += "\n";
