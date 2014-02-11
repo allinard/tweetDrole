@@ -109,7 +109,7 @@ public class Tweet {
 	}
 	
 	public void remplirMots (String s){
-		s = s.replaceAll("[-]", " ");
+		s = s.replaceAll("[-=]", " ");
 		String[] tab_mot = s.split(" ");
 		for (String m : tab_mot) {
 			m = m.toLowerCase();
