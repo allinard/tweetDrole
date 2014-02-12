@@ -110,10 +110,11 @@ public class Tweet {
 	
 	public void remplirMots (String s){
 		s = s.replaceAll("[-=]", " ");
+		s = s.replaceAll("[0-9]", "");
 		String[] tab_mot = s.split(" ");
 		for (String m : tab_mot) {
 			m = m.toLowerCase();
-			if ( !m.equals("\\s")&& !m.contains("http://") && !m.equals("\n") && !m.contains("@") && !m.contains("#") && !m.equals("") && !m.contains("retweet") && !m.contains("hashtag") && !m.contains("'") && !m.contains("\"")  && !m.isEmpty()){
+			if ( !m.equals("\\s")&& !m.contains("http://") && !m.contains("https://") && !m.equals("\n") && !m.contains("@") && !m.contains("#") && !m.equals("") && !m.contains("retweet") && !m.contains("hashtag") && !m.contains("'") && !m.contains("\"") && !m.isEmpty()){
 				m = m.replaceAll("[^a-zA-Zéèêîàùûç0-9 ']", "");
 				m=m.replaceAll("\\s+", " ");
 				m=m.replaceAll("\\s+$", "");
