@@ -88,7 +88,7 @@ public class ArffWriter {
 				MAPMOTS.put(argot, NOMBREATTRIBUTS);
 				NOMBREATTRIBUTS = MAPMOTS.size();
 			}
-			NOMBREATTRIBUTS = MAPMOTS.size();
+			NOMBREATTRIBUTS = MAPMOTS.size()-1;
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -104,14 +104,15 @@ public class ArffWriter {
 			  arffContent += "@ATTRIBUTE " + entry.getKey() + " {0,1}\n";
 		}
 
-		arffContent += "@ATTRIBUTE hashtag {\"true\",\"false\"}\n";
-		arffContent += "@ATTRIBUTE smileyPasContent {\"true\",\"false\"}\n";
-		arffContent += "@ATTRIBUTE smileyContent {\"true\",\"false\"}\n";
-		arffContent += "@ATTRIBUTE exclamation {\"absent\", \"regulier\", \"surnombre\"}\n";
-		arffContent += "@ATTRIBUTE retweet {\"true\",\"false\"}\n";
-		arffContent += "@ATTRIBUTE nbRetweet NUMERIC\n";
-		arffContent += "@ATTRIBUTE longeur NUMERIC\n";
-		arffContent += "@ATTRIBUTE Drole {\"true\",\"false\"}\n\n";
+		arffContent += "@ATTRIBUTE TweetDroleHashtag {\"true\",\"false\"}\n";
+		arffContent += "@ATTRIBUTE TweetDroleSmileyPasContent {\"true\",\"false\"}\n";
+		arffContent += "@ATTRIBUTE TweetDroleSmileyContent {\"true\",\"false\"}\n";
+		arffContent += "@ATTRIBUTE TweetDroleExclamation {\"absent\", \"regulier\", \"surnombre\"}\n";
+		arffContent += "@ATTRIBUTE TweetDroleRetweet {\"true\",\"false\"}\n";
+		arffContent += "@ATTRIBUTE TweetDroleNbRetweet NUMERIC\n";
+		arffContent += "@ATTRIBUTE TweetDroleLongeur NUMERIC\n";
+		arffContent += "@ATTRIBUTE TweetDroleNbMots NUMERIC\n";
+		arffContent += "@ATTRIBUTE TweetDroleDrole {\"true\",\"false\"}\n\n";
 		arffContent += "@DATA\n";
 
 		System.out
@@ -128,6 +129,7 @@ public class ArffWriter {
 			arffContent += processRetweetAttribute(arffContent, t);
 			arffContent += processNbRetweetAttribute(arffContent, t);
 			arffContent += processLongeurAttribute(arffContent, t);
+			arffContent += processNbMotsAttribute(arffContent, t);
 			arffContent += processDroleAttribute(arffContent, t);
 
 			arffContent += "\n";
@@ -135,6 +137,11 @@ public class ArffWriter {
 
 		return arffContent;
 	}
+
+	private String processNbMotsAttribute(String arffContent, Tweet t) {
+		NOMBREATTRIBUTS++;
+		String[] motsTexte = t.getText().split(" ");
+		return NOMBREATTRIBUTS+" "+motsTexte.length + ",";	}
 
 	private String processMotsAttribute(String arffContent, Tweet t) {
 		String truc = "{";
@@ -244,7 +251,7 @@ public class ArffWriter {
 	private String processDroleAttribute(String arffContent, Tweet t) {
 		int i = NOMBREATTRIBUTS++;
 		i++;
-		NOMBREATTRIBUTS -= 8;
+		NOMBREATTRIBUTS -= 9;
 		if (t.getCategories().contains("Drole")) {
 			return i+" \"true\"}";
 		} else {
