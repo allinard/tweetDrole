@@ -1,0 +1,37 @@
+\begin{thebibliography}{~~~}
+
+\bibitem[\protect\citename{Benarmara {\em et~al.}, }2007]{TALN2007}
+{\sc F. Benarmara, N. Hatout, P. Muller \& S. Ozdowska}, Eds. (2007).
+\newblock {\em Actes de TALN 2007 (Traitement automatique des langues
+  naturelles)}, Toulouse. ATALA, IRIT.
+
+\bibitem[\protect\citename{Bernhard, }2007]{Bernhard07}
+{\sc Bernhard D.} (2007).
+\newblock Apprentissage non supervis\'e de familles morphologiques par
+  classification ascendante hi\'erarchique.
+\newblock In \cite{TALN2007}, p.\ 367--376.
+
+\bibitem[\protect\citename{Bigi, }2014]{TALN2014}
+{\sc B. Bigi}, Ed. (2014).
+\newblock {\em Actes de TALN 2014 (Traitement automatique des langues
+  naturelles)}, Marseille. ATALA, LPL.
+
+\bibitem[\protect\citename{Laignelet \& Rioult, }2009]{LaigneletRioult09}
+{\sc Laignelet M. \& Rioult F.} (2009).
+\newblock Rep{\'e}rer automatiquement les segments obsolescents {\`a}
+  l{\textquoteright}aide d{\textquoteright}indices s{\'e}mantiques et
+  discursifs.
+\newblock In {\em Actes de TALN 2009 (Traitement automatique des langues
+  naturelles)}, Senlis: ATALA  LIPN.
+
+\bibitem[\protect\citename{Langlais \& Patry, }2007]{LanglaisPatry07}
+{\sc Langlais P. \& Patry A.} (2007).
+\newblock Enrichissement d'un lexique bilingue par analogie.
+\newblock In \cite{TALN2007}, p.\ 101--110.
+
+\bibitem[\protect\citename{Seretan \& Wehrli, }2007]{SeretanWehrli07}
+{\sc Seretan V. \& Wehrli E.} (2007).
+\newblock Collocation translation based on sentence alignment and parsing.
+\newblock In \cite{TALN2007}, p.\ 401--410.
+
+\end{thebibliography}

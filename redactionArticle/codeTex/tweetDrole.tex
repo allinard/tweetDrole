@@ -1,0 +1,190 @@
+%% Exemple de source LaTeX pour un article soumis à TALN
+\documentclass[10pt,a4paper,twoside]{article}
+
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+
+
+% faire les \usepackage dont vous avez besoin AVANT le \usepackage{taln2014} 
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% 
+\usepackage{taln2014}
+\usepackage[frenchb]{babel}
+%
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+% Titre complet
+\title{Est-ce que ce Tweet est drôle ? Détection automatique de tweets humoristiques}
+
+\author{Florian Boudin\up{1}\quad Adeline Granet\up{2}\quad Alexis Linard\up{2}\\
+  (1) Laboratoire LINA, Université de Nantes, 2 rue de la Houssinière, BP 92208, 44322 Nantes, France \\ 
+  (2) Université de Nantes, 2 rue de la Houssinière, BP 92208, 44322 Nantes, France\\ 
+  florian.boudin@univ-nantes.fr, adeline.granet@etu.univ-nantes.fr, alexis.linard@etu.univ-nantes.fr \\ 
+}
+
+% Titre qui apparait en en-tête (1 ligne maxi)
+\fancyhead[CO]{Détection automatique de tweets humoristiques} 
+% Auteurs qui apparaissent en en-tête (1 ligne maxi)
+\fancyhead[CE]{Florian Boudin, Adeline Granet, Alexis Linard} 
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\begin{document}
+
+\maketitle
+
+
+\resume{
+Ici, un résumé en français (max. 150 mots).
+}
+\\
+
+\abstract{
+Here an abstract in English (max. 150 words).
+}
+\\
+
+\motsClefs{Ici une liste de mots-clés en français}
+{Here a list of keywords in English}
+
+
+%%================================================================
+\section{Titre de la première partie}
+
+Les articles soumis ne devront pas dépasser 12 pages en Times 10, espacement simple, soit environ 4500 mots, figures, exemples et références compris. Les propositions de démonstrations ne devront pas dépasser 3 pages. Les articles seront rédigés en français pour les francophones, en anglais pour ceux qui ne maîtrisent pas le français. Les versions devront être en format A4. Prévoir des marges de 2 cm à gauche et à droite, 1,5 cm en haut et 1,27 cm en bas.
+
+Une feuille de style LaTeX et un modèle Word sont disponibles sur le site web de la conférence. Le site web de la conférence prévoit un formulaire interactif pour la soumission des résumés et des articles. Ce sont les données saisies dans le formulaire qui seront utilisées pour l'édition des résumés. Les articles devront être en format PDF. 
+
+
+\subsection{Titre de la première sous-partie}
+\begin{itemize}
+\item Une liste à puce 
+\end{itemize}
+\begin{enumerate}
+\item Une liste numérotée
+\end{enumerate}
+
+\begin{table}[!h]
+\centering
+	\begin{tabular}{|c|p{4cm}|}
+	\hline
+	Un tableau&\\
+	\hline
+	&Les cellules ainsi que le tableau sont centrés\\
+	\hline
+	\end{tabular}
+\caption{Un tableau}
+\end{table}
+
+\begin{figure}[htbp] 
+\begin{center} 
+\includegraphics{atala.png}
+\end{center} 
+\caption{Une image comme figure} \label{image} \
+\end{figure}
+
+
+Un texte qui termine par une note de bas de page\footnote{Que voici !}.
+
+Le renvoi à une référence bibliographique : \cite{Bernhard07}, et le renvoie à plusieurs références : \cite{TALN2014,LanglaisPatry07}.
+
+\begin{figure}[htbp] 
+\begin{center} 
+~\\
+~\\
+\framebox[5cm]{étape 1}\\
+ ~~~~~~~~ | \\
+ ~~~~~~~~ | \\
+\framebox[5cm]{étape 2}\\
+~~~~~~~~ | \\
+~~~~~~~~ | \\
+\framebox[5cm]{étape 3}\\
+~~~~~~~~ | \\
+~~~~~~~~ | \\
+\framebox[5cm]{étape 4}\\
+
+\end{center} 
+\caption{Un schéma comme figure} \label{schema}
+\end{figure}
+
+
+%%================================================================
+
+\subsection{Sous-partie}
+
+etc.
+
+
+\section{TALN 2014 à Marseille}
+
+Organisée par le LPL (Laboratoire Parole et Langage) et le LIF (Laboratoire d’Informatique Fondamentale), la conférence TALN (Traitement Automatique des Langues Naturelles) aura lieu pour son 20ème anniversaire à Marseille (Faculté Saint-Charles, Aix-Marseille Université) du 1er au 4 juillet 2014.
+
+La conférence TALN 2014, qui est organisée sous l’égide de l’ATALA, se tiendra conjointement avec la 16ème édition des Rencontres des Étudiants Chercheurs en Informatique pour le Traitement Automatique des Langues (RECITAL 2014).
+
+La conférence TALN 2014 comprendra des communications orales présentant des travaux de recherche et des prises de position, des communications affichées, des conférences invitées et des démonstrations.
+
+La langue officielle de la conférence est le français. Les communications en anglais sont acceptées pour les participants non francophones.
+
+
+%%================================================================
+\subsection{Types de communications}
+
+Deux formats de communications sont prévus : les articles longs (de 12 à 14 pages) et les articles courts (de 6 à 8 pages).
+
+Les auteurs sont invités à présenter deux types de communications :
+\begin{itemize}
+   \item des articles présentant des travaux de recherche originaux
+   \item des prises de position présentant un point de vue sur l’état des recherches en TALN, fondées sur une solide expérience du domaine
+\end{itemize}
+
+Les articles doivent présenter des travaux originaux, comportant un apport substantiel par rapport à d’autres travaux éventuellement déjà publiés. Les traductions d’articles publiés ailleurs dans une autre langue ne sont pas acceptées.
+
+Les articles longs seront présentés sous forme d’une communication orale, les articles courts sous forme d’un poster.
+
+Les communications pourront porter sur tous les thèmes du TAL.
+
+\subsection{Critères de sélection}
+
+Les soumissions seront examinées par au moins deux spécialistes du domaine. Pour les travaux de recherche, seront considérées en particulier :
+\begin{itemize}
+ \item  l’adéquation aux thèmes de la conférence
+ \item  l’importance et l’originalité de la contribution
+ \item  la correction du contenu scientifique et technique
+ \item  la discussion critique des résultats, en particulier par rapport aux autres travaux du domaine
+ \item  la situation des travaux dans le contexte de la recherche internationale
+ \item  l’organisation et la clarté de la présentation
+\end{itemize}
+
+
+Pour les prises de position, seront privilégiées :
+\begin{itemize}
+ \item   la largeur de vue et la prise en compte de l’état de l’art
+ \item   l’originalité et l’impact du point de vue présenté
+\end{itemize}
+
+Les articles sélectionnés seront publiés dans les actes de la conférence.
+
+Le comité de programme sélectionnera parmi les communications acceptées un article (prix TALN) pour recommandation à publication (dans une version étendue) dans la revue Traitement Automatique des Langues (revue
+TAL).
+
+
+%%================================================================
+\section*{Remerciements (pas de numéro)}
+
+Paragraphe facultatif
+
+%%================================================================
+%% Note : si l'on préfère éviter de factoriser les crossrefs :
+%% bibtex -min-crossrefs 99 taln-exemple
+%%================================================================
+\bibliographystyle{taln2002}
+\bibliography{biblio}
+\nocite{TALN2014,LaigneletRioult09,LanglaisPatry07,SeretanWehrli07}
+
+%%================================================================
+\end{document}
