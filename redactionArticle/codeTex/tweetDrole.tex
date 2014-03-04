@@ -54,137 +54,186 @@ Here an abstract in English (max. 150 words).
 
 
 %%================================================================
-\section{Titre de la première partie}
+\section{Introduction}
 
-Les articles soumis ne devront pas dépasser 12 pages en Times 10, espacement simple, soit environ 4500 mots, figures, exemples et références compris. Les propositions de démonstrations ne devront pas dépasser 3 pages. Les articles seront rédigés en français pour les francophones, en anglais pour ceux qui ne maîtrisent pas le français. Les versions devront être en format A4. Prévoir des marges de 2 cm à gauche et à droite, 1,5 cm en haut et 1,27 cm en bas.
+--> problématique de Tweeter, opinion, ce que l'on veut faire et pourquoi, mentionné les articles réf. 
 
-Une feuille de style LaTeX et un modèle Word sont disponibles sur le site web de la conférence. Le site web de la conférence prévoit un formulaire interactif pour la soumission des résumés et des articles. Ce sont les données saisies dans le formulaire qui seront utilisées pour l'édition des résumés. Les articles devront être en format PDF. 
+De nos jours, il n’y a plus de distinction nette entre la vie réelle et virtuelle. Il existe, chez les internautes, un besoin permanant de tout partager. Leurs succès, Leurs échecs, Leurs tracas, voir même leurs repas du midi prennent vie sur la toile, et ce sans aucune limite. Les outils les plus propices à cette déferlante d’informations sont les réseaux sociaux. Cet article s'intéresse à Twitter qui est rapidement devenu leader dans ce domaine avec plus de 500 millions d’utilisateurs.
+
+Par son format limité à des publications de 140 caractères (appelé Tweet), Twitter demande aux utilisateurs de faire passer leurs émotions, leurs sentiments et leurs découvertes en étant le plus concis possible. C’est un fait, Twitter est une véritable mine d’informations grâce à la multitude de messages qui s'y trouvent, mais également à tout ce qui gravite autour. Car un tweet peut être retweeté(reposté) par d'autres utilisateurs, contenir des hashtags définissant parfois le thème dominant.  Nous avons choisit de nous intéresser particulièrement aux tweets humoristiques.
+
+Notre objectif est de développer un outil capable de détecter automatiquement si un tweet est drôle ou non. Voici un tweet que l’on souhaiterai classer : « Il court, il court le furet \#Contrepeterie».  De toute évidence, celui-ci est drôle car comme le hashtag le mentionne c’est une contrepérie. 
+
+Des approches similaires ont déjà été réalisées dans le domaine anglophone comme \cite{Raz12, Barbosa2010}, elles seront détaillées dans la section suivante 2. La section 3 sera consacrée à la méthode que nous avons suivi pour réaliser la classification des tweets avec les traits que nous avons sélectionnés. La section 4 décrira le corpus qui a servi à construire le modèle ainsi que l’utilisation de Weka et la section 5, les résultats obtenus .
 
 
-\subsection{Titre de la première sous-partie}
+
+
+
+\section{Etat de l'art}
+
+--> décrire les approches qui existe avec leurs forces et leurs faiblesses
+
+Les idées d’exploitations de tweet ne manque pas du coté anglophone. Celui qui a largement inspiré la méthode présentée ici est \cite{Raz12}.  Dans cet article, Yishay Raz propose une méthode de classification de tweet en anglais humoristique selon le type de l’humour. Pour cela, il utilise un algorithme semi-supervisé qui prend en entrée des tweets annotés pour produire des ensembles avec des caractéristiques propres au classifieur.  […]
+
 \begin{itemize}
-\item Une liste à puce 
+\item Caractéristiques lexicales : les mots appartiennent à des lexiques particuliers, des entités nommées sont présentes, ou bien une ambiguité se pose;
+\item Caractéristiques morphologiques : analyse du temps des verbes, les mots existent-ils;
+\item Phonologie : les mots sont-ils connus comme homophone;
+\item Style : présence de smiley, ponctuation particulière, hashtag.
 \end{itemize}
-\begin{enumerate}
-\item Une liste numérotée
-\end{enumerate}
+Cette approche est fortement intéressante malheureusement, une partie des caractéristiques nécessite d’avoir énormément de ressources de références. En français, il est difficile de trouver un lexique pour les mots vulgaires, du domaine gay, les entités nommées, les homophones, etc. 
+L’évaluation de cette méthode a été réalisé en utilisant le site \url{ http://www.funny-tweets.com} pour collecter un ensemble de tweets « drôle » ce qui a permit d’éviter un tri fastidieux à la main pour classer les tweets en drôle ou non. Depuis, ce site ne fonctionne plus. Nous avons donc cherché une alternative pour la collecte de tweets drôles francophone.
 
-\begin{table}[!h]
-\centering
-	\begin{tabular}{|c|p{4cm}|}
-	\hline
-	Un tableau&\\
-	\hline
-	&Les cellules ainsi que le tableau sont centrés\\
-	\hline
-	\end{tabular}
-\caption{Un tableau}
-\end{table}
+L’article de \cite{Barbosa2010} sur la détection automatique de sentiment émis dans les tweets, montre qu’il y a beaucoup de travaux réalisés dans ce sens que se soit à travers des articles de recherches ou bien des sites proposant de la détection de sentiments en temps réels de tweets.  Sa méthode repose sur trois caractéristiques principalement : le POS tagging, la polarité et la syntaxe spécifique du tweet comme les liens, la ponctuations, les émoticônes, ainsi que la casse des mots. 
 
-\begin{figure}[htbp] 
-\begin{center} 
-\includegraphics{atala.png}
-\end{center} 
-\caption{Une image comme figure} \label{image} \
-\end{figure}
+Une caractéristique commune au deux articles est l’analyse du style qui n’est pas dépendant des bases de connaissances de la langue et donc exploitable dans notre étude.
 
 
-Un texte qui termine par une note de bas de page\footnote{Que voici !}.
-
-Le renvoi à une référence bibliographique : \cite{Bernhard07}, et le renvoie à plusieurs références : \cite{TALN2014,LanglaisPatry07}.
-
-\begin{figure}[htbp] 
-\begin{center} 
-~\\
-~\\
-\framebox[5cm]{étape 1}\\
- ~~~~~~~~ | \\
- ~~~~~~~~ | \\
-\framebox[5cm]{étape 2}\\
-~~~~~~~~ | \\
-~~~~~~~~ | \\
-\framebox[5cm]{étape 3}\\
-~~~~~~~~ | \\
-~~~~~~~~ | \\
-\framebox[5cm]{étape 4}\\
-
-\end{center} 
-\caption{Un schéma comme figure} \label{schema}
-\end{figure}
+\section{Méthode utilisée}
+\subsection{Classification}
+\subsection{Les features}
 
 
-%%================================================================
 
-\subsection{Sous-partie}
-
-etc.
-
-
-\section{TALN 2014 à Marseille}
-
-Organisée par le LPL (Laboratoire Parole et Langage) et le LIF (Laboratoire d’Informatique Fondamentale), la conférence TALN (Traitement Automatique des Langues Naturelles) aura lieu pour son 20ème anniversaire à Marseille (Faculté Saint-Charles, Aix-Marseille Université) du 1er au 4 juillet 2014.
-
-La conférence TALN 2014, qui est organisée sous l’égide de l’ATALA, se tiendra conjointement avec la 16ème édition des Rencontres des Étudiants Chercheurs en Informatique pour le Traitement Automatique des Langues (RECITAL 2014).
-
-La conférence TALN 2014 comprendra des communications orales présentant des travaux de recherche et des prises de position, des communications affichées, des conférences invitées et des démonstrations.
-
-La langue officielle de la conférence est le français. Les communications en anglais sont acceptées pour les participants non francophones.
+\section{Expérience}
+\subsection{Le corpus}
+comment il a été construit, à quoi il sert, la taille, avec plus en détail les tweets avec les comptes et pourquoi ces comptes
+comment annotation a été faite, et accord annotateur
+\subsection{Weka}
+paramètre utilisé sur le corpus d entrainement et de test
 
 
-%%================================================================
-\subsection{Types de communications}
+\section{Les résultats}
+faire un joli tableau, comparer à une baseline ( mais laquelle ? par exemple  1 smiley = 1 tweet drole mais il faut justifier cette baseline ) 
 
-Deux formats de communications sont prévus : les articles longs (de 12 à 14 pages) et les articles courts (de 6 à 8 pages).
+\section{Conclusion et discussion}
 
-Les auteurs sont invités à présenter deux types de communications :
-\begin{itemize}
-   \item des articles présentant des travaux de recherche originaux
-   \item des prises de position présentant un point de vue sur l’état des recherches en TALN, fondées sur une solide expérience du domaine
-\end{itemize}
-
-Les articles doivent présenter des travaux originaux, comportant un apport substantiel par rapport à d’autres travaux éventuellement déjà publiés. Les traductions d’articles publiés ailleurs dans une autre langue ne sont pas acceptées.
-
-Les articles longs seront présentés sous forme d’une communication orale, les articles courts sous forme d’un poster.
-
-Les communications pourront porter sur tous les thèmes du TAL.
-
-\subsection{Critères de sélection}
-
-Les soumissions seront examinées par au moins deux spécialistes du domaine. Pour les travaux de recherche, seront considérées en particulier :
-\begin{itemize}
- \item  l’adéquation aux thèmes de la conférence
- \item  l’importance et l’originalité de la contribution
- \item  la correction du contenu scientifique et technique
- \item  la discussion critique des résultats, en particulier par rapport aux autres travaux du domaine
- \item  la situation des travaux dans le contexte de la recherche internationale
- \item  l’organisation et la clarté de la présentation
-\end{itemize}
-
-
-Pour les prises de position, seront privilégiées :
-\begin{itemize}
- \item   la largeur de vue et la prise en compte de l’état de l’art
- \item   l’originalité et l’impact du point de vue présenté
-\end{itemize}
-
-Les articles sélectionnés seront publiés dans les actes de la conférence.
-
-Le comité de programme sélectionnera parmi les communications acceptées un article (prix TALN) pour recommandation à publication (dans une version étendue) dans la revue Traitement Automatique des Langues (revue
-TAL).
-
-
-%%================================================================
-\section*{Remerciements (pas de numéro)}
-
-Paragraphe facultatif
-
-%%================================================================
-%% Note : si l'on préfère éviter de factoriser les crossrefs :
-%% bibtex -min-crossrefs 99 taln-exemple
-%%================================================================
+%
+%\subsection{Titre de la première sous-partie}
+%\begin{itemize}
+%\item Une liste à puce 
+%\end{itemize}
+%\begin{enumerate}
+%\item Une liste numérotée
+%\end{enumerate}
+%
+%\begin{table}[!h]
+%\centering
+%	\begin{tabular}{|c|p{4cm}|}
+%	\hline
+%	Un tableau&\\
+%	\hline
+%	&Les cellules ainsi que le tableau sont centrés\\
+%	\hline
+%	\end{tabular}
+%\caption{Un tableau}
+%\end{table}
+%
+%\begin{figure}[htbp] 
+%\begin{center} 
+%\includegraphics{atala.png}
+%\end{center} 
+%\caption{Une image comme figure} \label{image} \
+%\end{figure}
+%
+%
+%Un texte qui termine par une note de bas de page\footnote{Que voici !}.
+%
+%Le renvoi à une référence bibliographique : \cite{Bernhard07}, et le renvoie à plusieurs références : \cite{TALN2014,LanglaisPatry07}.
+%
+%\begin{figure}[htbp] 
+%\begin{center} 
+%~\\
+%~\\
+%\framebox[5cm]{étape 1}\\
+% ~~~~~~~~ | \\
+% ~~~~~~~~ | \\
+%\framebox[5cm]{étape 2}\\
+%~~~~~~~~ | \\
+%~~~~~~~~ | \\
+%\framebox[5cm]{étape 3}\\
+%~~~~~~~~ | \\
+%~~~~~~~~ | \\
+%\framebox[5cm]{étape 4}\\
+%
+%\end{center} 
+%\caption{Un schéma comme figure} \label{schema}
+%\end{figure}
+%
+%
+%%%================================================================
+%
+%\subsection{Sous-partie}
+%
+%etc.
+%
+%
+%\section{TALN 2014 à Marseille}
+%
+%Organisée par le LPL (Laboratoire Parole et Langage) et le LIF (Laboratoire d’Informatique Fondamentale), la conférence TALN (Traitement Automatique des Langues Naturelles) aura lieu pour son 20ème anniversaire à Marseille (Faculté Saint-Charles, Aix-Marseille Université) du 1er au 4 juillet 2014.
+%
+%La conférence TALN 2014, qui est organisée sous l’égide de l’ATALA, se tiendra conjointement avec la 16ème édition des Rencontres des Étudiants Chercheurs en Informatique pour le Traitement Automatique des Langues (RECITAL 2014).
+%
+%La conférence TALN 2014 comprendra des communications orales présentant des travaux de recherche et des prises de position, des communications affichées, des conférences invitées et des démonstrations.
+%
+%La langue officielle de la conférence est le français. Les communications en anglais sont acceptées pour les participants non francophones.
+%
+%
+%%%================================================================
+%\subsection{Types de communications}
+%
+%Deux formats de communications sont prévus : les articles longs (de 12 à 14 pages) et les articles courts (de 6 à 8 pages).
+%
+%Les auteurs sont invités à présenter deux types de communications :
+%\begin{itemize}
+%   \item des articles présentant des travaux de recherche originaux
+%   \item des prises de position présentant un point de vue sur l’état des recherches en TALN, fondées sur une solide expérience du domaine
+%\end{itemize}
+%
+%Les articles doivent présenter des travaux originaux, comportant un apport substantiel par rapport à d’autres travaux éventuellement déjà publiés. Les traductions d’articles publiés ailleurs dans une autre langue ne sont pas acceptées.
+%
+%Les articles longs seront présentés sous forme d’une communication orale, les articles courts sous forme d’un poster.
+%
+%Les communications pourront porter sur tous les thèmes du TAL.
+%
+%\subsection{Critères de sélection}
+%
+%Les soumissions seront examinées par au moins deux spécialistes du domaine. Pour les travaux de recherche, seront considérées en particulier :
+%\begin{itemize}
+% \item  l’adéquation aux thèmes de la conférence
+% \item  l’importance et l’originalité de la contribution
+% \item  la correction du contenu scientifique et technique
+% \item  la discussion critique des résultats, en particulier par rapport aux autres travaux du domaine
+% \item  la situation des travaux dans le contexte de la recherche internationale
+% \item  l’organisation et la clarté de la présentation
+%\end{itemize}
+%
+%
+%Pour les prises de position, seront privilégiées :
+%\begin{itemize}
+% \item   la largeur de vue et la prise en compte de l’état de l’art
+% \item   l’originalité et l’impact du point de vue présenté
+%\end{itemize}
+%
+%Les articles sélectionnés seront publiés dans les actes de la conférence.
+%
+%Le comité de programme sélectionnera parmi les communications acceptées un article (prix TALN) pour recommandation à publication (dans une version étendue) dans la revue Traitement Automatique des Langues (revue
+%TAL).
+%
+%
+%%%================================================================
+%\section*{Remerciements (pas de numéro)}
+%
+%Paragraphe facultatif
+%
+%%%================================================================
+%%% Note : si l'on préfère éviter de factoriser les crossrefs :
+%%% bibtex -min-crossrefs 99 taln-exemple
+%%%================================================================
 \bibliographystyle{taln2002}
 \bibliography{biblio}
-\nocite{TALN2014,LaigneletRioult09,LanglaisPatry07,SeretanWehrli07}
+%\nocite{TALN2014,LaigneletRioult09,LanglaisPatry07,SeretanWehrli07}
 
 %%================================================================
 \end{document}
