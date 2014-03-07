@@ -56,7 +56,6 @@ Here an abstract in English (max. 150 words).
 %%================================================================
 \section{Introduction}
 
---> problématique de Tweeter, opinion, ce que l'on veut faire et pourquoi, mentionné les articles réf. 
 
 De nos jours, il n’y a plus de distinction nette entre la vie réelle et virtuelle. Il existe, chez les internautes, un besoin permanant de tout partager. Leurs succès, Leurs échecs, Leurs tracas, voir même leurs repas du midi prennent vie sur la toile, et ce sans aucune limite. Les outils les plus propices à cette déferlante d’informations sont les réseaux sociaux. Cet article s'intéresse à Twitter qui est rapidement devenu leader dans ce domaine avec plus de 500 millions d’utilisateurs.
 
@@ -71,8 +70,6 @@ Des approches similaires ont déjà été réalisées dans le domaine anglophone
 
 
 \section{Etat de l'art}
-
---> décrire les approches qui existe avec leurs forces et leurs faiblesses
 
 Les idées d’exploitations de tweet ne manque pas du coté anglophone. Celui qui a largement inspiré la méthode présentée ici est \cite{Raz12}.  Dans cet article, Yishay Raz propose une méthode de classification de tweet en anglais humoristique selon le type de l’humour. Pour cela, il utilise un algorithme semi-supervisé qui prend en entrée des tweets annotés pour produire des ensembles avec des caractéristiques propres au classifieur.  […]
 
@@ -90,16 +87,74 @@ L’article de \cite{Barbosa2010} sur la détection automatique de sentiment ém
 Une caractéristique commune au deux articles est l’analyse du style qui n’est pas dépendant des bases de connaissances de la langue et donc exploitable dans notre étude.
 
 
-\section{Méthode utilisée}
-\subsection{Classification}
-\subsection{Les features}
+\section{Méthode de classification utilisée}
+\label{features} [******doute sous forme de liste ou non********]\\
+Une méthode d'apprentissage non-supervisé est utilisé prenant en entrée un ensemble de Tweets. Ce dernier va fournir différentes caractéristiques pour le classifieur multi-classe. Les caractéristiques étudiées sont de type lexicale, stylistique et contextuel. 
 
+\textbf{Caractéristique lexicale}\\
+Lexique de mots construit à partir des tweets du corpus où chaque mot a été racinisé (sans les mots creux).
+\vspace{0.5cm}
+
+\textbf{Caractéristique stylistique}
+\begin{itemize}
+\item La présence de hashtag comme "\#humour";
+\item La présence de smiley content ou pas content au sein du tweet est observé. Par exemple "c'était pas moi ;)";
+\item Le nombre de point d'exclamation est également pris en compte. 
+\end{itemize}
+\vspace{0.5cm}
+
+\textbf{Caractéristique contextuel}
+\begin{itemize}
+\item Le nombre de mot dans le tweet;
+\item Le nombre de ReTweet;
+\item La longueur total du tweet;
+\item Est ce un retweet.
+\end{itemize}
+\vspace{0.5cm}
 
 
 \section{Expérience}
+
+\subsection{Le tweet} [à retravailler]
+Comme cela a été mentionné plutôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@"; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag "\#ironie" est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple " http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploités pour créer le modèle d'apprentissage comme cela est détaillé à la section \ref{features}.
+
 \subsection{Le corpus}
-comment il a été construit, à quoi il sert, la taille, avec plus en détail les tweets avec les comptes et pourquoi ces comptes
-comment annotation a été faite, et accord annotateur
+
+
+\textbf{Corpus d'entrainement}.
+Grâce à l'application twitter4j, un corpus de plus de 10 000 tweets a été réalisé. Ce corpus a été constitué à partir de tweets drôles et non drôles comme le montre le tableau suivant: 
+
+\begin{table}[!h]
+\centering
+	\begin{tabular}{|c|r|r|}
+	\hline
+	& Tweets Drôles & Tweets Pas Drôles \\
+	\hline
+	 ReTweets & 166 & 1019 \\
+	\hline
+	 ReTweetés & 2817 & 4009 \\
+	\hline
+	Non ReTweetés & 2000 & 1273 \\
+	\hline
+	Contrepètries & 200 & / \\
+	Autodérision & 200 & / \\
+	\hline 
+	Total & 4817 & 5282 \\
+	\hline
+	\end{tabular}
+\caption{Composition du corpus}
+\end{table}
+
+L'extraction de tweets avec l'application nécessite de donner des comptes ciblés. Pour cela une sélection de 35 comptes tweeter a été effectué visant les tweets drôle comme @100\_blagues ou @viedemerde. Le nom même du compte sous entend que les tweets seront à caractères humoristique. De même,  28 comptes jugés "pas drole", car spécialisé dans la politique ou l'information, ont été choisi comme @lemondefr ou @nantesfr.
+
+Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer si un tweet est drôle ou non mais pas seulement. Il a été utilisé pour créer un lexique de mot caractéristique des tweets. Pour cela, tous les mots ont été extrait et racinisé. A cette liste, les mots creux de langue française soit une liste de 460 mots, ont été retiré. Chaque mot restant constitue une caractéristique.
+
+
+
+\textbf{Corpus de test}.
+
+--> comment annotation a été faite, et accord annotateur
+
 \subsection{Weka}
 paramètre utilisé sur le corpus d entrainement et de test
 
