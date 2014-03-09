@@ -121,7 +121,7 @@ Comme cela a été mentionné plutôt, Twitter permet de poster de courts messag
 \subsection{Le corpus}
 
 
-\textbf{Corpus d'entrainement}.
+\paragraph{Corpus d'entrainement}
 Grâce à l'application twitter4j, un corpus de plus de 10 000 tweets a été réalisé. Ce corpus a été constitué à partir de tweets drôles et non drôles comme le montre le tableau suivant: 
 
 \begin{table}[!h]
@@ -145,15 +145,23 @@ Grâce à l'application twitter4j, un corpus de plus de 10 000 tweets a été r�
 \caption{Composition du corpus}
 \end{table}
 
-L'extraction de tweets avec l'application nécessite de donner des comptes ciblés. Pour cela une sélection de 35 comptes tweeter a été effectué visant les tweets drôle comme @100\_blagues ou @viedemerde. Le nom même du compte sous entend que les tweets seront à caractères humoristique. De même,  28 comptes jugés "pas drole", car spécialisé dans la politique ou l'information, ont été choisi comme @lemondefr ou @nantesfr.
+
+Pour extraire des tweets, il est important de commencer par choisir des comptes tweeter. Ces comptes doivent contenir soit uniquement (ou grande partie puisqu'il est difficile d'être sur) des tweets "drôles" ou des tweets "pas drôles".
+
+Pour les comptes supposés "drôles", nous avons effectué une sélection de 35 comptes. Nous nous sommes basés essentiellement sur le nom de l'utilisateur contenant des mots clés comme « humour » et « blague ». Voici des exemples de comptes que l'on a pu sélectionner « @100\_blagues, @BlaguesCarambar , @BlagueJour», il est facile de supposer que les tweets seront tous à caractères humoristiques et surement drôle. D'autres comptes ont été choisis par rapport à leur notoriété. Ils sont connus pour rassembler des tweets « drôles » par leur ironie ou montrant l'autodérision de leur auteur comme sur @viedemerde.
+
+Pour les comptes répertoriant les tweets dits "pas drôles", nous en avons choisi 28. Nous avons supposé que tous les comptes politiques comme « @elysee », journalistiques comme « @lemondefr,@LesEchos » ne contenaient pas de blagues, car ils sont supposés donner des informations sérieuses. Mais pour diversifier les domaines évoqués dans les tweets, nous avons ajouté des comptes commerciales comme @m6, @nantesfr ou @conforama.
 
 Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer si un tweet est drôle ou non mais pas seulement. Il a été utilisé pour créer un lexique de mot caractéristique des tweets. Pour cela, tous les mots ont été extrait et racinisé. A cette liste, les mots creux de langue française soit une liste de 460 mots, ont été retiré. Chaque mot restant constitue une caractéristique.
 
 
 
-\textbf{Corpus de test}.
+\paragraph{Corpus de test} 
+Pour constituer le corpus de test, nous avons extrait 250 tweets provenant des comptes des humoristes Gad elmaleh, Florence Foresti et Cyprien (un youtubeur). Nous les avons choisis, car ils sont représentatifs de Twitter c'est-à-dire une grande majorité de tweets sur le quotidien et quelques tweets drôles. Plus que quiconque ils sont plus susceptibles de par leur métier de poster des tweets drôles .
 
---> comment annotation a été faite, et accord annotateur
+Ce corpus a été réparti équitablement dans trois fichiers xml différents. Chaque fichier a été annoté par deux annotateurs, qui pour chaque tweet, devait indiquer si la mention "Drole" ou "PasDrole".
+
+% mettre la formule du kappa et expliquer chaque terme 
 
 \subsection{Weka}
 paramètre utilisé sur le corpus d entrainement et de test

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.5.3)  7 MAR 2014 16:30
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.5.3)  9 MAR 2014 18:57
 entering extended mode
 **C:/Users/boulanger/Documents/GitHub/tweetDrole/redactionArticle/codeTex/tweet
 Drole.tex
@@ -423,25 +423,29 @@ Underfull \vbox (badness 8132) has occurred while \output is active []
 
  [2]
 (C:\Users\boulanger\Documents\GitHub\tweetDrole\redactionArticle\codeTex\tweetD
-role.bbl) [3]
+role.bbl
+Underfull \vbox (badness 1400) has occurred while \output is active []
+
+ [3])
+[4]
 (C:\Users\boulanger\Documents\GitHub\tweetDrole\redactionArticle\codeTex\tweetD
 role.aux) ) 
 Here is how much of TeX's memory you used:
  2832 strings out of 494045
  35737 string characters out of 3145958
- 96030 words of memory out of 3000000
+ 98030 words of memory out of 3000000
  6096 multiletter control sequences out of 15000+200000
  34033 words of font info for 36 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 28i,11n,45p,785b,280s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 28i,10n,45p,785b,313s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<
 C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x8
 6)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2
 .9/fonts/type1/urw/times/utmr8a.pfb>
-Output written on tweetDrole.pdf (3 pages, 69386 bytes).
+Output written on tweetDrole.pdf (4 pages, 70818 bytes).
 PDF statistics:
- 29 PDF objects out of 1000 (max. 8388607)
+ 32 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
