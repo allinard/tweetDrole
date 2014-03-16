@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage{booktabs}
 
 
 % faire les \usepackage dont vous avez besoin AVANT le \usepackage{taln2014} 
@@ -57,7 +58,7 @@ Here an abstract in English (max. 150 words).
 \section{Introduction}
 
 
-De nos jours, il n’y a plus de distinction nette entre la vie réelle et virtuelle. Il existe, chez les internautes, un besoin permanant de tout partager. Leurs succès, Leurs échecs, Leurs tracas, voir même leurs repas du midi prennent vie sur la toile, et ce sans aucune limite. Les outils les plus propices à cette déferlante d’informations sont les réseaux sociaux. Cet article s'intéresse à Twitter qui est rapidement devenu leader dans ce domaine avec plus de 500 millions d’utilisateurs.
+De nos jours, il n’y a plus de distinction nette entre la vie réelle et virtuelle. Il existe, chez les internautes, un besoin permanant de tout partager. Leurs succès, leurs échecs, leurs tracas, voir même leurs repas du midi prennent vie sur la toile, et ce sans aucune limite. Les outils les plus propices à cette déferlante d’informations sont les réseaux sociaux. Cet article s'intéresse à Twitter qui est rapidement devenu leader dans ce domaine avec plus de 500 millions d’utilisateurs.
 
 Par son format limité à des publications de 140 caractères (appelé Tweet), Twitter demande aux utilisateurs de faire passer leurs émotions, leurs sentiments et leurs découvertes en étant le plus concis possible. C’est un fait, Twitter est une véritable mine d’informations grâce à la multitude de messages qui s'y trouvent, mais également à tout ce qui gravite autour. Car un tweet peut être retweeté(reposté) par d'autres utilisateurs, contenir des hashtags définissant parfois le thème dominant.  Nous avons choisit de nous intéresser particulièrement aux tweets humoristiques.
 
@@ -88,18 +89,27 @@ Une caractéristique commune au deux articles est l’analyse du style qui n’e
 
 
 \section{Méthode de classification utilisée}
-\label{features} [******doute sous forme de liste ou non********]\\
-Une méthode d'apprentissage non-supervisé est utilisé prenant en entrée un ensemble de Tweets. Ce dernier va fournir différentes caractéristiques pour le classifieur multi-classe. Les caractéristiques étudiées sont de type lexicale, stylistique et contextuel. 
+
+\subsection{Le tweet} 
+Comme cela a été mentionné plutôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@"; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag "\#ironie" est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple " http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploités pour créer le modèle d'apprentissage comme cela est détaillé à la section suivante \ref{features}.
+
+
+
+
+\subsection{Les features}
+\label{features}
+La tâche de classifaction consiste à séparer en deux classes distinctes les tweets : une classe "Drôle" et "Pas Drôle". Nous avons testé plusieurs algorithmes qui seront détaillé dans la section\ref{methode}
+Une méthode d'apprentissage non-supervisé est utilisé prenant en entrée un ensemble de tweets. Ce dernier va fournir différentes caractéristiques pour le classifieur multi-classe. Les caractéristiques étudiées sont de type lexicale, stylistique et contextuel. 
 
 \textbf{Caractéristique lexicale}\\
-Lexique de mots construit à partir des tweets du corpus où chaque mot a été racinisé (sans les mots creux).
+Lexique de mots : il a été construit à partir des tweets du corpus où chaque mot a été racinisé et auquel on a enlevé les mots creux et nettoyé le surplus comme les liens externes.
 \vspace{0.5cm}
 
 \textbf{Caractéristique stylistique}
 \begin{itemize}
-\item La présence de hashtag comme "\#humour";
-\item La présence de smiley content ou pas content au sein du tweet est observé. Par exemple "c'était pas moi ;)";
-\item Le nombre de point d'exclamation est également pris en compte. 
+\item La présence de hashtag comme "\#humour": nous avons trouvé que les utilisateurs ajoutaient un "\#humour" ou "\#contrepètrie" pour identifier le thème sous-entendu dans leur message;
+\item La présence de smiley content ou pas content au sein du tweet est observé. Par exemple "c'était pas moi ;)", la présence du smiley montre le caractère ironique de la phrase;
+\item Le nombre de point d'exclamation est également pris en compte, par exemple dans une même phrase "je suis calme!" et " je suis calme !!!!!!!!!!" n'ont pas la même signification, et donne de l'intensité au message voir même de l'ironie dans notre cas. 
 \end{itemize}
 \vspace{0.5cm}
 
@@ -112,35 +122,38 @@ Lexique de mots construit à partir des tweets du corpus où chaque mot a été 
 \end{itemize}
 \vspace{0.5cm}
 
+\subsection{Les méthodes utilisés} [!---pour chaque méthode en deux phrases expliquer comment elle fonctionne---! ]
+\label{methode}
+Pour les méthodes de classifications que nous avons utilisé dans Weka, nous avons pri le parti de garder les paramètres par défaut. 
+\paragraph{Naivesbayes} C'est le modèle probabiliste le plus utilisé. Il met en avant l'indépendance entre chaque caractèéristisques. Il utilise une hypothèse de distribution Gaussienne pour calculer la probabilité pour chaque caractéristique.
+\paragraph{J48} C'est une méthode d'apprentissage par arbre de décision. Un arbre va être construit de façon récursif en séparant les données suivant des tests sur les features définis. 
+\paragraph{...}
 
-\section{Expérience}
-
-\subsection{Le tweet} [à retravailler]
-Comme cela a été mentionné plutôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@"; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag "\#ironie" est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple " http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploités pour créer le modèle d'apprentissage comme cela est détaillé à la section \ref{features}.
-
-\subsection{Le corpus}
 
 
-\paragraph{Corpus d'entrainement}
+
+\section{Le corpus}
+
+\subsection{Corpus d'entrainement}
 Grâce à l'application twitter4j, un corpus de plus de 10 000 tweets a été réalisé. Ce corpus a été constitué à partir de tweets drôles et non drôles comme le montre le tableau suivant: 
 
 \begin{table}[!h]
 \centering
-	\begin{tabular}{|c|r|r|}
-	\hline
+	\begin{tabular}{lrr}
+	\toprule
 	& Tweets Drôles & Tweets Pas Drôles \\
-	\hline
+	\midrule
 	 ReTweets & 166 & 1019 \\
-	\hline
+	
 	 ReTweetés & 2817 & 4009 \\
-	\hline
+	
 	Non ReTweetés & 2000 & 1273 \\
-	\hline
+	
 	Contrepètries & 200 & / \\
 	Autodérision & 200 & / \\
-	\hline 
+	 \midrule
 	Total & 4817 & 5282 \\
-	\hline
+	\bottomrule
 	\end{tabular}
 \caption{Composition du corpus}
 \end{table}
@@ -156,18 +169,34 @@ Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer 
 
 
 
-\paragraph{Corpus de test} 
+\subsection{Corpus de test} 
 Pour constituer le corpus de test, nous avons extrait 250 tweets provenant des comptes des humoristes Gad elmaleh, Florence Foresti et Cyprien (un youtubeur). Nous les avons choisis, car ils sont représentatifs de Twitter c'est-à-dire une grande majorité de tweets sur le quotidien et quelques tweets drôles. Plus que quiconque ils sont plus susceptibles de par leur métier de poster des tweets drôles .
 
 Ce corpus a été réparti équitablement dans trois fichiers xml différents. Chaque fichier a été annoté par deux annotateurs, qui pour chaque tweet, devait indiquer si la mention "Drole" ou "PasDrole".
 
 % mettre la formule du kappa et expliquer chaque terme 
 
-\subsection{Weka}
-paramètre utilisé sur le corpus d entrainement et de test
+
+\begin{table}[!h]
+\centering
+	\begin{tabular}{lrr}
+	\toprule
+	& Corpus d'entraînement & Corpus de test \\
+	\midrule
+	 Nbre de mot départ & ? & ? \\
+	 Après nettoyage & ? & ? \\
+	 Après racinisation & ? & ? \\
+	\bottomrule
+	\end{tabular}
+\caption{Constitutions des corpus}
+\end{table}
 
 
-\section{Les résultats}
+\section{Phase d'évaluation}
+
+\subsection{Mesures d'évaluation}
+
+\subsection{Les résultats}
 faire un joli tableau, comparer à une baseline ( mais laquelle ? par exemple  1 smiley = 1 tweet drole mais il faut justifier cette baseline ) 
 
 \section{Conclusion et discussion}
