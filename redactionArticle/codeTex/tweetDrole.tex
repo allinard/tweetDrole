@@ -125,11 +125,11 @@ Lexique de mots : il a été construit à partir des tweets du corpus où chaque
 \subsection{Les méthodes utilisés}
 \label{methode}
 Pour les méthodes de classification que nous avons utilisées dans Weka, nous avons pris le parti de garder certains des paramètres par défaut. 
-\paragraph{Naivesbayes} C'est le modèle probabiliste le plus utilisé. Il met en avant l'indépendance entre chaque caractèéristisques. Il utilise une hypothèse de distribution Gaussienne pour calculer la probabilité pour chaque caractéristique.
-\paragraph{J48} C'est une méthode d'apprentissage par arbre de décision. Un arbre va être construit de façon récursif en séparant les données suivant des tests sur les features définis. 
-\paragraph{ZeroR} Assigne simplement chaque valeur à la classe la plus commune (en examinant le corpus d'entrainement). Cela signifie que si les données sont a 55% de classe A, 10% de classe B, 5% de classe C etc... alors ZeroR trouvera 55% A. C'est le classifieur le plus "basique". C'est de fait la méthode nous donnant les plus faibles résultats obtenables.
-\paragraph{MultilayerPerceptron} Le Perceptron multicouche est un classifieur linéaire organisé en plusieurs couches au sein desquelles une information circule de la couche d'entrée vers la couche de sortie uniquement ; chaque couche est constituée d'un nombre variable de neurones, les neurones de la couche de sortie correspondant toujours aux sorties du système.
-\paragraph{DecisionStump} Consiste en un arbre de décision à une seul niveau. C'est un arbre avec une racine immédiatement connectés à ses feuilles. En outre, donne une prédiction sur une valeur d'un seul trait.
+\textbf{Naivesbayes}. C'est le modèle probabiliste le plus utilisé. Il met en avant l'indépendance entre chaque caractèéristisques. Il utilise une hypothèse de distribution Gaussienne pour calculer la probabilité pour chaque caractéristique.\\
+\textbf{J48} C'est une méthode d'apprentissage par arbre de décision. Un arbre va être construit de façon récursif en séparant les données suivant des tests sur les features définis.  \\
+\textbf{ZeroR} Assigne simplement chaque valeur à la classe la plus commune (en examinant le corpus d'entrainement). Cela signifie que si les données sont a 55\% de classe A, 10\% de classe B, 5\% de classe C etc... alors ZeroR trouvera 55\% A. C'est le classifieur le plus "basique". C'est de fait la méthode nous donnant les plus faibles résultats obtenables.\\
+\textbf{MultilayerPerceptron} Le Perceptron multicouche est un classifieur linéaire organisé en plusieurs couches au sein desquelles une information circule de la couche d'entrée vers la couche de sortie uniquement ; chaque couche est constituée d'un nombre variable de neurones, les neurones de la couche de sortie correspondant toujours aux sorties du système.\\
+\textbf{DecisionStump} Consiste en un arbre de décision à une seul niveau. C'est un arbre avec une racine immédiatement connectés à ses feuilles. En outre, donne une prédiction sur une valeur d'un seul trait.
 
 
 
