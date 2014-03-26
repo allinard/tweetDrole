@@ -64,14 +64,14 @@ Par son format limité à des publications de 140 caractères (appelé Tweet), T
 
 Notre objectif est de développer un outil capable de détecter automatiquement si un tweet est drôle ou non. Voici un tweet que l’on souhaiterai classer : « Il court, il court le furet \#Contrepeterie».  De toute évidence, celui-ci est drôle car comme le hashtag le mentionne c’est une contrepérie. 
 
-Des approches similaires ont déjà été réalisées dans le domaine anglophone comme \cite{Raz12, Barbosa2010}, elles seront détaillées dans la section suivante 2. La section 3 sera consacrée à la méthode que nous avons suivi pour réaliser la classification des tweets avec les traits que nous avons sélectionnés. La section 4 décrira le corpus qui a servi à construire le modèle ainsi que l’utilisation de Weka et la section 5, les résultats obtenus .
+Des approches similaires ont déjà été réalisées dans le domaine anglophone comme \cite{Raz12, Barbosa2010}, elles seront détaillées dans la section suivante \ref{art}. La section \ref{methClass} sera consacrée à la définition de qu'est un tweet avec tous les traits qui le caractérisent avec les méthodes que nous avons utilisés pour réaliser la classification des tweets dans Weka avec les traits que nous avons sélectionnés. La section \ref{corpus} décrira le corpus d'entraînement qui a servi à construire le modèle ainsi que celui de test avec une présentation de l'accord inter-annotateurs utilisé. La section \ref{eval}, expliquera en détails la démarche que nous avons suivi avec les résultats obtenus .
 
 
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Etat de l'art}
-
+\label{art}
 Les idées d’exploitations de tweet ne manquent pas du coté anglophone. Celui qui a largement inspiré la méthode présentée ici est \cite{Raz12}.  Dans cet article, Yishay Raz propose une méthode de classification de tweets humoristiques en anglais selon le type de l’humour. Pour cela, il utilise un algorithme semi-supervisé qui prend en entrée des tweets annotés pour produire des ensembles avec des caractéristiques propres au classifieur.  […]
 
 \begin{itemize}
@@ -87,13 +87,11 @@ L’article de \cite{Barbosa2010} sur la détection automatique de sentiment ém
 
 Une caractéristique commune aux deux articles est l’analyse du style qui n’est pas dépendante des bases de connaissances de la langue et donc exploitable dans notre étude.
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Méthode de classification utilisée}
-
+\label{methClass}
 \subsection{Le tweet} 
 Comme cela a été mentionné plus tôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@"; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag "\#ironie" est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple " http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploités pour créer le modèle d'apprentissage comme cela est détaillé à la section suivante \ref{features}.
-
-
 
 
 \subsection{Les features}
@@ -124,7 +122,7 @@ Lexique de mots : il a été construit à partir des tweets du corpus où chaque
 
 \subsection{Les méthodes utilisés}
 \label{methode}
-Pour les méthodes de classification que nous avons utilisées dans Weka, nous avons pris le parti de garder certains des paramètres par défaut. 
+Pour les méthodes de classification que nous avons utilisées dans Weka, nous avons pris le parti de garder certains des paramètres par défaut. \\
 \textbf{Naivesbayes}. C'est le modèle probabiliste le plus utilisé. Il met en avant l'indépendance entre chaque caractèéristisques. Il utilise une hypothèse de distribution Gaussienne pour calculer la probabilité pour chaque caractéristique.\\
 \textbf{J48} C'est une méthode d'apprentissage par arbre de décision. Un arbre va être construit de façon récursif en séparant les données suivant des tests sur les features définis.  \\
 \textbf{ZeroR} Assigne simplement chaque valeur à la classe la plus commune (en examinant le corpus d'entrainement). Cela signifie que si les données sont a 55\% de classe A, 10\% de classe B, 5\% de classe C etc... alors ZeroR trouvera 55\% A. C'est le classifieur le plus "basique". C'est de fait la méthode nous donnant les plus faibles résultats obtenables.\\
@@ -133,9 +131,9 @@ Pour les méthodes de classification que nous avons utilisées dans Weka, nous a
 
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Le corpus}
-
+\label{corpus}
 \subsection{Corpus d'entrainement}
 Grâce à l'application twitter4j, un corpus de plus de 10 000 tweets a été réalisé. Ce corpus a été constitué à partir de tweets drôles et non drôles comme le montre le tableau suivant: 
 
@@ -171,14 +169,6 @@ Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer 
 
 
 
-\subsection{Corpus de test} 
-Pour constituer le corpus de test, nous avons extrait 250 tweets provenant des comptes des humoristes Gad Elmaleh, Florence Foresti et Cyprien (un youtubeur). Nous les avons choisis, car ils sont représentatifs de Twitter c'est-à-dire une grande majorité de tweets sur le quotidien et quelques tweets drôles. Plus que quiconque ils sont plus susceptibles de par leur métier de poster des tweets drôles .
-
-Ce corpus a été réparti équitablement dans trois fichiers xml différents. Chaque fichier a été annoté par deux annotateurs, qui pour chaque tweet, devait indiquer si la mention "Drole" ou "PasDrole".
-
-% mettre la formule du kappa et expliquer chaque terme 
-
-
 \begin{table}[!h]
 \centering
 	\begin{tabular}{lrr}
@@ -193,14 +183,52 @@ Ce corpus a été réparti équitablement dans trois fichiers xml différents. C
 \caption{Constitutions des corpus}
 \end{table}
 
+\subsection{Corpus de test} 
+Pour constituer le corpus de test, nous avons extrait 250 tweets provenant des comptes des humoristes Gad Elmaleh, Florence Foresti et Cyprien (un youtubeur). Nous les avons choisis, car ils sont représentatifs de Twitter c'est-à-dire une grande majorité de tweets sur le quotidien et quelques tweets drôles. Plus que quiconque ils sont plus susceptibles de par leur métier de poster des tweets drôles .
 
+Ce corpus a été réparti équitablement dans trois fichiers xml différents. Chaque fichier a été annoté par deux annotateurs, qui pour chaque tweet, devait indiquer la mention "Drôle" ou "Pas Drôle". Une fois que cela a été réalisé, un accord annotateur a été calculé. Nous avons utilisé le coefficient $\kappa$ de \cite{cohen1960} ou \textit{kappa} de \cite{Carletta}. Cet accord est utilisable dans notre cas, car nous n'avons que deux annotateurs pour chaque fichier. La table \ref{anno} montre les résultats que nous avons obtenus :
+
+% mettre la formule du kappa et expliquer chaque terme 
+\begin{table}[!h]
+\centering
+	\begin{tabular}{lr}
+	\toprule
+	 Document & $\kappa$ \\
+	\midrule
+	  Fichier 1 & 0.978 \\
+	  Fichier 2 &  0.967\\
+	  Fichier 3 & 0.974  \\
+	\bottomrule
+	\end{tabular}
+\caption{Résultat accords inter-annotateurs}
+\label{anno}
+\end{table}
+
+Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Mais il ne faut pas oublier que l'humour reste complètement subjectif. Et que notre résultat montre seulement que les annotateurs ont le même humour.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Phase d'évaluation}
+\label{eval}
+\subsection{La méthode suivi}
+Nous avons commencé par créer les corpus d'entraînement et de test. Nous avons pris le parti de créer deux corpus d'entraînement : le premier est équilibré suivant les deux classes recherchées tweets « Drôle » et « Pas Drôle » ; le second a une proportion de 2/5, où les tweets « drôle » sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles.
+
+Ensuite, nous avons construit les traits qui se basaient sur le corpus, comme le lexique de mots. Avant de créer le fichier contenant les caractéristiques de chaque tweet du corpus d'entraînement.
+
+A l'aide de Weka, nous avons entraîné des modèles grâce aux méthodes de classifieurs cité à la section\ref{methode}. Le but de notre démarche est de trouver des tweets « drôle » à coup sur et non de trouver des tweets « pas drôle » comme étant « drôle ». C'est pour cela que sur certaines méthodes nous avons ajouté une matrice de coût. Cette matrice de coût permet de sanctionner lourdement les erreurs de classification d'un tweet « pas drôle » en un tweet « drôle ». Nous avons testé la classification avec deux valeurs de matrice : la première avec un poids de 10 à chaque erreur et la seconde avec un poids de 100. Le détail des résultats avec cette matrice est décrite à la section\ref{res}.
+
+Et pour finir, nous avons intégré directement la phase de test sur le corpus de test que nous avions préalablement annoté à la main.
 
 \subsection{Mesures d'évaluation}
 
 \subsection{Les résultats}
+\label{res}
 faire un joli tableau, comparer à une baseline ( mais laquelle ? par exemple  1 smiley = 1 tweet drole mais il faut justifier cette baseline ) 
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion et discussion}
 
 %
