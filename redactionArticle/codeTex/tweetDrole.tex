@@ -62,7 +62,7 @@ De nos jours, il n’y a plus de distinction nette entre la vie réelle et virtu
 
 Par son format limité à des publications de 140 caractères (appelé Tweet), Twitter demande aux utilisateurs de faire passer leurs émotions, leurs sentiments et leurs découvertes en étant le plus concis possible. C’est un fait, Twitter est une véritable mine d’informations grâce à la multitude de messages qui s'y trouvent, mais également à tout ce qui gravite autour. Car un tweet peut être retweeté(reposté) par d'autres utilisateurs, contenir des hashtags définissant parfois le thème dominant.  Nous avons choisit de nous intéresser particulièrement aux tweets humoristiques.
 
-Notre objectif est de développer un outil capable de détecter automatiquement si un tweet est drôle ou non. Voici un tweet que l’on souhaiterai classer : « Il court, il court le furet \#Contrepeterie».  De toute évidence, celui-ci est drôle car comme le hashtag le mentionne c’est une contrepérie. 
+Notre objectif est de développer un outil capable de détecter automatiquement si un tweet est drôle ou non. Voici un tweet que l’on souhaiterai classer : " Il court, il court le furet \#Contrepeterie".  De toute évidence, celui-ci est drôle car comme le hashtag le mentionne c’est une contrepérie. 
 
 Des approches similaires ont déjà été réalisées dans le domaine anglophone comme \cite{Raz12, Barbosa2010}, elles seront détaillées dans la section suivante \ref{art}. La section \ref{methClass} sera consacrée à la définition de qu'est un tweet avec tous les traits qui le caractérisent avec les méthodes que nous avons utilisés pour réaliser la classification des tweets dans Weka avec les traits que nous avons sélectionnés. La section \ref{corpus} décrira le corpus d'entraînement qui a servi à construire le modèle ainsi que celui de test avec une présentation de l'accord inter-annotateurs utilisé. La section \ref{eval}, expliquera en détails la démarche que nous avons suivi avec les résultats obtenus .
 
@@ -81,7 +81,7 @@ Les idées d’exploitations de tweet ne manquent pas du coté anglophone. Celui
 \item Style : présence de smiley, ponctuation particulière, hashtag.
 \end{itemize}
 Cette approche est fortement intéressante. Malheureusement, une partie des caractéristiques nécessite d’avoir énormément de ressources de références. En français, il est difficile de trouver un lexique pour les mots vulgaires, du domaine gay, les entités nommées, les homophones, etc. 
-L’évaluation de cette méthode a été réalisé en utilisant le site \url{ http://www.funny-tweets.com} pour collecter un ensemble de tweets « drôles » ce qui a permi d’éviter un tri fastidieux à la main pour classer les tweets en drôle ou non. Depuis, ce site ne fonctionne plus. Nous avons donc cherché une alternative pour la collecte de tweets drôles francophones.
+L’évaluation de cette méthode a été réalisé en utilisant le site \url{ http://www.funny-tweets.com} pour collecter un ensemble de tweets " drôles " ce qui a permi d’éviter un tri fastidieux à la main pour classer les tweets en drôle ou non. Depuis, ce site ne fonctionne plus. Nous avons donc cherché une alternative pour la collecte de tweets drôles francophones.
 
 L’article de \cite{Barbosa2010} sur la détection automatique de sentiment émis dans les tweets, montre qu’il y a beaucoup de travaux réalisés dans ce sens que se soit à travers des articles de recherche ou bien des sites proposant de la détection de sentiments en temps réels de tweets.  Sa méthode repose sur trois caractéristiques principalement : le POS tagging, la polarité et la syntaxe spécifique du tweet comme les liens, la ponctuations, les émoticônes, ainsi que la casse des mots. 
 
@@ -135,7 +135,7 @@ Pour les méthodes de classification que nous avons utilisées dans Weka, nous a
 \section{Le corpus}
 \label{corpus}
 \subsection{Corpus d'entrainement}
-Grâce à l'application twitter4j, un corpus de plus de 10 000 tweets a été réalisé. Ce corpus a été constitué à partir de tweets drôles et non drôles comme le montre le tableau suivant: 
+Grâce à l'application twitter4j, deux corpus un de 10 000 tweets et un autres de 15 000 ont été réalisé. Les deux corpus ont été constitué à partir de tweets drôles et non drôles. Le tableau suivant montre les statistiques du corpus équilibré: 
 
 \begin{table}[!h]
 \centering
@@ -161,9 +161,9 @@ Grâce à l'application twitter4j, un corpus de plus de 10 000 tweets a été r�
 
 Pour extraire des tweets, il est important de commencer par choisir des comptes tweeter. Ces comptes doivent contenir soit uniquement (ou grande partie puisqu'il est difficile d'être sur) des tweets "drôles" ou des tweets "pas drôles".
 
-Pour les comptes supposés "drôles", nous avons effectué une sélection de 35 comptes. Nous nous sommes basés essentiellement sur le nom de l'utilisateur contenant des mots clés comme « humour » et « blague ». Voici des exemples de comptes que l'on a pu sélectionner « @100\_blagues, @BlaguesCarambar , @BlagueJour», il est facile de supposer que les tweets seront tous à caractères humoristiques et surement drôles. D'autres comptes ont été choisis par rapport à leur notoriété. Ils sont connus pour rassembler des tweets « drôles » par leur ironie ou montrant l'autodérision de leur auteur comme sur @viedemerde.
+Pour les comptes supposés "drôles", nous avons effectué une sélection de 35 comptes. Nous nous sommes basés essentiellement sur le nom de l'utilisateur contenant des mots clés comme " humour " et " blague ". Voici des exemples de comptes que l'on a pu sélectionner " @100\_blagues, @BlaguesCarambar , @BlagueJour", il est facile de supposer que les tweets seront tous à caractères humoristiques et surement drôles. D'autres comptes ont été choisis par rapport à leur notoriété. Ils sont connus pour rassembler des tweets " drôles " par leur ironie ou montrant l'autodérision de leur auteur comme sur @viedemerde.
 
-Pour les comptes répertoriant les tweets dits "pas drôles", nous en avons choisi 28. Nous avons supposé que tous les comptes politiques comme « @elysee », journalistiques comme « @lemondefr,@LesEchos » ne contenaient pas de blagues, car ils sont supposés donner des informations sérieuses. Mais pour diversifier les domaines évoqués dans les tweets, nous avons ajouté des comptes commerciaux comme @m6, @nantesfr ou @conforama.
+Pour les comptes répertoriant les tweets dits "pas drôles", nous en avons choisi 28. Nous avons supposé que tous les comptes politiques comme " @elysee ", journalistiques comme " @lemondefr,@LesEchos " ne contenaient pas de blagues, car ils sont supposés donner des informations sérieuses. Mais pour diversifier les domaines évoqués dans les tweets, nous avons ajouté des comptes commerciaux comme @m6, @nantesfr ou @conforama.
 
 Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer si un tweet est drôle ou non mais pas seulement. Il a été utilisé pour créer un lexique de mot caractéristique des tweets. Pour cela, tous les mots ont été extraits puis racinisés. A cette liste, les mots creux de langue française, soit une liste de 460 mots, ont été retirés. Chaque mot restant constitue une caractéristique, un trait.
 
@@ -173,14 +173,13 @@ Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer 
 \centering
 	\begin{tabular}{lrr}
 	\toprule
-	& Corpus d'entraînement & Corpus de test \\
+	& Equilibré & Déséquilibré \\
 	\midrule
-	 Nbre de mot départ & ? & ? \\
-	 Après nettoyage & ? & ? \\
-	 Après racinisation & ? & ? \\
+	 Après nettoyage & 14574 & 18973 \\
+	 Après racinisation & 10168 & 12956 \\
 	\bottomrule
 	\end{tabular}
-\caption{Constitutions des corpus}
+\caption{Constitutions des corpus d'entraînements}
 \end{table}
 
 \subsection{Corpus de test} 
@@ -206,17 +205,18 @@ Ce corpus a été réparti équitablement dans trois fichiers xml différents. C
 
 Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Mais il ne faut pas oublier que l'humour reste complètement subjectif. Et que notre résultat montre seulement que les annotateurs ont le même humour.
 
-
+\subsection{Notre baseline}
+Nous avons créé un dernier corpus pour représenter notre baseline. Notre réflexion a été la suivante : si un tweet comporte un smiley, il est classé comme "drôle" et dans le cas contraire il sera classé comme "Pas drôle".
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Phase d'évaluation}
 \label{eval}
 \subsection{La méthode suivi}
-Nous avons commencé par créer les corpus d'entraînement et de test. Nous avons pris le parti de créer deux corpus d'entraînement : le premier est équilibré suivant les deux classes recherchées tweets « Drôle » et « Pas Drôle » ; le second a une proportion de 2/5, où les tweets « drôle » sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles.
+Nous avons commencé par créer les corpus d'entraînement et de test. Nous avons pris le parti de créer deux corpus d'entraînement : le premier est équilibré suivant les deux classes recherchées tweets "Drôle" et "Pas Drôle" ; le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles.
 
 Ensuite, nous avons construit les traits qui se basaient sur le corpus, comme le lexique de mots. Avant de créer le fichier contenant les caractéristiques de chaque tweet du corpus d'entraînement.
 
-A l'aide de Weka, nous avons entraîné des modèles grâce aux méthodes de classifieurs cité à la section\ref{methode}. Le but de notre démarche est de trouver des tweets « drôle » à coup sur et non de trouver des tweets « pas drôle » comme étant « drôle ». C'est pour cela que sur certaines méthodes nous avons ajouté une matrice de coût. Cette matrice de coût permet de sanctionner lourdement les erreurs de classification d'un tweet « pas drôle » en un tweet « drôle ». Nous avons testé la classification avec deux valeurs de matrice : la première avec un poids de 10 à chaque erreur et la seconde avec un poids de 100. Le détail des résultats avec cette matrice est décrite à la section\ref{res}.
+A l'aide de Weka, nous avons entraîné des modèles grâce aux méthodes de classifieurs cité à la section\ref{methode}. Le but de notre démarche est de trouver des tweets " drôle " à coup sur et non de trouver des tweets "pas drôle" comme étant "drôle". C'est pour cela que sur certaines méthodes nous avons ajouté une matrice de coût. Cette matrice de coût permet de sanctionner lourdement les erreurs de classification d'un tweet "pas drôle" en un tweet "drôle". Nous avons testé la classification avec deux valeurs de matrice : la première avec un poids de 10 à chaque erreur et la seconde avec un poids de 100. Le détail des résultats avec cette matrice est décrite à la section\ref{res}.
 
 Et pour finir, nous avons intégré directement la phase de test sur le corpus de test que nous avions préalablement annoté à la main.
 
