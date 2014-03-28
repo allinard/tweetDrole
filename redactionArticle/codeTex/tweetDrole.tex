@@ -125,8 +125,7 @@ Lexique de mots : il a été construit à partir des tweets du corpus où chaque
 Pour les méthodes de classification que nous avons utilisées dans Weka, nous avons pris le parti de garder certains des paramètres par défaut. \\
 \textbf{Naivesbayes}. C'est le modèle probabiliste le plus utilisé. Il met en avant l'indépendance entre chaque caractèéristisques. Il utilise une hypothèse de distribution Gaussienne pour calculer la probabilité pour chaque caractéristique.\\
 \textbf{J48} C'est une méthode d'apprentissage par arbre de décision. Un arbre va être construit de façon récursif en séparant les données suivant des tests sur les features définis.  \\
-\textbf{ZeroR} Assigne simplement chaque valeur à la classe la plus commune (en examinant le corpus d'entrainement). Cela signifie que si les données sont a 55\% de classe A, 10\% de classe B, 5\% de classe C etc... alors ZeroR trouvera 55\% A. C'est le classifieur le plus "basique". C'est de fait la méthode nous donnant les plus faibles résultats obtenables.\\
-\textbf{MultilayerPerceptron} Le Perceptron multicouche est un classifieur linéaire organisé en plusieurs couches au sein desquelles une information circule de la couche d'entrée vers la couche de sortie uniquement ; chaque couche est constituée d'un nombre variable de neurones, les neurones de la couche de sortie correspondant toujours aux sorties du système.\\
+%\textbf{MultilayerPerceptron} Le Perceptron multicouche est un classifieur linéaire organisé en plusieurs couches au sein desquelles une information circule de la couche d'entrée vers la couche de sortie uniquement ; chaque couche est constituée d'un nombre variable de neurones, les neurones de la couche de sortie correspondant toujours aux sorties du système.\\
 \textbf{DecisionStump} Consiste en un arbre de décision à une seul niveau. C'est un arbre avec une racine immédiatement connectés à ses feuilles. En outre, donne une prédiction sur une valeur d'un seul trait.
 
 
@@ -135,13 +134,15 @@ Pour les méthodes de classification que nous avons utilisées dans Weka, nous a
 \section{Le corpus}
 \label{corpus}
 \subsection{Corpus d'entrainement}
-Grâce à l'application twitter4j, deux corpus un de 10 000 tweets et un autres de 15 000 ont été réalisé. Les deux corpus ont été constitué à partir de tweets drôles et non drôles. Le tableau suivant montre les statistiques du corpus équilibré: 
+
+% Nous avons pris le parti de créer deux corpus d'entraînement : le premier est équilibré suivant les deux classes recherchées tweets "Drôle" et "Pas Drôle" ; le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles.
+Grâce à l'application twitter4j, deux corpus un de 10 000 tweets et un autres de 15 000 ont été réalisé. Les deux corpus ont été constitué à partir de tweets drôle ou non:  le premier est équilibré suivant les deux classes recherchées tweets "Drôle" et "Pas Drôle"le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles. Le tableau suivant montre les statistiques des deux corpus: 
 
 \begin{table}[!h]
 \centering
-	\begin{tabular}{lrr}
+	\begin{tabular}{lrrrr}
 	\toprule
-	& Tweets Drôles & Tweets Pas Drôles \\
+	& Tweets Drôl & Tweets Pas Drôles \\
 	\midrule
 	 ReTweets & 166 & 1019 \\
 	
@@ -155,7 +156,7 @@ Grâce à l'application twitter4j, deux corpus un de 10 000 tweets et un autres 
 	Total & 4817 & 5282 \\
 	\bottomrule
 	\end{tabular}
-\caption{Composition du corpus}
+\caption{Composition des corpus d'entraînements}
 \end{table}
 
 
@@ -185,7 +186,7 @@ Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer 
 \subsection{Corpus de test} 
 Pour constituer le corpus de test, nous avons extrait 250 tweets provenant des comptes des humoristes Gad Elmaleh, Florence Foresti et Cyprien (un youtubeur). Nous les avons choisis, car ils sont représentatifs de Twitter c'est-à-dire une grande majorité de tweets sur le quotidien et quelques tweets drôles. Plus que quiconque ils sont plus susceptibles de par leur métier de poster des tweets drôles .
 
-Ce corpus a été réparti équitablement dans trois fichiers xml différents. Chaque fichier a été annoté par deux annotateurs, qui pour chaque tweet, devait indiquer la mention "Drôle" ou "Pas Drôle". Une fois que cela a été réalisé, un accord annotateur a été calculé. Nous avons utilisé le coefficient $\kappa$ de \cite{cohen1960} ou \textit{kappa} de \cite{Carletta}. Cet accord est utilisable dans notre cas, car nous n'avons que deux annotateurs pour chaque fichier. La table \ref{anno} montre les résultats que nous avons obtenus :
+L'ensemble de ces tweets ont été annoté par 3 annotateurs. Chaque tweet a été annoté par deux annotateurs particulièrement, qui devaient indiquer la mention "Drôle" ou "Pas Drôle". Une fois que cela a été réalisé, un accord annotateur a été calculé. Nous avons utilisé le coefficient $\kappa$ de \cite{cohen1960}. Cet accord est utilisable dans notre cas, car nous n'avons que deux annotateurs pour chaque fichier. Et il nous permet de vérifier que le choix des classes n'est pas du au hazard. La table \ref{anno} montre les résultats que nous avons obtenus :
 
 % mettre la formule du kappa et expliquer chaque terme 
 \begin{table}[!h]
@@ -203,22 +204,25 @@ Ce corpus a été réparti équitablement dans trois fichiers xml différents. C
 \label{anno}
 \end{table}
 
-Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Mais il ne faut pas oublier que l'humour reste complètement subjectif. Et que notre résultat montre seulement que les annotateurs ont le même humour.
+%Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Mais il ne faut pas oublier que l'humour reste complètement subjectif. Et que notre résultat montre seulement que les annotateurs ont le même humour.
+Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Cela s'explique simplement. En effet, le calcul se base sur l'ensemble des tweets annotés or sur les 250 tweets annotés seulement moins d'une vingtaine ont été annotés comme "drôle" par au moins un annotateur. Les tweets dit "drôle" sont docn noyé dans la masse. Il est donc important de re-centrer l'accord inter-annotateur sur uniquement les tweets annotés au moins une fois comme "drôle". 
 
-\subsection{Notre baseline}
-Nous avons créé un dernier corpus pour représenter notre baseline. Notre réflexion a été la suivante : si un tweet comporte un smiley, il est classé comme "drôle" et dans le cas contraire il sera classé comme "Pas drôle".
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Phase d'évaluation}
 \label{eval}
-\subsection{La méthode suivi}
-Nous avons commencé par créer les corpus d'entraînement et de test. Nous avons pris le parti de créer deux corpus d'entraînement : le premier est équilibré suivant les deux classes recherchées tweets "Drôle" et "Pas Drôle" ; le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles.
+\subsection{Méthodologie}
+Nous avons commencé par créer les corpus d'entraînement, de test et la baseline.
 
 Ensuite, nous avons construit les traits qui se basaient sur le corpus, comme le lexique de mots. Avant de créer le fichier contenant les caractéristiques de chaque tweet du corpus d'entraînement.
 
 A l'aide de Weka, nous avons entraîné des modèles grâce aux méthodes de classifieurs cité à la section\ref{methode}. Le but de notre démarche est de trouver des tweets " drôle " à coup sur et non de trouver des tweets "pas drôle" comme étant "drôle". C'est pour cela que sur certaines méthodes nous avons ajouté une matrice de coût. Cette matrice de coût permet de sanctionner lourdement les erreurs de classification d'un tweet "pas drôle" en un tweet "drôle". Nous avons testé la classification avec deux valeurs de matrice : la première avec un poids de 10 à chaque erreur et la seconde avec un poids de 100. Le détail des résultats avec cette matrice est décrite à la section\ref{res}.
 
 Et pour finir, nous avons intégré directement la phase de test sur le corpus de test que nous avions préalablement annoté à la main.
+
+\subsection{Notre baseline}
+Nous avons créé un dernier corpus pour représenter notre baseline. Notre réflexion a été la suivante : si un tweet comporte un smiley, il est classé comme "drôle" et dans le cas contraire il sera classé comme "Pas drôle". Nous devons insister sur le fait que nous voulons un système très précis c'est à dire avec une forte précision. Le rappel est peu intéressant. En effet, nous voulons être sur de ne pas classer un tweet "Pas Drôle" comme étant "Drôle" et plutôt que de classer un tweet comme "Pas drôle" alors qu'il était "Drôle", ce qui est moins grave.
+
 
 \subsection{Mesures d'évaluation}
 
