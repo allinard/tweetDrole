@@ -142,18 +142,21 @@ Grâce à l'application twitter4j, deux corpus un de 10 000 tweets et un autres 
 \centering
 	\begin{tabular}{lrrrr}
 	\toprule
-	& Tweets Drôl & Tweets Pas Drôles \\
+	& \multicolumn{2}{c}{Equilibré}  & \multicolumn{2}{c}{Deséquilibré}\\
+	\cmidrule(r){2-3} \cmidrule(r){4-5}
+
+	& Tweets Drôle & Tweets Pas Drôles &  Tweets Drôle & Tweets Pas Drôles \\
 	\midrule
-	 ReTweets & 166 & 1019 \\
+	 ReTweets & 166 & 1019 &  & \\
 	
-	 ReTweetés & 2817 & 4009 \\
+	 ReTweetés & 2817 & 4009 & & \\
 	
-	Non ReTweetés & 2000 & 1273 \\
+	Non ReTweetés & 2000 & 1273 & &\\
 	
-	Contrepètries & 200 & / \\
-	Autodérision & 200 & / \\
+	Contrepètries & 200 & / & & \\
+	Autodérision & 200 & / & & \\
 	 \midrule
-	Total & 4817 & 5282 \\
+	Total & 4817 & 5282 & &  \\
 	\bottomrule
 	\end{tabular}
 \caption{Composition des corpus d'entraînements}
@@ -234,6 +237,10 @@ faire un joli tableau, comparer à une baseline ( mais laquelle ? par exemple  1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion et discussion}
+
+De notre expérience, nous en déduisons ceci : pour que les traits qui sont des mots soient exploitables, il faudrait y associer le contexte dans lequel il est sorti. Par exemple, dans le corpus de test, nous avons le tweet suivant "Ceux qui vous disent "j'ai dormi comme un bébé"... n'ont jamais eu de bébé:)" est selon nous "drôle". Le souci est que le mot "bébé" a la même période faisait les gros titre des journaux pour des faits graves. Sauf que sans avoir le contexte, le tweet cité sera classé comme "Pas Drôle" à cause du choix du corpus d'entrainement. L'étude du contexte de chaque tweet pourrait également aider à la recherche de passage ironique. 
+[Même mettre un feature numérique plutôt que booléen pour les mots ne garantira pas d'éviter l'ambiguité]
+
 
 %
 %\subsection{Titre de la première sous-partie}
