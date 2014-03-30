@@ -41,17 +41,17 @@
 
 
 \resume{
-Ici, un résumé en français (max. 150 mots).
+Nous présentons un outil, HTD4F (Humoristic Tweet Detection for French) qui prend en entrée une liste de tweets bruts issus de Tweeter (sans annotation linguistique) et qui fournit en sortie les tweets détectés comme humoristiques. Cet outil a donc comme fonctionnalité de détecter l'humour dans un tweet. HTD4F donne un taux de précision de 14,5%. Nous présentons l'approche adoptée, la constitution de corpus, et les méthodes de classification utilisées pour la détection de l'humour dans de courts textes bruités en français.
 }
 \\
 
 \abstract{
-Here an abstract in English (max. 150 words).
+We present a tool, HTD4F (Humoristic Tweet Detection for French) wich takes as input a list of raw tweets from Tweeter, and wich provides as output detected tweets as humoristical. This tool aims at detecting humor in a tweet. The precision rate for HTD4F is 14,5%. Our approach is presented, together with corpus constitution, and classification methods used for detecting humor in short noisy texts written in french.
 }
 \\
 
-\motsClefs{Ici une liste de mots-clés en français}
-{Here a list of keywords in English}
+\motsClefs{Twitter, Humour, Détection de tweets humoristiques, Weka, Classification}
+{Twitter, Humor, Humoristic Tweet Detection, Weka, Classification}
 
 
 %%================================================================
@@ -60,11 +60,11 @@ Here an abstract in English (max. 150 words).
 
 De nos jours, il n’y a plus de distinction nette entre la vie réelle et virtuelle. Il existe, chez les internautes, un besoin permanant de tout partager. Leurs succès, leurs échecs, leurs tracas, voir même leurs repas du midi prennent vie sur la toile, et ce sans aucune limite. Les outils les plus propices à cette déferlante d’informations sont les réseaux sociaux. Cet article s'intéresse à Twitter qui est rapidement devenu leader dans ce domaine avec plus de 500 millions d’utilisateurs.
 
-Par son format limité à des publications de 140 caractères (appelé Tweet), Twitter demande aux utilisateurs de faire passer leurs émotions, leurs sentiments et leurs découvertes en étant le plus concis possible. C’est un fait, Twitter est une véritable mine d’informations grâce à la multitude de messages qui s'y trouvent, mais également à tout ce qui gravite autour. Car un tweet peut être retweeté(reposté) par d'autres utilisateurs, contenir des hashtags définissant parfois le thème dominant.  Nous avons choisit de nous intéresser particulièrement aux tweets humoristiques.
+Par son format limité à des publications de 140 caractères (appelé Tweet), Twitter demande aux utilisateurs de faire passer leurs émotions, leurs sentiments et leurs découvertes en étant le plus concis possible. C’est un fait, Twitter est une véritable mine d’informations grâce à la multitude de messages qui s'y trouvent, mais également à tout ce qui gravite autour. Car un tweet peut être retweeté(reposté) par d'autres utilisateurs, contenir des hashtags définissant parfois le thème dominant.  Nous avons choisi de nous intéresser plus particulièrement aux tweets humoristiques.
 
-Notre objectif est de développer un outil capable de détecter automatiquement si un tweet est drôle ou non. Voici un tweet que l’on souhaiterai classer : " Il court, il court le furet \#Contrepeterie".  De toute évidence, celui-ci est drôle car comme le hashtag le mentionne c’est une contrepérie. 
+Notre objectif est de développer un outil capable de détecter automatiquement si un tweet est drôle ou non. Voici un tweet que l’on souhaiterais classer : " Il court, il court le furet \#Contrepeterie".  De toute évidence, celui-ci est drôle car comme le hashtag le mentionne, il s'agit d'une contrepètrie. 
 
-Des approches similaires ont déjà été réalisées dans le domaine anglophone comme \cite{Raz12, Barbosa2010}, elles seront détaillées dans la section suivante \ref{art}. La section \ref{methClass} sera consacrée à la définition de qu'est un tweet avec tous les traits qui le caractérisent avec les méthodes que nous avons utilisés pour réaliser la classification des tweets dans Weka avec les traits que nous avons sélectionnés. La section \ref{corpus} décrira le corpus d'entraînement qui a servi à construire le modèle ainsi que celui de test avec une présentation de l'accord inter-annotateurs utilisé. La section \ref{eval}, expliquera en détails la démarche que nous avons suivi avec les résultats obtenus .
+Des approches similaires ont déjà été réalisées dans le domaine anglophone comme \cite{Raz12, Barbosa2010}. Ces approches seront détaillées dans la section \ref{art}. La section \ref{methClass} sera consacrée à la définition de ce qu'est un tweet avec tous les traits qui le caractérisent, ainsi que les méthodes que nous avons utilisées pour réaliser la classification des tweets grâce à l'outil Weka, et les traits que nous avons sélectionnés. La section \ref{corpus} décrira le corpus d'entraînement qui a servi à construire le modèle ainsi que celui de test avec une présentation de l'accord inter-annotateurs utilisé. La section \ref{eval} expliquera en détail la démarche que nous avons suivie avec les résultats obtenus.
 
 
 
@@ -83,7 +83,7 @@ Les idées d’exploitations de tweet ne manquent pas du coté anglophone. Celui
 Cette approche est fortement intéressante. Malheureusement, une partie des caractéristiques nécessite d’avoir énormément de ressources de références. En français, il est difficile de trouver un lexique pour les mots vulgaires, du domaine gay, les entités nommées, les homophones, etc. 
 L’évaluation de cette méthode a été réalisé en utilisant le site \url{ http://www.funny-tweets.com} pour collecter un ensemble de tweets " drôles " ce qui a permi d’éviter un tri fastidieux à la main pour classer les tweets en drôle ou non. Depuis, ce site ne fonctionne plus. Nous avons donc cherché une alternative pour la collecte de tweets drôles francophones.
 
-L’article de \cite{Barbosa2010} sur la détection automatique de sentiment émis dans les tweets, montre qu’il y a beaucoup de travaux réalisés dans ce sens que se soit à travers des articles de recherche ou bien des sites proposant de la détection de sentiments en temps réels de tweets.  Sa méthode repose sur trois caractéristiques principalement : le POS tagging, la polarité et la syntaxe spécifique du tweet comme les liens, la ponctuations, les émoticônes, ainsi que la casse des mots. 
+L’article de \cite{Barbosa2010} sur la détection automatique de sentiment émis dans les tweets, montre qu’il y a beaucoup de travaux réalisés dans ce sens que se soit à travers des articles de recherche ou bien des sites proposant de la détection de sentiments en temps réels de tweets.  Sa méthode repose sur trois caractéristiques principalement : le POS tagging, la polarité et la syntaxe spécifique du tweet comme les liens, la ponctuation, les émoticônes, ainsi que la casse des mots. 
 
 Une caractéristique commune aux deux articles est l’analyse du style qui n’est pas dépendante des bases de connaissances de la langue et donc exploitable dans notre étude.
 
@@ -94,10 +94,10 @@ Une caractéristique commune aux deux articles est l’analyse du style qui n’
 Comme cela a été mentionné plus tôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@"; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag "\#ironie" est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple " http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploités pour créer le modèle d'apprentissage comme cela est détaillé à la section suivante \ref{features}.
 
 
-\subsection{Les features}
+\subsection{Les traits}
 \label{features}
 La tâche de classification consiste à séparer en deux classes distinctes les tweets : une classe "Drôle" et "Pas Drôle". Nous avons testé plusieurs algorithmes qui seront détaillés dans la section \ref{methode}
-Une méthode d'apprentissage non-supervisé est utilisé prenant en entrée un ensemble de tweets. Ce dernier va fournir différentes caractéristiques pour le classifieur multi-classe. Les caractéristiques étudiées sont de type lexicales, stylistiques et contextuelles. 
+Une méthode d'apprentissage non-supervisé est utilisée prenant en entrée un ensemble de tweets. Ce dernier va fournir différentes caractéristiques pour le classifieur multi-classe. Les caractéristiques étudiées sont de type lexicales, stylistiques et contextuelles. 
 
 \textbf{Caractéristique lexicale}\\
 Lexique de mots : il a été construit à partir des tweets du corpus où chaque mot a été racinisé et auquel on a enlevé les mots creux et nettoyé le surplus comme les liens externes.
@@ -107,7 +107,7 @@ Lexique de mots : il a été construit à partir des tweets du corpus où chaque
 \begin{itemize}
 \item La présence de hashtag comme "\#humour": nous avons trouvé que les utilisateurs ajoutaient un "\#humour" ou "\#contrepètrie" pour identifier le thème sous-entendu dans leur message;
 \item La présence de smiley content ou pas content au sein du tweet est observé. Par exemple "c'était pas moi ;)", la présence du smiley montre le caractère ironique de la phrase;
-\item Le nombre de point d'exclamation est également pris en compte, par exemple dans une même phrase "je suis calme!" et " je suis calme !!!!!!!!!!" n'ont pas la même signification, et donne de l'intensité au message voir même de l'ironie dans notre cas. 
+\item Le nombre de points d'exclamation est également pris en compte, par exemple dans une même phrase "je suis calme!" et " je suis calme !!!!!!!!!!" n'ont pas la même signification, et donne de l'intensité au message voir même de l'ironie dans notre cas. 
 \end{itemize}
 \vspace{0.5cm}
 
@@ -125,9 +125,9 @@ Lexique de mots : il a été construit à partir des tweets du corpus où chaque
 Pour les méthodes de classification que nous avons utilisées dans Weka, nous avons pris le parti de garder certains des paramètres par défaut. \\
 \textbf{Naivesbayes}. C'est le modèle probabiliste le plus utilisé. Il met en avant l'indépendance entre chaque caractèéristisques. Il utilise une hypothèse de distribution Gaussienne pour calculer la probabilité pour chaque caractéristique.\\
 \textbf{J48} C'est une méthode d'apprentissage par arbre de décision. Un arbre va être construit de façon récursif en séparant les données suivant des tests sur les features définis.  \\
-%\textbf{MultilayerPerceptron} Le Perceptron multicouche est un classifieur linéaire organisé en plusieurs couches au sein desquelles une information circule de la couche d'entrée vers la couche de sortie uniquement ; chaque couche est constituée d'un nombre variable de neurones, les neurones de la couche de sortie correspondant toujours aux sorties du système.\\
+\textbf{MultilayerPerceptron} Le Perceptron multicouche est un classifieur linéaire organisé en plusieurs couches au sein desquelles une information circule de la couche d'entrée vers la couche de sortie uniquement ; chaque couche est constituée d'un nombre variable de neurones, les neurones de la couche de sortie correspondant toujours aux sorties du système.\\
 \textbf{DecisionStump} Consiste en un arbre de décision à une seul niveau. C'est un arbre avec une racine immédiatement connectés à ses feuilles. En outre, donne une prédiction sur une valeur d'un seul trait.
-
+\textbf{RandomForest} L'algorithme des forêts d'arbres décisionnels effectue un apprentissage sur de multiples arbres de décision entraînés sur des sous-ensembles de données légèrement différents.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -136,7 +136,7 @@ Pour les méthodes de classification que nous avons utilisées dans Weka, nous a
 \subsection{Corpus d'entrainement}
 
 % Nous avons pris le parti de créer deux corpus d'entraînement : le premier est équilibré suivant les deux classes recherchées tweets "Drôle" et "Pas Drôle" ; le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles.
-Grâce à l'application twitter4j, deux corpus un de 10 000 tweets et un autres de 15 000 ont été réalisé. Les deux corpus ont été constitué à partir de tweets drôle ou non:  le premier est équilibré suivant les deux classes recherchées tweets "Drôle" et "Pas Drôle"le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles. Le tableau suivant montre les statistiques des deux corpus: 
+Grâce à l'application twitter4j, deux corpus, un de 10 000 tweets et un autre de 15 000 ont été réalisés. Les deux corpus ont été constitués à partir de tweets drôles ou non : le premier est équilibré suivant les deux classes recherchées (tweets "Drôle" et "Pas Drôle") ; le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles. Le tableau suivant montre les statistiques des deux corpus: 
 
 \begin{table}[!h]
 \centering
@@ -165,11 +165,11 @@ Grâce à l'application twitter4j, deux corpus un de 10 000 tweets et un autres 
 
 Pour extraire des tweets, il est important de commencer par choisir des comptes tweeter. Ces comptes doivent contenir soit uniquement (ou grande partie puisqu'il est difficile d'être sur) des tweets "drôles" ou des tweets "pas drôles".
 
-Pour les comptes supposés "drôles", nous avons effectué une sélection de 35 comptes. Nous nous sommes basés essentiellement sur le nom de l'utilisateur contenant des mots clés comme " humour " et " blague ". Voici des exemples de comptes que l'on a pu sélectionner " @100\_blagues, @BlaguesCarambar , @BlagueJour", il est facile de supposer que les tweets seront tous à caractères humoristiques et surement drôles. D'autres comptes ont été choisis par rapport à leur notoriété. Ils sont connus pour rassembler des tweets " drôles " par leur ironie ou montrant l'autodérision de leur auteur comme sur @viedemerde.
+Pour les comptes supposés "drôles", nous avons effectué une sélection de 35 comptes. Nous nous sommes basés essentiellement sur le nom de l'utilisateur contenant des mots clés comme " humour " et " blague ". Voici des exemples de comptes que l'on a pu sélectionner "@100\_blagues, @BlaguesCarambar , @BlagueJour", il est facile de supposer que les tweets seront tous à caractères humoristiques et sûrement drôles. D'autres comptes ont été choisi par rapport à leur notoriété. Ils sont connus pour rassembler des tweets " drôles " par leur ironie ou montrant l'autodérision de leur auteur comme sur @viedemerde.
 
 Pour les comptes répertoriant les tweets dits "pas drôles", nous en avons choisi 28. Nous avons supposé que tous les comptes politiques comme " @elysee ", journalistiques comme " @lemondefr,@LesEchos " ne contenaient pas de blagues, car ils sont supposés donner des informations sérieuses. Mais pour diversifier les domaines évoqués dans les tweets, nous avons ajouté des comptes commerciaux comme @m6, @nantesfr ou @conforama.
 
-Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer si un tweet est drôle ou non mais pas seulement. Il a été utilisé pour créer un lexique de mot caractéristique des tweets. Pour cela, tous les mots ont été extraits puis racinisés. A cette liste, les mots creux de langue française, soit une liste de 460 mots, ont été retirés. Chaque mot restant constitue une caractéristique, un trait.
+Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer si un tweet est drôle ou non mais pas seulement. Il a été utilisé pour créer un lexique de mots caractéristiques des tweets. Pour cela, tous les mots ont été extraits puis racinisés. A cette liste, les mots creux de langue française, soit une liste de 460 mots, ont été retirés. Chaque mot restant constitue une caractéristique, un trait.
 
 
 
@@ -208,7 +208,7 @@ L'ensemble de ces tweets ont été annoté par 3 annotateurs. Chaque tweet a ét
 \end{table}
 
 %Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Mais il ne faut pas oublier que l'humour reste complètement subjectif. Et que notre résultat montre seulement que les annotateurs ont le même humour.
-Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Cela s'explique simplement. En effet, le calcul se base sur l'ensemble des tweets annotés or sur les 250 tweets annotés seulement moins d'une vingtaine ont été annotés comme "drôle" par au moins un annotateur. Les tweets dit "drôle" sont docn noyé dans la masse. Il est donc important de re-centrer l'accord inter-annotateur sur uniquement les tweets annotés au moins une fois comme "drôle". 
+Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Cela s'explique simplement. En effet, le calcul se base sur l'ensemble des tweets annotés or sur les 250 tweets annotés seulement moins d'une vingtaine ont été annotés comme "drôle" par au moins un annotateur. Les tweets dit "drôles" sont donc noyés dans la masse. Il est donc important de re-centrer l'accord inter-annotateur sur uniquement les tweets annotés au moins une fois comme "drôle". 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
