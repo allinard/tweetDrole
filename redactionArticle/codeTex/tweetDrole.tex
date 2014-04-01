@@ -229,6 +229,13 @@ Nous avons créé un dernier corpus pour représenter notre baseline. Notre réf
 
 
 \subsection{Mesures d'évaluation}
+Afin d'évaluer nos méthodes de classification, nous utilisons les mesures de précision et de rappel. Toutefois, ces deux mesures n'ont pas la même importance : la précision dans la détection des tweets humoristiques est primordiale. En effet, nous souhaitons avant tout que notre classification permette la détection de tweets drôles, peu important l'oubli de tweets drôles, mais en maximisant le coût d'erreurs rapportant des tweets non humoristiques dans la liste des résultats. La mesure déterminante dans notre cas est donc la \textbf{précision dans la détection des tweets drôles}.
+
+Afin d'améliorer nos résultats, et la détection des tweets humoristiques, nous nous basons en sus du score de précision, du score de confiance en sortie du classifieur pour un message donné. Le score de confiance est un indice de 0 à 1 indiquant si la classification est fiable (indice tendant vers 1), ou non (indice tendant vers 0). Dans notre cas, nous avons recalculé la précision des tweets classés comme humoristiques en ne prenant en compte les résultats ayant un score de confidence d'au moins 0.8.
+
+Les résultats sont décris ci-dessous.
+
+
 
 \subsection{Les résultats}
 \label{res}
