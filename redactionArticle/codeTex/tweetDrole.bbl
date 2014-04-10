@@ -3,11 +3,34 @@
 \bibitem[\protect\citename{Barbosa \& Feng, }2010]{Barbosa2010}
 {\sc Barbosa L. \& Feng J.} (2010).
 \newblock Robust sentiment detection on twitter from biased and noisy data.
-\newblock p.\ 36--44: Association for Computational Linguistics.
+\newblock In {\em Proceedings of the 23rd International Conference on
+  Computational Linguistics: Posters}, COLING '10, p.\ 36--44, Stroudsburg, PA,
+  USA: Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Cohen, }1960]{cohen1960}
+{\sc Cohen J.} (1960).
+\newblock {A Coefficient of Agreement for Nominal Scales}.
+\newblock {\em Educational and Psychological Measurement}, {\bf 20}(1), 37.
+
+\bibitem[\protect\citename{Kiddon \& Brun, }2011]{Kiddon11}
+{\sc Kiddon C. \& Brun Y.} (2011).
+\newblock That's what she said: Double entendre identification.
+\newblock In {\em ACL (Short Papers)}, p.\ 89--94: The Association for Computer
+  Linguistics.
 
 \bibitem[\protect\citename{Raz, }2012]{Raz12}
 {\sc Raz Y.} (2012).
 \newblock Automatic humor classification on twitter.
-\newblock p.\ 66--70: The Association for Computational Linguistics.
+\newblock In {\em Proceedings of the 2012 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies: Student Research Workshop}, NAACL HLT '12, p.\ 66--70,
+  Stroudsburg, PA, USA: Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Reyes {\em et~al.}, }2010]{ReyesPRS10}
+{\sc Reyes A., Potthast M., Rosso P. \& Stein B.} (2010).
+\newblock Evaluating humour features on web comments.
+\newblock In {\sc N. Calzolari, K. Choukri, B. Maegaard, J. Mariani, J. Odijk,
+  S. Piperidis, M. Rosner \& D. Tapias}, Eds., {\em LREC}: European Language
+  Resources Association.
 
 \end{thebibliography}

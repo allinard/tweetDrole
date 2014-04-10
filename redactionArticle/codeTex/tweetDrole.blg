@@ -1,9 +1,11 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: tweetDrole.aux
 The style file: taln2002.bst
 Database file #1: biblio.bib
-A bad cross reference---entry "Raz12"
-refers to entry "conf/naacl/2012", which doesn't exist
-Warning--I didn't find a database entry for "conf/naacl/2012"
-Warning--empty booktitle{\em in }Barbosa2010
-Warning--empty booktitle{\em in }Raz12
-(There was 1 error message)
+A bad cross reference---entry "ReyesPRS10"
+refers to entry "conf/lrec/2010", which doesn't exist
+A bad cross reference---entry "Kiddon11"
+refers to entry "conf/acl/2011s", which doesn't exist
+Warning--I didn't find a database entry for "MihalceaP07"
+Warning--I didn't find a database entry for "conf/acl/2011s"
+Warning--I didn't find a database entry for "conf/lrec/2010"
+(There were 2 error messages)
