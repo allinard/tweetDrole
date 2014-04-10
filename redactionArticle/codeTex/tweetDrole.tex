@@ -152,14 +152,14 @@ Grâce à l'application twitter4j, deux corpus, un de 10 000 tweets et un autre 
 
 	& Tweets Drôle & Tweets Pas Drôles &  Tweets Drôle & Tweets Pas Drôles \\
 	\midrule
-	 ReTweets & 166 & 1019 &   & \\
+	 ReTweets & 166 & 1019 & 166 & 1048 \\
 	
-	 ReTweetés & 2817 & 4009 & & \\
+	 ReTweetés & 2817 & 4009 & 0 & 0 \\
 	
-	Non ReTweetés & 2000 & 1273 & &\\
+	Non ReTweetés & 2000 & 1273 & 4785 & 10541 \\
 	
-	Contrepètries & 200 & / & & \\
-	Autodérision & 200 & / & & \\
+	Contrepètries & 200 & / & 200 & / \\
+	Autodérision & 200 & / & 200 & / \\
 	 \midrule
 	Total & 4817 & 5282 & 4785 &  10541 \\
 	\bottomrule
@@ -293,10 +293,10 @@ Voici les résultats sur la précision des tweets drôles avec chaque trait util
 	
 	indice de confiance	& sans & 0.7 & 0.8 & 0.9 \\
 	\midrule
-	DecisionStump & 5.5\% & 0 & 0 & 0 \\%0.7 confiance AVEC stem
+	DecisionStump & 5.5\% & 0\% & 0\% & 0\% \\%0.7 confiance AVEC stem
 	J48 & 7.5\% & 7.6\% & 7.6\% & 8.2\% \\ %0.7
 	NaiveBayes & 9.2\% & 10.7\% & 11.1\% & 11.1\% \\ %0.7
-	RandomForest & 8.3\% & 7.14\% & 7.4\% & 0 \\ %0.7
+	RandomForest & 8.3\% & 7.14\% & 7.4\% & 0\% \\ %0.7
 
 	\bottomrule
 	\end{tabular}
@@ -310,9 +310,10 @@ Voici les résultats sur la précision des tweets drôles avec chaque trait util
 	\toprule
 	
 	indice de confiance	& sans & 0.7 & 0.8 & 0.9 \\
-	DecisionStump & 0\% & 0 & 0 & 0 \\%0.7 confiance AVEC stem déséquilibré
+	\midrule
+	DecisionStump & 0\% & 0\% & 0\% & 0\% \\%0.7 confiance AVEC stem déséquilibré
 	J48 & 0\% & 0\% & 0\% & 0\% \\ %0.7
-	NaiveBayes & 0\% & 0\% & \%0 & 0\% \\ %0.7
+	NaiveBayes & 0\% & 0\% & 0\% & 0\% \\ %0.7
 	RandomForest & 100\% & 100\%  & 100\% & 100\% \\ %0.7
 	\bottomrule
 	\end{tabular}
