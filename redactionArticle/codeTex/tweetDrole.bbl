@@ -18,6 +18,12 @@
 \newblock In {\em ACL (Short Papers)}, p.\ 89--94: The Association for Computer
   Linguistics.
 
+\bibitem[\protect\citename{Mihalcea \& Pulman, }2007]{MihalceaP07}
+{\sc Mihalcea R. \& Pulman S.~G.} (2007).
+\newblock Characterizing humour: An exploration of features in humorous texts.
+\newblock In {\sc A.~F. Gelbukh}, Ed., {\em CICLing}, volume 4394 of {\em
+  Lecture Notes in Computer Science}, p.\ 337--347: Springer.
+
 \bibitem[\protect\citename{Raz, }2012]{Raz12}
 {\sc Raz Y.} (2012).
 \newblock Automatic humor classification on twitter.

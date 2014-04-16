@@ -3,9 +3,11 @@ The style file: taln2002.bst
 Database file #1: biblio.bib
 A bad cross reference---entry "ReyesPRS10"
 refers to entry "conf/lrec/2010", which doesn't exist
+A bad cross reference---entry "MihalceaP07"
+refers to entry "conf/cicling/2007", which doesn't exist
 A bad cross reference---entry "Kiddon11"
 refers to entry "conf/acl/2011s", which doesn't exist
-Warning--I didn't find a database entry for "MihalceaP07"
 Warning--I didn't find a database entry for "conf/acl/2011s"
 Warning--I didn't find a database entry for "conf/lrec/2010"
-(There were 2 error messages)
+Warning--I didn't find a database entry for "conf/cicling/2007"
+(There were 3 error messages)

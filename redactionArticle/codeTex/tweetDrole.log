@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.5.3)  10 APR 2014 16:47
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.5.3)  16 APR 2014 18:15
 entering extended mode
 **C:/Users/boulanger/Documents/GitHub/tweetDrole/redactionArticle/codeTex/tweet
 Drole.tex
@@ -312,6 +312,9 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@lastruleclass=\count91
 \@thisrulewidth=\dimen117
 )
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\multirow\multirow.sty"
+\bigstrutjot=\dimen118
+)
 (C:\Users\boulanger\Documents\GitHub\tweetDrole\redactionArticle\codeTex\taln20
 14.sty
 Package `taln2014' <26 janvier 2014>.
@@ -354,16 +357,16 @@ Language: frenchb 2009/03/16 v2.3d French support from the babel system
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.def"
 File: babel.def 2008/07/08 v3.8m Babel common definitions
 \babel@savecnt=\count93
-\U@D=\dimen118
+\U@D=\dimen119
 )
 Package babel Info: Making : an active character on input line 120.
 Package babel Info: Making ; an active character on input line 121.
 Package babel Info: Making ! an active character on input line 122.
 Package babel Info: Making ? an active character on input line 123.
-\FB@Mht=\dimen119
+\FB@Mht=\dimen120
 \std@mcc=\count94
 \dec@mcc=\count95
-\parindentFFN=\dimen120
+\parindentFFN=\dimen121
 
 *************************************
 * Local config file frenchb.cfg used
@@ -371,114 +374,144 @@ Package babel Info: Making ? an active character on input line 123.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\frenchb.cfg")))
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\carlisle\scalefnt.sty")
 (C:\Users\boulanger\Documents\GitHub\tweetDrole\redactionArticle\codeTex\tweetD
-role.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 38.
+role.aux
+
+LaTeX Warning: Label `corpus' multiply defined.
+
+)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 37.
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\t1ptm.fd"
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count96
-\scratchdimen=\dimen121
+\scratchdimen=\dimen122
 \scratchbox=\box26
 \nofMPsegments=\count97
 \nofMParguments=\count98
 \everyMPshowfont=\toks17
 \MPscratchCnt=\count99
-\MPscratchDim=\dimen122
+\MPscratchDim=\dimen123
 \MPnumerator=\count100
 \makeMPintoPDFobject=\count101
 \everyMPtoPDFconversion=\toks18
 )
-LaTeX Info: Redefining \degres on input line 38.
-LaTeX Info: Redefining \dots on input line 38.
-LaTeX Info: Redefining \up on input line 38.
+LaTeX Info: Redefining \degres on input line 37.
+LaTeX Info: Redefining \dots on input line 37.
+LaTeX Info: Redefining \up on input line 37.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 40.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 39.
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--47
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 50--52
+Underfull \hbox (badness 10000) in paragraph at lines 44--46
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 54--55
+Underfull \hbox (badness 10000) in paragraph at lines 49--51
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
+
+ []
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 77.
+(Font)              <7> on input line 69.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 77.
- [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
+(Font)              <5> on input line 69.
+[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 ]
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 85.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 92.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\t1pcr.fd"
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 97.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 106.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 105.
  [2]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 128.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [3]
+Underfull \hbox (badness 10000) in paragraph at lines 151--153
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--155
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 155--156
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 156--157
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 157--158
+
+ []
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[3] [4]
+[4] [5]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[5]
-(C:\Users\boulanger\Documents\GitHub\tweetDrole\redactionArticle\codeTex\tweetD
-role.bbl)
-
-Package natbib Warning: Citation `MihalceaP07' undefined on input line 354.
-
-
-Package natbib Warning: There were undefined citations.
 
 [6]
 (C:\Users\boulanger\Documents\GitHub\tweetDrole\redactionArticle\codeTex\tweetD
-role.aux) ) 
+role.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7])
+[8]
+(C:\Users\boulanger\Documents\GitHub\tweetDrole\redactionArticle\codeTex\tweetD
+role.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2915 strings out of 494045
- 36824 string characters out of 3145958
- 100779 words of memory out of 3000000
- 6173 multiletter control sequences out of 15000+200000
+ 2929 strings out of 494045
+ 37155 string characters out of 3145958
+ 101978 words of memory out of 3000000
+ 6183 multiletter control sequences out of 15000+200000
  36881 words of font info for 38 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 28i,11n,45p,922b,243s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<
-C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:
-/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program 
-Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)
-/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9
-/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type
-1/urw/times/utmri8a.pfb>
-Output written on tweetDrole.pdf (6 pages, 103602 bytes).
+ 28i,11n,45p,1119b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files (x8
+6)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2
+.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/ty
+pe1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/tim
+es/utmri8a.pfb>
+Output written on tweetDrole.pdf (8 pages, 110439 bytes).
 PDF statistics:
- 46 PDF objects out of 1000 (max. 8388607)
+ 54 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
