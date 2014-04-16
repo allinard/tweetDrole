@@ -6,7 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{booktabs}
-
+\usepackage{multirow}
 
 % faire les \usepackage dont vous avez besoin AVANT le \usepackage{taln2014} 
 
@@ -21,9 +21,8 @@
 % Titre complet
 \title{Est-ce que ce Tweet est drôle ? Détection automatique de tweets humoristiques}
 
-\author{Florian Boudin\up{1}\quad Adeline Granet\up{2}\quad Alexis Linard\up{2}\\
-  (1) Laboratoire LINA, Université de Nantes, 2 rue de la Houssinière, BP 92208, 44322 Nantes, France \\ 
-  (2) Université de Nantes, 2 rue de la Houssinière, BP 92208, 44322 Nantes, France\\ 
+\author{Adeline Granet\up{1}\quad Alexis Linard\up{1}\quad Florian Boudin\up{1}\\
+  (1) Université de Nantes, 2 rue de la Houssinière, BP 92208, 44322 Nantes, France\\ 
   florian.boudin@univ-nantes.fr, \{adeline.granet,alexis.linard\}@etu.univ-nantes.fr \\ 
 }
 
@@ -41,12 +40,12 @@
 
 
 \resume{
-Nous présentons un outil, HTD4F (Humoristic Tweet Detection for French) qui prend en entrée une liste de tweets bruts issus de Tweeter (sans annotation linguistique) et qui fournit en sortie les tweets détectés comme humoristiques. Cet outil a donc comme fonctionnalité de détecter l'humour dans un tweet. HTD4F donne un taux de précision de 25\%. Nous présentons l'approche adoptée, la constitution de corpus, et les méthodes de classification utilisées pour la détection de l'humour dans de courts textes bruités en français.
+Nous présentons une expérience de détection de tweets humoristiques qui prend en entrée une liste de tweets bruts issus de Tweeter (sans annotation linguistique) et qui fournit en sortie les tweets détectés comme humoristiques. Notre expérimentation a donc comme caractéristique de détecter l'humour dans un tweet. Nous obtenons un taux de précision de 25\%. Nous présentons l'approche adoptée, la constitution de corpora de tweets en français, et les méthodes de classification utilisées pour la détection de l'humour dans de courts textes bruités en français.
 }
 \\
 
 \abstract{
-We present a tool, HTD4F (Humoristic Tweet Detection for French) wich takes as input a list of raw tweets from Tweeter, and wich provides as output detected tweets as humoristical. This tool aims at detecting humor in a tweet. The precision rate for HTD4F is 25\%. Our approach is presented, together with corpus constitution, and classification methods used for detecting humor in short noisy texts written in french.
+We present an experiment for humoristical tweet detection wich takes as input a list of raw tweets from Tweeter, and wich provides as output detected tweets as humoristical. This experiment aims at detecting humor in a tweet. The precision rate we get is 25\%. Our approach is presented, together with french tweet corpus constitution, and classification methods used for detecting humor in short noisy texts written in french.
 }
 \\
 
@@ -59,55 +58,78 @@ We present a tool, HTD4F (Humoristic Tweet Detection for French) wich takes as i
 \section{Introduction}
 
 
-De nos jours, il n’y a plus de distinction nette entre la vie réelle et virtuelle. Il existe, chez les internautes, un besoin permanant de tout partager. Leurs succès, leurs échecs, leurs tracas, voir même leurs repas du midi prennent vie sur la toile, et ce sans aucune limite. Les outils les plus propices à cette déferlante d’informations sont les réseaux sociaux. Cet article s'intéresse à Twitter qui est rapidement devenu leader dans ce domaine avec plus de 500 millions d’utilisateurs.
+De nos jours, il n’y a plus de distinction entre la vie réelle et virtuelle. Il existe, chez les internautes, un besoin permanent de tout partager. Leurs succès, leurs échecs, leurs tracas, voir même leurs repas du midi prennent vie sur la toile, et ce sans aucune limite. Les outils les plus propices à cette déferlante d’informations sont les réseaux sociaux. Cet article s'intéresse à Twitter qui est rapidement devenu leader dans ce domaine avec plus de 500 millions d’utilisateurs et une moyenne de 58 millions de tweets émis par jour. En France, 7,3 millions d’utilisateurs sont inscrits, ce qui représente une faible part du marché mondial.
 
-Par son format limité à des publications de 140 caractères (appelé Tweet), Twitter demande aux utilisateurs de faire passer leurs émotions, leurs sentiments et leurs découvertes en étant le plus concis possible. C’est un fait, Twitter est une véritable mine d’informations grâce à la multitude de messages qui s'y trouvent, mais également à tout ce qui gravite autour. Car un tweet peut être retweeté(reposté) par d'autres utilisateurs, contenir des hashtags définissant parfois le thème dominant.  Nous avons choisi de nous intéresser plus particulièrement aux tweets humoristiques.
+Par son format limité à des publications de 140 caractères (appelé Tweet), Twitter demande aux utilisateurs de faire passer leurs émotions, leurs sentiments et leurs découvertes en étant le plus concis possible. C’est un fait, Twitter est une véritable mine d’informations grâce à la multitude de messages qui s'y trouvent, mais également à tout ce qui gravite autour. Car un tweet peut être retweeté (reposté) par d'autres utilisateurs, contenir des hashtags définissant parfois le thème dominant. De nombreuses études, qu'elles soient sociologiques, démographiques, ou bien d'opinion, ce sont intéressées aux tweets, et plus particulièrement pour les tweets anglophones. Nous avons choisi de nous intéresser aux tweets humoristiques en français.
 
-Notre objectif est de développer un outil capable de détecter automatiquement si un tweet est drôle ou non. Voici un tweet que l’on souhaiterais classer : " Il court, il court le furet \#Contrepeterie".  De toute évidence, celui-ci est drôle car comme le hashtag le mentionne, il s'agit d'une contrepètrie. 
+La détection de l'humour est importante, et peut servir en premier lieu l'analyse d'opinion. En effet, ce type d'analyse peut facilement être faussé dans le cas de tweets subjectifs, puisque l'analyseur d'opinion est alors incapable de reconnaître le vecteur d'avis contenu dans le texte. Nous sommes donc convaincus qu'une méthode automatique pour la détection de l'humour dans des textes courts et bruités comme les tweets est indispensable dans de nombreux domaines. 
 
-Des approches similaires ont déjà été réalisées dans le domaine anglophone comme \cite{Raz12, Barbosa2010}. Elles seront détaillées dans la section \ref{art}. La section \ref{methClass} sera consacrée à la définition de ce qu'est un tweet avec tous les traits qui le caractérisent, ainsi que les méthodes que nous avons utilisées pour réaliser la classification des tweets grâce à l'outil Weka, et les traits que nous avons sélectionnés. La section \ref{corpus} décrira le corpus d'entraînement qui a servi à construire le modèle ainsi que celui de test avec une présentation de l'accord inter-annotateurs utilisé. La section \ref{eval} expliquera en détail la démarche que nous avons suivie avec les résultats obtenus.
+Notre objectif est de développer un outil capable de détecter automatiquement si un tweet est drôle ou non. Voici un tweet que l’on souhaiterais classer : "Il court, il court le furet \#Contrepeterie".  De toute évidence, celui-ci est drôle car comme le hashtag le mentionne, il s'agit d'une contrepètrie. Cependant, une difficulté majeure apparaît lors de la détection de l'humour : un tweet drôle est extrêmement subjectif, puisque nous ne réagissons pas tous de la même façon face à l'humour. Certaines blagues ne font en effet rire que certains. Par exemple, "Quand je me moque des handicapés on me dit, mets toi à leurs places et quand je me met à leurs places on me mets une amende de 135 euros!" ne ferait certainement pas rire une personne à mobilité réduite. Un autre problème est aussi la longueur restreinte des tweets, c'est à dire 140 caractères. Il s'agit également de textes très bruités, avec la présence de beaucoup d'abréviations de type "SMS" ou langage vulgaire.
 
+Nous proposons donc une méthode supervisée pour la détection de tweets drôles en français. Nous construisons le premier ensemble entraînement/test en français, et nous évaluons la performance de notre méthode. Les résultats montrent qu'il est difficile de prédire l'humour d'un tweet.
+
+Des approches similaires ont déjà été réalisées dans le domaine anglophone comme \cite{Raz12, Barbosa2010}. Cependant, il n'y a aucune étude de ce type publiée pour le français. Les études existantes pour la langue anglaise seront détaillées dans la section \ref{art}.  La section \ref{methClass} sera consacrée à la définition de ce qu'est un tweet avec tous les traits qui le caractérisent, ainsi que les méthodes que nous avons utilisées pour réaliser la classification des tweets grâce à l'outil Weka, et les traits que nous avons sélectionnés. La section \ref{corpus} décrira le corpus d'entraînement qui a servi à construire le modèle ainsi que celui de test avec une présentation de l'accord inter-annotateurs utilisé. La section \ref{eval} expliquera en détail la démarche que nous avons suivie avec les résultats obtenus.
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Etat de l'art}
 \label{art}
-Les idées d’exploitations de tweets ne manquent pas du coté anglophone. Celui qui a largement inspiré la méthode présentée ici est \cite{Raz12}.  Dans cet article, Yishay Raz propose une méthode de classification de tweets humoristiques en anglais selon le type de l’humour. Pour cela, il utilise un algorithme semi-supervisé qui prend en entrée des tweets annotés pour produire des ensembles avec des caractéristiques propres au classifieur.  […]
+Les idées d’exploitations de tweets ne manquent pas du coté anglophone. Celui qui a largement inspiré la méthode présentée ici est \cite{Raz12}.  Dans cet article, Yishay Raz propose une méthode de classification de tweets humoristiques en anglais selon le type de l’humour. Pour cela, il utilise un algorithme semi-supervisé qui prend en entrée des tweets pour produire des ensembles avec les caractéristiques suivantes :
 
 \begin{itemize}
-\item Caractéristiques lexicales : les mots appartiennent à des lexiques particuliers, des entités nommées sont présentes, ou bien une ambiguité se pose;
-\item Caractéristiques morphologiques : analyse du temps des verbes, les mots existent-ils;
-\item Phonologie : les mots sont-ils connus comme homophone;
-\item Style : présence de smiley, ponctuation particulière, hashtag.
-\end{itemize}
-Cette approche est fortement intéressante. Malheureusement, une partie des caractéristiques nécessite d’avoir énormément de ressources de références. En français, il est difficile de trouver un lexique pour les mots vulgaires, du domaine gay, les entités nommées, les homophones, etc. 
-L’évaluation de cette méthode a été réalisé en utilisant le site \url{ http://www.funny-tweets.com} pour collecter un ensemble de tweets " drôles " ce qui a permi d’éviter un tri fastidieux à la main pour classer les tweets en drôle ou non. Depuis, ce site ne fonctionne plus. Nous avons donc cherché une alternative pour la collecte de tweets drôles francophones.
+\item Caractéristiques lexicales : les mots appartiennent à des lexiques particuliers, des entités nommées sont présentes, ou bien une ambiguité se pose ;
+\item Caractéristiques morphologiques : analyse du temps des verbes, si les mots existent;
+\item Phonologie : si les mots sont connus comme homophones;
 
-L’article de \cite{Barbosa2010} sur la détection automatique de sentiment émis dans les tweets, montre qu’il y a beaucoup de travaux réalisés dans ce sens que se soit à travers des articles de recherche ou bien des sites proposant de la détection de sentiments en temps réels de tweets.  Sa méthode repose sur trois caractéristiques principalement : le POS tagging, la polarité et la syntaxe spécifique du tweet comme les liens, la ponctuation, les émoticônes, ainsi que la casse des mots. 
+"Leonard devint Sy!" en référence à l'acteur Omar Sy.
+\item Style : présence de smiley, ponctuation particulière, hashtag.
+
+"On dit que le chien est le meilleur ami de l'homme mais les chiennes c'est pas mal non plus :)" contient un smiley, ce qui est une indication de l'humour. "Quelle est l'expression préférée d'un vampire ? Bon sang !!!!" contient cette fois plusieurs points d'exclamation.
+\end{itemize}
+
+Cette approche est fortement intéressante. Malheureusement, une partie des caractéristiques nécessite d’avoir énormément de ressources, comme des lexiques de mots drôles, d'homophones, de mots à caractères sexuels, stigmatisants, vulgaires, etc. Or, en français, il est difficile de trouver ce type de lexiques.
+L’évaluation de cette méthode a été réalisée en utilisant le site \url{ http://www.funny-tweets.com} pour collecter un ensemble de tweets "drôles" ce qui a permis d’éviter un tri fastidieux à la main pour classer les tweets en drôle ou non.
+
+L’article de \cite{Barbosa2010}, sur la détection automatique de sentiments émis dans les tweets, montre qu’il y a beaucoup de travaux réalisés dans ce sens que se soit au travers d'articles de recherche ou bien de sites proposant de la détection de sentiments en temps réel de tweets. Leur méthode repose sur trois caractéristiques principales : le POS tagging, la polarité et la syntaxe spécifique du tweet comme les liens, la ponctuation, les émoticônes, ainsi que la casse des mots. 
 
 Une caractéristique commune aux deux articles est l’analyse du style qui n’est pas dépendante des bases de connaissances de la langue et donc exploitable dans notre étude. 
 
-Par la suite, nous avons continué nos recherches dans le domaine de la détection de phrase humouristique et les articles de \cite{ReyesPRS10}  et \cite{MihalceaP07}, nous ont interpellé. En effet dans le premier, on s'attache à évaluer le modèle d'humour dans les commentaires de blogs et sites Web. Pour ce modèle, les auteurs de l'article ont ajouté des termes qui permettent d'exprimer des sentiments différents. Ces termes se regroupent selon 5 catégories : les termes à caractère sexuel, à polarité négative, sémantiquement ambigu, qui reflètent les sentiments et pour finir les émoticones et termes d'argot internet. Ils ont évalué leur méthode sur un corpus de plus d'un millions de commentaires (soit à titre comparatif cent fois plus que nous). Au moment de la phase de test, ils obtiennent des résultats relativement corrects à hauteur de 60\% en moyenne.
-\\Dans le second article, les auteurs ont la particularité de s'être attaché à deux caractéristiques particulières : ce qu'ils appellent "aux faiblesses" de l'homme (l'alcool, bière, ignorance, stupidité...)et le domaine professionnel (car beaucoup de blagues se font sur des métiers, comme par exemple les enseignants, les policiers, etc.).
+Par la suite, nous avons continué nos recherches dans le domaine de la détection de phrases humouristiques et les articles de \cite{ReyesPRS10}  et \cite{MihalceaP07}, nous ont interpellé. En effet dans le premier, on s'attache à évaluer le modèle d'humour dans les commentaires de blogs. Pour ce modèle, les auteurs de l'article ont listé des termes qui permettent d'exprimer des sentiments différents. Ces termes se regroupent selon 5 catégories : les termes à caractère sexuel, à polarité négative, sémantiquement ambigus, qui reflètent les sentiments et les émoticones et termes d'argot internet. Ils ont évalué leur méthode sur un corpus de plus d'un millions de commentaires. Au moment de la phase de test, ils obtiennent des résultats relativement corrects à hauteur de 60\% de précision.
+\\Dans le second article, les auteurs ont la particularité de s'être penché sur deux caractéristiques particulières : "les faiblesses de l'homme" (l'alcool, bière, ignorance, stupidité...), car ils pensent que ces termes et ces domaines sont source d'humour ; et le domaine professionnel, car beaucoup de blagues se font sur des métiers, comme par exemple les enseignants, les policiers, etc. "Le comble pour un dentiste, c'est d'habiter dans un palais." est une blague sur les dentistes, qui plus est contenant un homophone sur les mots palet et palais.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Méthode de classification utilisée}
+\section{Méthode}
 \label{methClass}
-\subsection{Le tweet} 
-Comme cela a été mentionné plus tôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@"; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag "\#ironie" est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple " http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploités pour créer le modèle d'apprentissage comme cela est détaillé à la section suivante \ref{features}.
+
+\subsection{Méthodologie}
+Notre méthode passe pas la création des corpora d'entraînement, de test, ainsi que la création d'une méthode baseline.
+
+Ensuite, nous avons construit les traits qui se basent sur le corpus, comme le lexique de mots, avant de créer le fichier contenant les caractéristiques de chaque tweet du corpus d'entraînement.
+
+A l'aide de Weka, nous avons entraînons des modèles grâce aux méthodes des classifieurs cités à la section \ref{methode}. Le but de notre démarche est de trouver des tweets "drôles" à coup sûr et non de classifier des tweets "pas drôle" comme étant "drôle". C'est pour cela que sur certaines méthodes nous avons ajouté une matrice de coût. Cette matrice de coût permet de sanctionner lourdement les erreurs de classification d'un tweet "pas drôle" en un tweet "drôle". Nous avons testé la classification avec une valeur de matrice avec un poids de 100 à chaque erreur. Le détail des résultats avec cette matrice est décrite à la section \ref{res}.
+
+Et pour finir, nous avons intégré directement la phase de test sur le corpus de test que nous avions préalablement annoté à la main.
+
+Pour les résultats, nous sommes particulièrement attentifs à la précision sur la détection des tweets drôles. C'est la mesure des vrais positifs qui nous intéresse, puisque nous voulons détecter en priorité les tweets humoristiques, et récupérer le moins de faux positifs possibles, quitte à avoir une grande proportion de faux négatifs.
+
+Nous utilisons également les scores de confiance en sortie des classifieurs, pour recalculer et maximiser la précision sur la détection des tweets drôles. Pour cela, nous avons fixé un seuil de confiance requis pour considérer un tweet classifié comme "drôle" comme l'étant vraiment. 
+
 
 
 \subsection{Les traits}
 \label{features}
-La tâche de classification consiste à séparer en deux classes distinctes les tweets : une classe "Drôle" et "Pas Drôle". Nous avons testé plusieurs algorithmes qui seront détaillés dans la section \ref{methode}
-Une méthode d'apprentissage non-supervisé est utilisée prenant en entrée un ensemble de tweets. Ce dernier va fournir différentes caractéristiques pour le classifieur multi-classe. Les caractéristiques étudiées sont de type lexicales, stylistiques et contextuelles. 
+Comme cela a été mentionné plus tôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@". Il s'agit d'un trait pouvant permettre d'identifier les comptes spécialisés dans l'humour (@Humour, @HuMoUr\_Con, @viedemerde) ou non (@Elysee, @TF1, @GroupeCarrefour) ; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag "\#ironie" est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple " http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploitées pour créer le modèle d'apprentissage comme cela est détaillé à la section suivante \ref{features}.
 
-\textbf{Caractéristique lexicale}\\
+
+La tâche de classification consiste à séparer en deux classes distinctes les tweets : "Drôle" et "Pas Drôle".
+Une méthode d'apprentissage non-supervisé est utilisée prenant en entrée un ensemble de tweets. Ce dernier va fournir différentes caractéristiques pour le classifieur multi-classes. Les caractéristiques étudiées sont de type lexical, stylistique et contextuel. 
+
+\textbf{Caractéristiques lexicales}\\
 Lexique de mots : il a été construit à partir des tweets du corpus où chaque mot a été racinisé et auquel on a enlevé les mots creux et nettoyé le surplus comme les liens externes.
 \vspace{0.5cm}
 
-\textbf{Caractéristique stylistique}
+\textbf{Caractéristiques stylistiques}
 \begin{itemize}
 \item La présence de hashtag comme "\#humour": nous avons trouvé que les utilisateurs ajoutaient un "\#humour" ou "\#contrepètrie" pour identifier le thème sous-entendu dans leur message;
 \item La présence de smiley content ou pas content au sein du tweet est observé. Par exemple "c'était pas moi ;)", la présence du smiley montre le caractère ironique de la phrase;
@@ -115,7 +137,7 @@ Lexique de mots : il a été construit à partir des tweets du corpus où chaque
 \end{itemize}
 \vspace{0.5cm}
 
-\textbf{Caractéristique contextuel}
+\textbf{Caractéristiques contextuelles}
 \begin{itemize}
 \item Le nombre de mots dans le tweet;
 \item Le nombre de ReTweet;
@@ -126,22 +148,25 @@ Lexique de mots : il a été construit à partir des tweets du corpus où chaque
 
 \subsection{Les méthodes utilisés}
 \label{methode}
-Notre travail a consisté en utiliser des méthodes de classification. Nous avons pour cela utilisé Weka (Université de Waikato, Nouvelle-Zélande), qui est une suite populaire de logiciels d'apprentissage automatique parmi lesquels se trouvent des programmes réalisant de la classification.
-Pour les méthodes de classification que nous avons utilisées dans Weka, nous avons pris le parti de garder certains des paramètres par défaut. \\
-\textbf{Naivesbayes}. C'est le modèle probabiliste le plus utilisé. Il met en avant l'indépendance entre chaque caractèéristisques. Il utilise une hypothèse de distribution Gaussienne pour calculer la probabilité pour chaque caractéristique.\\
-\textbf{J48} C'est une méthode d'apprentissage par arbre de décision. Un arbre va être construit de façon récursif en séparant les données suivant des tests sur les features définis.  \\
-\textbf{MultilayerPerceptron} Le Perceptron multicouche est un classifieur linéaire organisé en plusieurs couches au sein desquelles une information circule de la couche d'entrée vers la couche de sortie uniquement ; chaque couche est constituée d'un nombre variable de neurones, les neurones de la couche de sortie correspondant toujours aux sorties du système.\\
-\textbf{DecisionStump} Consiste en un arbre de décision à une seul niveau. C'est un arbre avec une racine immédiatement connectés à ses feuilles. En outre, donne une prédiction sur une valeur d'un seul trait.\\
-\textbf{RandomForest} L'algorithme des forêts d'arbres décisionnels effectue un apprentissage sur de multiples arbres de décision entraînés sur des sous-ensembles de données légèrement différents.
-
+Notre travail a consisté à utiliser des méthodes de classification. Nous avons pour cela utilisé Weka (Université de Waikato, Nouvelle-Zélande), qui est une suite populaire de logiciels d'apprentissage automatique parmi lesquels se trouvent des algorithmes de classification.
+Pour les méthodes de classification que nous avons utilisées dans Weka, nous avons gardé les paramètres par défaut. \\
+\begin{itemize}
+\item\textbf{Naivesbayes}. C'est le modèle probabiliste le plus utilisé. Il met en avant l'indépendance entre chaque caractéristique. Il utilise une hypothèse de distribution Gaussienne pour calculer la probabilité pour chacune.\\
+\item\textbf{J48} C'est une méthode d'apprentissage par arbre de décision. Un arbre va être construit de façon récursif en séparant les données suivant des tests sur les features définis.  \\
+\item\textbf{MultilayerPerceptron} Le Perceptron multicouche est un classifieur linéaire organisé en plusieurs couches au sein desquelles une information circule de la couche d'entrée vers la couche de sortie uniquement ; chaque couche est constituée d'un nombre variable de neurones, les neurones de la couche de sortie correspondant toujours aux sorties du système.\\
+\item\textbf{DecisionStump} Consiste en un arbre de décision à une seul niveau. C'est un arbre avec une racine immédiatement connectés à ses feuilles. En outre, donne une prédiction sur une valeur d'un seul trait.\\
+\item\textbf{RandomForest} L'algorithme des forêts d'arbres décisionnels effectue un apprentissage sur de multiples arbres de décision entraînés sur des sous-ensembles de données légèrement différents.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Le corpus}
+\section{Présentation des données}
 \label{corpus}
 \subsection{Corpus d'entrainement}
 
 % Nous avons pris le parti de créer deux corpus d'entraînement : le premier est équilibré suivant les deux classes recherchées tweets "Drôle" et "Pas Drôle" ; le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles.
-Grâce à l'application twitter4j, deux corpus, un de 10 000 tweets et un autre de 15 000 ont été réalisés. Les deux corpus ont été constitués à partir de tweets drôles ou non : le premier est équilibré suivant les deux classes recherchées (tweets "Drôle" et "Pas Drôle") ; le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer que dans la réalité sur la quantité de tweets postés, très peu sont drôles. Le tableau suivant montre les statistiques des deux corpus: 
+De façon générale, la langue française possède, pour des traitements du langage naturel, très peu de ressources \textit{libres} en comparaison avec la langue anglaise. Nos domaines de recherche, l'humour et le tweet, peu explorés jusqu'ici, font état d'un manque de corpus et de données. Cela nous a amené à créer nos propres ressources.
+
+Grâce à l'interface de programmation twitter4j nous avons construit deux corpora : un corpus de 10 000 tweets et un autre de 15 000. Les deux corpus ont été constitués à partir de tweets drôles ou non : le premier est équilibré suivant les deux classes recherchées (tweets "Drôle" et "Pas Drôle") ; le second a une proportion de 2/5, où les tweets "drôle" sont les moins représentés, car nous avons pu observer lors de l'annotation du corpus de test, que dans la réalité, sur la quantité de tweets postés, très peu sont drôles. Le tableau \ref{corpus} montre les statistiques des deux corpus: 
 
 \begin{table}[!h]
 \centering
@@ -158,23 +183,24 @@ Grâce à l'application twitter4j, deux corpus, un de 10 000 tweets et un autre 
 	
 	Non ReTweetés & 2000 & 1273 & 4785 & 10541 \\
 	
-	Contrepètries & 200 & / & 200 & / \\
-	Autodérision & 200 & / & 200 & / \\
+	Contrepètries & 200 & - & 200 & - \\
+	Autodérision & 200 & - & 200 & - \\
 	 \midrule
 	Total & 4817 & 5282 & 4785 &  10541 \\
 	\bottomrule
 	\end{tabular}
-\caption{Composition des corpus d'entraînements}
+\caption{Composition des corpus d'entraînement}
+\label{corpus}
 \end{table}
 
 
-Pour extraire des tweets, il est important de commencer par choisir des comptes tweeter. Ces comptes doivent contenir soit uniquement (ou grande partie puisqu'il est difficile d'être sur) des tweets "drôles" ou des tweets "pas drôles".
+Pour extraire des tweets, une stratégie consiste à choisir des comptes tweeter. Ces comptes doivent contenir soit uniquement (ou grande partie puisqu'il est difficile d'être sûr) des tweets "drôles" ou des tweets "pas drôles".
 
-Pour les comptes supposés "drôles", nous avons effectué une sélection de 35 comptes. Nous nous sommes basés essentiellement sur le nom de l'utilisateur contenant des mots clés comme " humour " et " blague ". Voici des exemples de comptes que l'on a pu sélectionner "@100\_blagues, @BlaguesCarambar , @BlagueJour", il est facile de supposer que les tweets seront tous à caractères humoristiques et sûrement drôles. D'autres comptes ont été choisi par rapport à leur notoriété. Ils sont connus pour rassembler des tweets " drôles " par leur ironie ou montrant l'autodérision de leur auteur comme sur @viedemerde.
+Pour les comptes supposés "drôles", nous avons effectué une sélection de 35 comptes. Nous nous sommes basés essentiellement sur le nom de l'utilisateur contenant des mots clés comme "humour" et "blague". Voici des exemples de comptes que l'on a pu sélectionner "@100\_blagues, @BlaguesCarambar , @BlagueJour", il est facile de supposer que les tweets seront tous à caractères humoristiques et sûrement drôles. D'autres comptes ont été choisi par rapport à leur notoriété. Ils sont connus pour rassembler des tweets "drôles" par leur ironie ou montrant l'autodérision de leur auteur comme sur "@viedemerde".
 
-Pour les comptes répertoriant les tweets dits "pas drôles", nous en avons choisi 28. Nous avons supposé que tous les comptes politiques comme " @elysee ", journalistiques comme " @lemondefr,@LesEchos " ne contenaient pas de blagues, car ils sont supposés donner des informations sérieuses. Mais pour diversifier les domaines évoqués dans les tweets, nous avons ajouté des comptes commerciaux comme @m6, @nantesfr ou @conforama.
+Pour les comptes répertoriant les tweets dits "pas drôles", nous en avons choisi 28. Nous avons supposé que tous les comptes politiques comme "@elysee", journalistiques comme "@lemondefr, @LesEchos" ne contenaient pas de blagues, car ils sont supposés donner des informations sérieuses. Mais pour diversifier les domaines évoqués dans les tweets, nous avons ajouté des comptes commerciaux comme "@m6, @nantesfr" ou "@conforama".
 
-Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer si un tweet est drôle ou non mais pas seulement. Il a été utilisé pour créer un lexique de mots caractéristiques des tweets. Pour cela, tous les mots ont été extraits puis racinisés. A cette liste, les mots creux de langue française, soit une liste de 460 mots, ont été retirés. Chaque mot restant constitue une caractéristique, un trait.
+Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer si un tweet est drôle ou non mais pas seulement. Il a été utilisé pour créer un lexique de mots caractéristiques des tweets. Pour cela, tous les mots ont été extraits puis racinisés. A cette liste ont été retirés les mots creux de langue française, soit une liste de 460 mots. Chaque mot restant constitue une caractéristique, un trait.
 
 
 
@@ -188,13 +214,15 @@ Ce corpus est utilisé pour entrainer le modèle d'apprentissage pour distiguer 
 	 Après racinisation & 10168 & 12956 \\
 	\bottomrule
 	\end{tabular}
-\caption{Constitutions des corpus d'entraînements}
+\caption{Constitutions des corpus d'entraînement}
 \end{table}
 
-\subsection{Corpus de test} 
-Pour constituer le corpus de test, nous avons extrait 250 tweets provenant des comptes des humoristes Gad Elmaleh, Florence Foresti et Cyprien (un youtubeur). Nous les avons choisis, car ils sont représentatifs de Twitter c'est-à-dire une grande majorité de tweets sur le quotidien et quelques tweets drôles. Plus que quiconque ils sont plus susceptibles de par leur métier de poster des tweets drôles .
+\subsection{Corpus de test}
+Pour créer le corpus d'entraînement, nous avons sélectionnné des comptes qui ne contiennent que des tweets drôles et d'autres ne contenant que des tweets pas drôles. Cependant, effectuer une validation croisée soulèverait un problème : en effet, les comptes utilisateurs sont directement associés à une classe et le tweet en lui-même n'est pas étudié. Cela aurait induit un problème de sur-apprentissage. Notre but étant de coller au maximum à la réalité, nous avons choisi de créer un copus de test différent avec des comptes qui contiennent à la fois des tweets drôles et pas drôles. 
 
-L'ensemble de ces tweets ont été annoté par 3 annotateurs. Chaque tweet a été annoté par deux annotateurs particulièrement, qui devaient indiquer la mention "Drôle" ou "Pas Drôle". Une fois que cela a été réalisé, un accord annotateur a été calculé. Nous avons utilisé le coefficient $\kappa$ de \cite{cohen1960}. Cet accord est utilisable dans notre cas, car nous n'avons que deux annotateurs pour chaque fichier. Et il nous permet de vérifier que le choix des classes n'est pas du au hazard. La table \ref{anno} montre les résultats que nous avons obtenus :
+Pour constituer le corpus de test, nous avons extrait 250 tweets provenant des comptes des humoristes Gad Elmaleh, Florence Foresti et Cyprien (un youtubeur). Nous les avons choisis, car ils sont représentatifs de Twitter c'est-à-dire une grande majorité de tweets sur le quotidien et quelques tweets drôles. Plus que quiconque les humoristes sont plus susceptibles de par leur métier de poster des tweets drôles .
+
+L'ensemble de ces tweets a été annoté par 3 annotateurs. Chaque tweet a été annoté par deux annotateurs particulièrement, qui devaient indiquer la mention "Drôle" ou "Pas Drôle". Une fois que cela a été réalisé, un accord annotateur a été calculé. Nous avons utilisé le coefficient $\kappa$ de \cite{cohen1960}, car nous n'avons que deux annotateurs pour chaque fichier. En outre, il nous permet de vérifier que le choix des classes est bel et bien subjectif. La table \ref{anno} montre les résultats que nous avons obtenus.
 
 % mettre la formule du kappa et expliquer chaque terme 
 \begin{table}[!h]
@@ -213,40 +241,34 @@ L'ensemble de ces tweets ont été annoté par 3 annotateurs. Chaque tweet a ét
 \end{table}
 
 %Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Mais il ne faut pas oublier que l'humour reste complètement subjectif. Et que notre résultat montre seulement que les annotateurs ont le même humour.
-Nous sommes sur un accord inter-annotateurs presque parfait dans notre cas. Cela s'explique simplement. En effet, le calcul se base sur l'ensemble des tweets annotés or sur les 250 tweets annotés seulement moins d'une vingtaine ont été annotés comme "drôle" par au moins un annotateur. Les tweets dit "drôles" sont donc noyés dans la masse. Il est donc important de re-centrer l'accord inter-annotateur sur uniquement les tweets annotés au moins une fois comme "drôle". 
+L'accord inter-annotateurs est presque parfait dans notre cas. Cela s'explique simplement. En effet, le calcul se base sur l'ensemble des tweets annotés or sur les 250 tweets annotés seulement moins d'une vingtaine ont été annotés comme "drôle" par au moins un annotateur. Les tweets dit "drôles" sont donc noyés dans la masse. Il est donc important de re-centrer l'accord inter-annotateur sur uniquement les tweets annotés au moins une fois comme "drôle". 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Phase d'évaluation}
+\section{Expériences}
 \label{eval}
-\subsection{Méthodologie}
-Nous avons commencé par créer les corpus d'entraînement, de test et la baseline.
 
-Ensuite, nous avons construit les traits qui se basaient sur le corpus, comme le lexique de mots, avant de créer le fichier contenant les caractéristiques de chaque tweet du corpus d'entraînement.
+\subsection{Paramètres expérimentaux}
 
-A l'aide de Weka, nous avons entraîné des modèles grâce aux méthodes des classifieurs cité à la section\ref{methode}. Le but de notre démarche est de trouver des tweets "drôles" à coup sûr et non de trouver des tweets "pas drôle" comme étant "drôle". C'est pour cela que sur certaines méthodes nous avons ajouté une matrice de coût. Cette matrice de coût permet de sanctionner lourdement les erreurs de classification d'un tweet "pas drôle" en un tweet "drôle". Nous avons testé la classification avec une valeur de matrice avec un poids de 100 à chaque erreur. Le détail des résultats avec cette matrice est décrite à la section\ref{res}.
 
-Et pour finir, nous avons intégré directement la phase de test sur le corpus de test que nous avions préalablement annoté à la main.
-
-\subsection{Notre baseline}
-Nous avons créé un dernier corpus pour représenter notre baseline. Notre réflexion a été la suivante : si un tweet comporte un smiley, il est classé comme "drôle" et dans le cas contraire il sera classé comme "Pas drôle". Nous devons insister sur le fait que nous voulons un système très précis c'est à dire avec une forte précision. Le rappel est peu intéressant. En effet, nous voulons être sûrs de ne pas classer un tweet "Pas Drôle" comme étant "Drôle" et plutôt que de classer un tweet comme "Pas drôle" alors qu'il était "Drôle", ce qui est moins grave.
+\paragraph{Baseline}
+Nous avons créé un dernier corpus pour notre méthode baseline. Notre réflexion a été la suivante : si un tweet comporte un smiley, il est classé comme "drôle" et dans le cas contraire il sera classé comme "Pas drôle". Nous devons insister sur le fait que nous voulons un système très précis c'est à dire avec une forte précision. Le rappel est peu intéressant. En effet, nous voulons être sûrs de ne pas classer un tweet "Pas Drôle" comme étant "Drôle" et plutôt que de classer un tweet comme "Pas drôle" alors qu'il était "Drôle", ce qui est moins grave.
 La baseline se base sur très peu de traits, mais qui nous semblent très caractéristiques toutefois :
 \begin{itemize}
 \item Les exclamations (absentes, en nombre normal, en surnombre)
-\item Si le tweet contient des smileys drôles/contents
-\item Si le tweet contient des smileys pas drôles/pas contents
+\item Si le tweet contient des smileys drôles/contents ou pas drôles/pas contents 
 \end{itemize}
 
-\subsection{Mesures d'évaluation}
-Afin d'évaluer nos méthodes de classification, nous utilisons les mesures de précision et de rappel. Toutefois, ces deux mesures n'ont pas la même importance : la précision dans la détection des tweets humoristiques est primordiale. En effet, nous souhaitons avant tout que notre classification permette la détection de tweets drôles, peu important l'oubli de tweets drôles, mais en maximisant le coût d'erreurs rapportant des tweets non humoristiques dans la liste des résultats. La mesure déterminante dans notre cas est donc la \textbf{précision dans la détection des tweets drôles}.
 
-Afin d'améliorer nos résultats, et la détection des tweets humoristiques, nous nous basons en sus du score de précision, du score de confiance en sortie du classifieur pour un message donné. Le score de confiance est un indice de 0 à 1 indiquant si la classification est fiable (indice tendant vers 1), ou non (indice tendant vers 0). Dans notre cas, nous avons recalculé la précision des tweets classés comme humoristiques en ne prenant en compte les résultats ayant un score de confidence d'au moins 0.7.
+\paragraph{Mesures d'évaluation}
+Afin d'évaluer nos méthodes de classification, nous utilisons les mesures de précision et de rappel. Toutefois, ces deux mesures n'ont pas la même importance : la précision dans la détection des tweets humoristiques est primordiale. En effet, nous souhaitons avant tout que notre classification permette la détection de tweets drôles, l'oubli de tweets drôles étant peu important, mais en maximisant le coût d'erreurs rapportant des tweets non humoristiques dans la liste des résultats. La mesure déterminante dans notre cas est donc la \textbf{précision dans la détection des tweets drôles}.
 
-Les résultats sont décris ci-dessous.
-
+Afin d'améliorer nos résultats, et la détection des tweets humoristiques, nous nous basons en sus du score de précision, du score de confiance en sortie du classifieur pour un message donné. Le score de confiance est un indice de 0 à 1 indiquant si la classification est fiable (indice tendant vers 1), ou non (indice tendant vers 0). Dans notre cas, nous avons recalculé la précision des tweets classés comme humoristiques en ne prenant en compte les résultats ayant un score de confiance d'au moins 0.7.
 
 
-\subsection{Les résultats}
+
+
+\subsection{Résultats}
 \label{res}
 
 Comme expliqué ci-dessus, la baseline se base sur très peu de traits, mais qui nous semblaient très caractéristiques. Nous avons des résultats très médiocres, qui s'expliquent par le fait que rien ne permet de déterminer l'humour d'un tweet sur ces traits que nous pensions discriminants.
@@ -267,58 +289,46 @@ Comme expliqué ci-dessus, la baseline se base sur très peu de traits, mais qui
 \caption{Résultats : précision sur la détection des tweets drôles pour la baseline}
 \end{table}
 
-Voici les résultats sur la précision des tweets drôles. Nous voyons que pour la plupart des classifieurs, plus l'indice de confiance requis augmente, plus nous sommes précis dans la détection de tweets humoristiques.
+Les résultats que nous obtenons sur la précision des tweets drôles sont dans la table \ref{precision}.
+
 \begin{table}[!h]
 \centering
-	\begin{tabular}{lrrrr}
+	\begin{tabular}{llrrrr}
 	\toprule
 
-	indice de confiance	& sans & 0.7 & 0.8 & 0.9 \\
+	& Indice de confiance & sans & 0.7 & 0.8 & 0.9 \\
 	\midrule
-	DecisionStump & 5.5\% & 0\% & 0\% & 0\% \\%0.7 confiance sans stem
-	J48 & 9.8\% & 10\% & 10\% & 11.5\% \\ %0.7
-	NaiveBayes & 11\% & 11.5\% & 12.3\% & 12.5\% \\ %0.7
-	RandomForest & 8.1\% & 10.4\% & 10.6\% & 25\%\\ %0.7
+    \multirow{4}{*}{Normal} & DecisionStump & 5.5\% & 0\% & 0\% & 0\% \\%0.7 confiance sans stem
+	& J48 & 9.8\% & 10\% & 10\% & 11.5\% \\ %0.7
+	& NaiveBayes & 11\% & 11.5\% & 12.3\% & 12.5\% \\ %0.7
+	& RandomForest & 8.1\% & 10.4\% & 10.6\% & 25\%\\ %0.7
+    
+    \midrule
+	\multirow{4}{*}{Racinisation}& DecisionStump & 5.5\% & 0\% & 0\% & 0\% \\%0.7 confiance AVEC stem
+	& J48 & 7.5\% & 7.6\% & 7.6\% & 8.2\% \\ %0.7
+	& NaiveBayes & 9.2\% & 10.7\% & 11.1\% & 11.1\% \\ %0.7
+	& RandomForest & 8.3\% & 7.14\% & 7.4\% & 0\% \\ %0.7
+    
+    \midrule
+	\multirow{4}{*}{Racinisation et Déséquilibré}& DecisionStump & 0\% & 0\% & 0\% & 0\% \\%0.7 confiance AVEC stem déséquilibré
+	& J48 & 0\% & 0\% & 0\% & 0\% \\ %0.7
+	& NaiveBayes & 0\% & 0\% & 0\% & 0\% \\ %0.7
+	& RandomForest & 100\% & 100\%  & 100\% & 100\% \\ %0.7
+
 
 	\bottomrule
 	\end{tabular}
-\caption{Résultats : précision sur la détection des tweets drôles}
+\caption{Résultats : précision sur la détection des tweets drôles, sans stemming, avec stemming, et avec stemming et corpus déséquilibré}
+\label{precision}
 \end{table}
 
-Voici les résultats sur la précision des tweets drôles avec chaque trait utilisé une racine de mot (stemm). Nous voyons que les résultats sont du même ordre de grandeur que les précédents (la racinisation n'influe pas sur la déterminisation de l'humour d'un tweet)
-\begin{table}[!h]
-\centering
-	\begin{tabular}{lrrrr}
-	\toprule
-	
-	indice de confiance	& sans & 0.7 & 0.8 & 0.9 \\
-	\midrule
-	DecisionStump & 5.5\% & 0\% & 0\% & 0\% \\%0.7 confiance AVEC stem
-	J48 & 7.5\% & 7.6\% & 7.6\% & 8.2\% \\ %0.7
-	NaiveBayes & 9.2\% & 10.7\% & 11.1\% & 11.1\% \\ %0.7
-	RandomForest & 8.3\% & 7.14\% & 7.4\% & 0\% \\ %0.7
 
-	\bottomrule
-	\end{tabular}
-\caption{Résultats : précision sur la détection des tweets drôles en utilisant le stemming}
-\end{table}
+Pour la méthode sans stemming et avec corpus d'entraînement équilibré (première ligne), nous voyons que pour la plupart des classifieurs, plus l'indice de confiance requis augmente, plus nous sommes précis dans la détection de tweets humoristiques. La méthode RandomForest avec un score de confiance de 0.9 requis obtient un résultat de 25\%, ce qui est notre meilleure performance.
 
-Voici les résultats sur la précision des tweets drôles avec chaque trait utilisé une racine de mot (stemm) et pour un corpus d'entraînement déséquilibré. Les résultats sont dus au fait qu'aucun tweet n'est soulevé comme "drôle" dans la plupart des méthodes de classification. Cependant, la méthode RandomForest ne retourne que des tweets "drôles" réellement drôles, bien qu'il n'y en ait que très peu.
-\begin{table}[!h]
-\centering
-	\begin{tabular}{lrrrr}
-	\toprule
-	
-	indice de confiance	& sans & 0.7 & 0.8 & 0.9 \\
-	\midrule
-	DecisionStump & 0\% & 0\% & 0\% & 0\% \\%0.7 confiance AVEC stem déséquilibré
-	J48 & 0\% & 0\% & 0\% & 0\% \\ %0.7
-	NaiveBayes & 0\% & 0\% & 0\% & 0\% \\ %0.7
-	RandomForest & 100\% & 100\%  & 100\% & 100\% \\ %0.7
-	\bottomrule
-	\end{tabular}
-\caption{Résultats : précision sur la détection des tweets drôles avec stemming et corpus d'entraînement déséquilibré}
-\end{table}
+Pour les résultats sur la précision des tweets drôles avec chaque trait utilisé une racine de mot (seconde ligne), nous voyons que les résultats sont du même ordre de grandeur que les précédents (la racinisation n'influe pas sur la déterminisation de l'humour d'un tweet).
+
+Enfin, pour la méthode qui associe à chaque trait utilisé une racine de mot, et pour un corpus d'entraînement déséquilibré (dernière ligne), les résultats sont dus au fait qu'aucun tweet n'est soulevé comme "drôle" dans la plupart des méthodes de classification. Cependant, la méthode RandomForest ne retourne que des tweets "drôles" réellement drôles, bien qu'il n'y en ait qu'un seul détecté "drôle". Nous ne pouvons donc pas considérer cet excellent résultat, puisqu'une mise à l'échelle avec un corpus de test plus grand serait nécessaire pour émettre de plus amples conclusions.
+
 
 
 
@@ -389,10 +399,10 @@ Voici les résultats sur la précision des tweets drôles avec chaque trait util
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion et discussion}
 
-De nos expérimentations, nous déduisons cela : pour que les traits qui sont des mots soient exploitables, il faudrait y associer le contexte dans lequel il est sorti. Par exemple, dans le corpus de test, nous avons le tweet suivant "Ceux qui vous disent "j'ai dormi comme un bébé"... n'ont jamais eu de bébé:)" est selon nous "drôle". Le souci est que le mot "bébé" a la même période faisait les gros titre des journaux pour des faits graves. Sauf que sans avoir le contexte, le tweet cité sera classé comme "Pas Drôle" à cause du choix du corpus d'entrainement. L'étude du contexte de chaque tweet pourrait également aider à la recherche de passages ironiques. 
-Les même tests devraient être effectué en sélectionnant la fréquence d'apparition de chaque mot plutôt que de prendre les traits comme des booléens à savoir s'ils sont présent ou non. Une fois la fréquence obtenue, seul les mots le plus fréquents devraient être retenu. Bien sur, cette idée ne garantit pas le problème de contexte que nous venons de soulever.
+De nos expérimentations, nous déduisons cela : pour que les traits qui sont des mots soient exploitables, il faudrait y associer le contexte de la discussion dans lequel il est sorti, c'est à dire les tweets précédants, mais aussi l'actualité assortie. Par exemple, dans le corpus de test, nous avons le tweet suivant "Ceux qui vous disent "j'ai dormi comme un bébé"... n'ont jamais eu de bébé:)" est selon nous "drôle". Le souci est que le mot "bébé" a la même période faisait les gros titre des journaux pour des faits graves. Sauf que sans avoir le contexte, le tweet cité sera classé comme "Pas Drôle" à cause du choix du corpus d'entrainement. L'étude du contexte de chaque tweet pourrait également aider à la recherche de passages ironiques. 
+Les même tests devraient être effectués en sélectionnant la fréquence d'apparition de chaque mot plutôt que de prendre les traits comme des booléens à savoir s'ils sont présent ou non. Une fois la fréquence obtenue, seul les mots les plus fréquents devraient être retenus. Bien sur, cette idée ne garantit pas le problème de contexte que nous venons de soulever.
 
-L'état de l'art que nous avons mené, nous a permis de comprendre les limites de notre travail. Sur des phrases complètes et potentiellement correctes syntaxiquement, les recherches effectuées dans le domaine obtiennent des résultats justes corrects, tout en sachant, qu'ils ont les ressources nécessaires en terme de lexique de mots (par exemple à caractère sexuel). Alors que nous travaillons sur des messages de 150 caractères uniquement, et nos lexiques se limitent à émoticônes et à l'argot internet, notre étude ne fait évidemment pas le poids face à des expérimentations sur des textes littéraires avec des corpus de millions de phrases. 
+L'état de l'art que nous avons mené, nous a permis de comprendre les limites de notre travail. Sur des phrases complètes et potentiellement correctes syntaxiquement, les recherches effectuées dans le domaine obtiennent des résultats justes corrects, tout en sachant qu'ils ont les ressources nécessaires en terme de lexique de mots (par exemple à caractère sexuel). Alors que nous travaillons sur des messages de 140 caractères uniquement, et nos lexiques se limitent à des émoticônes et à l'argot internet, notre étude ne fait évidemment pas le poids face à des expérimentations sur des textes littéraires avec des corpus de millions de phrases. Toutefois, un résultat de 25\% dans la détection des tweets humoristiques en français est acceptable, car nous sommes capables de trouver 1 tweet drôle sur 4 dans une liste de tweets. De plus, nous sommes parmi les premiers à nous positionner sur cette tâche, en français.
 
 
 %%%================================================================
