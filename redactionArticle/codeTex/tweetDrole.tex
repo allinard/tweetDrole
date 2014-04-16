@@ -109,17 +109,17 @@ Ensuite, nous avons construit les traits qui se basent sur le corpus, comme le l
 
 A l'aide de Weka, nous entraînons des modèles grâce aux méthodes des classifieurs cités à la section \ref{methode}. Le but de notre démarche est de trouver des tweets "drôles" à coup sûr et non de classifier des tweets "pas drôle" comme étant "drôle". C'est pour cela que sur certaines méthodes nous avons ajouté une matrice de coût. Cette matrice de coût permet de sanctionner lourdement les erreurs de classification d'un tweet "pas drôle" en un tweet "drôle". Nous avons testé la classification avec une valeur de matrice avec un poids de 100 à chaque erreur. Le détail des résultats avec cette matrice est décrite à la section \ref{res}.
 
-Et pour finir, nous avons intégré directement la phase de test sur le corpus de test que nous avions préalablement annoté à la main.
+Et pour finir, nous intégrons directement la phase de test sur le corpus de test que nous avons préalablement annoté à la main.
 
 Pour les résultats, nous sommes particulièrement attentifs à la précision sur la détection des tweets drôles. C'est la mesure des vrais positifs qui nous intéresse, puisque nous voulons détecter en priorité les tweets humoristiques, et récupérer le moins de faux positifs possibles, quitte à avoir une grande proportion de faux négatifs.
 
-Nous utilisons également les scores de confiance en sortie des classifieurs, pour recalculer et maximiser la précision sur la détection des tweets drôles. Pour cela, nous avons fixé un seuil de confiance requis pour considérer un tweet classifié comme "drôle" comme l'étant vraiment. 
+Nous utilisons également les scores de confiance en sortie des classifieurs, pour recalculer et maximiser la précision sur la détection des tweets drôles. Pour cela, nous fixons un seuil de confiance requis pour considérer un tweet classifié comme "drôle" comme l'étant vraiment. 
 
 
 
 \subsection{Les traits}
 \label{features}
-Comme cela a été mentionné plus tôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@". Il s'agit d'un trait pouvant permettre d'identifier les comptes spécialisés dans l'humour (@Humour, @HuMoUr\_Con, @viedemerde) ou non (@Elysee, @TF1, @GroupeCarrefour) ; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag "\#ironie" est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple " http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploitées pour créer le modèle d'apprentissage comme cela est détaillé à la section suivante \ref{features}.
+Comme cela a été mentionné plus tôt, Twitter permet de poster de courts messages de 140 caractères. Il y a certaines caractéristiques présentes dans le tweet qui sont intéressantes : l'utilisateur propriétaire qui est indiqué par 20 caractères commençant par le symbole "@". Il s'agit d'un trait pouvant permettre d'identifier les comptes spécialisés dans l'humour (@Humour, @HuMoUr\_Con, @viedemerde) ou non (@Elysee, @TF1, @GroupeCarrefour) ; la mention ReTweeter avec le nom de l'utilisateur d'origine; le hashtag comme "\#ironie", est un mot clé donnant le thème du tweet; les liens externes vers d'autres sources pour avoir la fin d'une blague par exemple "http://bit.ly/1l4TdOF". Parmi ces caractéristiques, un grand nombre seront exploitées pour créer le modèle d'apprentissage comme cela est détaillé à la section suivante \ref{features}.
 
 
 La tâche de classification consiste à séparer en deux classes distinctes les tweets : "Drôle" et "Pas Drôle".
