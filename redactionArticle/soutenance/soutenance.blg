@@ -1,0 +1,10 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: soutenance.aux
+The style file: acm.bst
+Database file #1: biblio.bib
+A bad cross reference---entry "ReyesPRS10"
+refers to entry "conf/lrec/2010", which doesn't exist
+A bad cross reference---entry "MihalceaP07"
+refers to entry "conf/cicling/2007", which doesn't exist
+Warning--I didn't find a database entry for "conf/lrec/2010"
+Warning--I didn't find a database entry for "conf/cicling/2007"
+(There were 2 error messages)

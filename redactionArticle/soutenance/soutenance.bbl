@@ -1,0 +1,31 @@
+\begin{thebibliography}{1}
+
+\bibitem{Barbosa2010}
+{\sc Barbosa, L., and Feng, J.}
+\newblock Robust sentiment detection on twitter from biased and noisy data.
+\newblock In {\em Proceedings of the 23rd International Conference on
+  Computational Linguistics: Posters\/} (Stroudsburg, PA, USA, 2010), COLING
+  '10, Association for Computational Linguistics, pp.~36--44.
+
+\bibitem{MihalceaP07}
+{\sc Mihalcea, R., and Pulman, S.~G.}
+\newblock Characterizing humour: An exploration of features in humorous texts.
+\newblock In {\em CICLing\/} (2007), A.~F. Gelbukh, Ed., vol.~4394 of {\em
+  Lecture Notes in Computer Science}, Springer, pp.~337--347.
+
+\bibitem{Raz12}
+{\sc Raz, Y.}
+\newblock Automatic humor classification on twitter.
+\newblock In {\em Proceedings of the 2012 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies: Student Research Workshop\/} (Stroudsburg, PA, USA, 2012),
+  NAACL HLT '12, Association for Computational Linguistics, pp.~66--70.
+
+\bibitem{ReyesPRS10}
+{\sc Reyes, A., Potthast, M., Rosso, P., and Stein, B.}
+\newblock Evaluating humour features on web comments.
+\newblock In {\em LREC\/} (2010), N.~Calzolari, K.~Choukri, B.~Maegaard,
+  J.~Mariani, J.~Odijk, S.~Piperidis, M.~Rosner, and D.~Tapias, Eds., European
+  Language Resources Association.
+
+\end{thebibliography}

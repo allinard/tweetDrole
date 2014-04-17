@@ -1,0 +1,532 @@
+\documentclass{beamer}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{Warsaw}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+
+\title[Détection automatique des tweets humoristiques]{Est-ce que ce tweet est drôle ? \\ Détection automatique des tweets humoristiques}
+\author{Adeline Granet, Alexis Linard}
+\institute{Université de Nantes}
+\date{18 avril 2014}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+%\begin{frame}{Outline}
+%  \tableofcontents
+%\end{frame}
+
+%Introduction
+\section{Introduction}
+\subsection{Contexte}
+\begin{frame}[allowframebreaks]{Définition}
+	\begin{columns}
+		\column{9cm}
+		\begin{block}{Twitter}
+			\begin{itemize}
+				\item Un des leaders parmi les réseaux sociaux
+				\item 645 millions d'utilisateurs dont 7.3 millions en France
+				\item 58 millions de tweets par jour
+			\end{itemize}
+		\end{block}
+		
+		\column{2.5cm}
+		\begin{figure}
+			\includegraphics[width=2cm]{twitter.png}
+		\end{figure}
+	\end{columns}
+
+
+
+\begin{block}{Tweet}
+\begin{itemize}
+\item Limité à 140 caractères
+\item Auteurs (@)
+\item Hashtags (\#)
+\item Retweets, Retweeté, liens...
+\item Contenu bruité
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\subsection{Problématique}
+\begin{frame}{Problème du format}
+	\begin{itemize}
+		\item message subjectif
+		\item message très court
+		\item langage utilisé SMS, fautes de frappes
+	\end{itemize}
+
+
+\end{frame}
+
+
+
+\begin{frame}{Exemple de tweets}
+\begin{exampleblock}{Subjectif}
+Quand je me moque des handicapés on me dit, mets toi à leurs places et quand je me met à leurs places on me mets une amende de 135 euros !
+\end{exampleblock}
+\begin{exampleblock}{Court}
+Il court, il court le furet \#Contrepeterie
+\end{exampleblock}
+\begin{exampleblock}{Langage SMS}
+mr6 bcp pr vs retweet lol!
+\end{exampleblock}
+\end{frame}
+
+\subsection{Objectifs}
+\begin{frame}{Objectifs}
+Détection de l'humour
+
+	
+\begin{itemize}
+\item Textes courts
+\item Données bruitées
+\item En français :
+\begin{itemize}
+\item Pas de ressources \textit{libres}
+\item Pas d'étiqueteurs morpho-syntaxiques \textit{libres} 
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+%table of contents
+\begin{frame}
+\frametitle{Sommaire} % Table of contents slide, comment this block out to remove it
+\tableofcontents[hideallsubsections]  % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%Etat de l'art
+\section{Etat de l'art}
+
+\subsection{Raz, 2012}
+\begin{frame}[allowframebreaks]{\textit{Automatic humor classifcation on twitter}\\ de Raz, 2012 \cite{Raz12}}
+
+\begin{itemize}
+ \item méthode de classification de tweets humoristiques en anglais selon le type de l’humour;
+\item algorithme semi-suprevisé
+\item en entrée : des tweets, en sortie : des ensembles avec les même caractéristiques
+\end{itemize}
+
+\begin{block}{Caractéristiques lexicales}
+\begin{itemize}
+\item appartenance à des lexiques particuliers
+\item présence des entités nommées
+\item ambiguité
+\end{itemize}
+\end{block}
+
+\begin{block}{Caractéristiques morphologiques}
+\begin{itemize}
+\item analyse du temps des verbes
+\item les mots existent (ou non)
+\end{itemize}
+\end{block}
+
+\vspace*{1.1cm}
+\begin{exampleblock}{Exemple : Phonologie}
+\begin{itemize}
+\item Leonard devint Sy
+\end{itemize}
+\end{exampleblock}
+
+\vspace*{1.1cm}
+\begin{block}{Style}
+\begin{itemize}
+\item présence de smiley
+\item ponctuation particulière
+\item hashtag
+\end{itemize}
+\end{block}
+
+\begin{exampleblock}{Exemple : Style}
+\begin{itemize}
+\item On dit que le chien est le meilleur ami de l’homme mais les chiennes c’est pas mal non plus :)
+\item Quelle est l’expression préférée d’un vampire ? Bon sang ! ! !
+\end{itemize}
+\end{exampleblock}
+
+
+\begin{block}{Problème de cette méthode}
+\begin{itemize}
+\item necéssité d'avoir beaucoup de ressources : lexiques de mots drôles, d'homophones, mots vulgaires...
+\item utilisation d'un site fermé aujourd'hui pour collecter les tweets 
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\subsection{Barbosa, 2010}
+\begin{frame}[allowframebreaks]{\textit{Robust detection on twitter from biased and noisy data}\\ de Barbosa, 2010 \cite{Barbosa2010}}
+
+
+Détection automatique de sentiments émis dans les tweets dont les caractéristiques sont :
+\begin{itemize}
+\item POStagging;
+\item la polarité et la syntaxe spécifique du tweet comme les liens;
+\item la ponctuation, les émoticônes, la casse des mots.
+\end{itemize}
+\end{frame}
+
+
+\subsection{Autres}
+\begin{frame}[allowframebreaks]{Autres}
+\begin{block}{\textit{Evaluating humour features on web comments} de Reyes,2010 \cite{ReyesPRS10}}
+Evaluation du modèle d'humour dans les commentaires de blog
+\begin{itemize}
+\item liste des termes exprimant des sentiments différents : les termes à caractère sexuel, à polarité négative, sémantiquement ambigus, reflètant des sentiments, et les émoticones et termes d’argot internet. 
+\item évaluation sur un corpus de plus d’un millions de commentaires
+\item résultats 60\% de précision
+\end{itemize}
+\end{block}
+
+\begin{block}{\textit{Characterizing humour: An exploration of features in humorous texts} de Mihalcea,2007 \cite{MihalceaP07}}
+\begin{itemize}
+\item les faiblesses de l'homme : l’alcool, bière, ignorance, stupidité
+\item le domaine professionnel, exemple "Le comble pour un dentiste, c’est d’habiter dans un palais."
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\section{Méthode}
+\subsection{Méthodologie}
+\begin{frame}{Méthodologie}
+
+\begin{itemize}
+  \item Création de corpus d'entraînement, ainsi que de test
+  \item Identification des traits
+  \item Entraînement avec Weka, et phase de test
+  \item Identification des mesures intéressantes pour notre étude
+  \item Amélioration avec scores de confiance
+\end{itemize}
+
+
+\end{frame}
+
+
+
+
+\subsection{Les traits}
+\begin{frame}{Les traits}
+
+3 caractéristiques : 
+\begin{itemize}
+  \item Lexicales
+  \item Stylistiques
+  \item Contextuelles
+\end{itemize}
+
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}[allowframebreaks]{Les traits}
+
+\begin{block}{Caractéristiques lexicales}
+Lexique de mots construit sur la base des mots racinisés du corpus
+
+\end{block}
+
+
+\begin{block}{Caractéristiques stylistiques} 
+\begin{itemize}
+\item La présence de hashtag :\\
+Exemple :"\#humour" "\#contrepètrie"
+\item La présence de smiley content ou pas content :\\
+Exemple :"c'était pas moi ;)"
+\item Le nombre de points d'exclamation: :\\
+Exemple :"je suis calme!" vs " je suis calme !!!!!!!!!!" 
+\end{itemize}
+\end{block}
+
+
+\begin{block}{Caractéristiques contextuelles}
+\begin{itemize}
+  \item Nombre de mots dans le tweet
+  \item Nombre de retweets
+  \item Longueur totale du tweet
+  \item S'il s'agit d'un retweet
+\end{itemize}
+\end{block}
+
+
+\end{frame}
+
+
+
+
+\subsection{Méthodes de classification}
+\begin{frame}{Environnement de travail}
+
+\begin{block}{Weka}
+Université de Waikato, Nouvelle-Zélande : suite populaire de logiciels d'apprentissage automatique parmi lesquels se trouvent des programmes réalisant de la classification.
+\end{block}
+
+\end{frame}
+
+
+
+\begin{frame}{Les méthodes utilisées}
+
+Les algorithmes de classification utilisés :
+\begin{itemize}
+  \item NaiveBayes
+  \item J48
+  \item MultilayerPerceptron
+  \item DecisionStump
+  \item RandomForest
+\end{itemize}
+
+\end{frame}
+
+
+
+
+
+%Données
+\section{Présentation des données}
+
+
+\begin{frame}[allowframebreaks]{Corpora d'entraînement}
+Peu de ressources libres en français dans les domaines du tweets et de l'humour
+\begin{itemize}
+
+\item Construction :\\ \textbf{1 corpus équilibré} et \textbf{1 corpus déséquilibré}
+\item Outil : twitter4J
+\item Choix des comptes "Drôles" : par mots clés \textit{@100\_blagues, @BlaguesCarambar, @BlagueJour}, par notoriété \textit{@VDM}
+\item Choix des comptes "Pas Drôles" : politique \textit{@elysee}, journalistique \textit{@lemondefr} et commerciaux \textit{@m6, @nantesfr}
+\end{itemize}
+
+
+
+
+\begin{table}
+\centering
+\tiny
+	\begin{tabular}{lrrrr}
+	\toprule
+	& \multicolumn{2}{c}{Equilibré}  & \multicolumn{2}{c}{Deséquilibré}\\
+	\cmidrule(r){2-3} \cmidrule(r){4-5}
+
+	& Tweets Drôle & Tweets Pas Drôles &  Tweets Drôle & Tweets Pas Drôles \\
+	\midrule
+	 ReTweets & 166 & 1019 & 166 & 1048 \\
+	
+	 ReTweetés & 2817 & 4009 & 0 & 0 \\
+	
+	Non ReTweetés & 2000 & 1273 & 4785 & 10541 \\
+	
+	Contrepètries & 200 & - & 200 & - \\
+	Autodérision & 200 & - & 200 & - \\
+	 \midrule
+	Total & 4817 & 5282 & 4785 &  10541 \\
+	\bottomrule
+	\end{tabular}
+\caption{Composition des corpus d'entraînement}
+\label{corpus}
+\end{table}
+
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]{Corpus de test}
+
+
+\begin{itemize}
+  \item Validation croisée : problème de sur-apprentissage
+  \item Choix des comptes : humouristes \textit{Gad Elmaleh,
+Florence Foresti et Cyprien (un youtubeur)} 
+  \item Tweets du quotidien et blagues 
+\end{itemize}
+
+\begin{block}{Phase d'annotation}
+\begin{itemize}
+\item Qui : 3 annotateurs
+\item Tache : classer le tweet comme "Drôle" ou "Pas Drôle"
+\item Combien : 250 tweets
+\item Mesure : le coefficient $\kappa$
+\end{itemize}
+\end{block}
+
+\vspace*{0.4cm}
+Calcul centré sur les tweets annotés comme "Drôle" : 
+\vspace*{0.2cm}
+\begin{table}[!h]
+\centering
+	\begin{tabular}{lr}
+	\toprule
+	 Document & $\kappa$ \\
+	\midrule
+	  Fichier 1 & 0.978 \\
+	  Fichier 2 &  0.967\\
+	  Fichier 3 & 0.974  \\
+	\bottomrule
+	\end{tabular}
+\caption{Résultat accords inter-annotateurs}
+\label{anno}
+\end{table}
+
+\end{frame}
+
+
+
+
+
+
+%Expérimentations
+\section{Expérimentations}
+
+\subsection{Paramètres expérimentaux}
+\begin{frame}{Paramètres expérimentaux}
+\begin{block}{Baseline}
+On cherche à maximiser la précision :
+\begin{itemize}
+  \item Présence de smiley content/drôle vs pas content/pas drôle
+  \item Présence de ponctuation en surnombre 
+\end{itemize}
+\end{block}
+
+
+\begin{block}{Mesure d'évaluation}
+
+\begin{itemize}
+  \item La précision dans la détection des tweets drôles
+  \item Les autres mesures sont peu importantes
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+
+
+\subsection{Résultats}
+\begin{frame}{Expérimentations}
+
+\begin{table}[!h]
+\centering
+\tiny
+	\begin{tabular}{llrrrr}
+	\toprule
+
+	& Indice de confiance & sans & 0.7 & 0.8 & 0.9 \\
+	\midrule
+    \multirow{4}{*}{Normal} & DecisionStump & 5.5\% & 0\% & 0\% & 0\% \\%0.7 confiance sans stem
+	& J48 & 9.8\% & 10\% & 10\% & 11.5\% \\ %0.7
+	& NaiveBayes & 11\% & 11.5\% & 12.3\% & 12.5\% \\ %0.7
+	& RandomForest & 8.1\% & 10.4\% & 10.6\% & 25\%\\ %0.7
+    
+    \midrule
+	\multirow{4}{*}{Racinisation}& DecisionStump & 5.5\% & 0\% & 0\% & 0\% \\%0.7 confiance AVEC stem
+	& J48 & 7.5\% & 7.6\% & 7.6\% & 8.2\% \\ %0.7
+	& NaiveBayes & 9.2\% & 10.7\% & 11.1\% & 11.1\% \\ %0.7
+	& RandomForest & 8.3\% & 7.14\% & 7.4\% & 0\% \\ %0.7
+    
+    \midrule
+	\multirow{4}{*}{Racinisation et Déséquilibré}& DecisionStump & 0\% & 0\% & 0\% & 0\% \\%0.7 confiance AVEC stem déséquilibré
+	& J48 & 0\% & 0\% & 0\% & 0\% \\ %0.7
+	& NaiveBayes & 0\% & 0\% & 0\% & 0\% \\ %0.7
+	& RandomForest & 100\% & 100\%  & 100\% & 100\% \\ %0.7
+
+
+	\bottomrule
+	\end{tabular}
+\caption{Résultats : précision sur la détection des tweets drôles, sans stemming, avec stemming, et avec stemming et corpus déséquilibré}
+\label{precision}
+\end{table}
+
+
+
+\end{frame}
+
+
+
+
+
+
+
+
+%Conclusion
+\section{Conclusion}
+
+
+\begin{frame}{Conclusion et Discussion}
+\begin{block}{Amélioration possible}
+\begin{itemize}
+  \item L'étude du contexte de chaque tweet serait interessante
+  \item Privilégier les mots les plus fréquents
+\end{itemize}
+\end{block}
+
+\begin{block}{Limites de notre travail}
+\begin{itemize}
+  \item En anglais et sur des phrases complètes : résultats corrects
+  \item Messages courts et bruités : peu de ressources
+\end{itemize}
+\end{block}
+\vspace{0.5cm}
+\hspace*{1.0cm}{\textbf{1 tweet humoristique sur 4 détecté reste satisfaisant}}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}[allowframebreaks] %allow to expand references to multiple frames (slides)
+
+\frametitle{References}
+
+\scriptsize{\bibliographystyle{acm}}
+
+\bibliography{biblio} %bibtex file name without .bib extension
+
+\end{frame}
+
+
+\end{document}
