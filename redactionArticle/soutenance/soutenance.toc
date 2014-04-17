@@ -6,14 +6,14 @@
 \beamer@subsectionintoc {1}{3}{Objectifs}{6}{0}{1}
 \beamer@sectionintoc {2}{Etat de l'art}{8}{0}{2}
 \beamer@subsectionintoc {2}{1}{Raz, 2012}{8}{0}{2}
-\beamer@subsectionintoc {2}{2}{Barbosa, 2010}{12}{0}{2}
-\beamer@subsectionintoc {2}{3}{Autres}{13}{0}{2}
-\beamer@sectionintoc {3}{M\IeC {\'e}thode}{15}{0}{3}
-\beamer@subsectionintoc {3}{1}{M\IeC {\'e}thodologie}{15}{0}{3}
-\beamer@subsectionintoc {3}{2}{Les traits}{16}{0}{3}
-\beamer@subsectionintoc {3}{3}{M\IeC {\'e}thodes de classification}{19}{0}{3}
-\beamer@sectionintoc {4}{Pr\IeC {\'e}sentation des donn\IeC {\'e}es}{21}{0}{4}
-\beamer@sectionintoc {5}{Exp\IeC {\'e}rimentations}{25}{0}{5}
-\beamer@subsectionintoc {5}{1}{Param\IeC {\`e}tres exp\IeC {\'e}rimentaux}{25}{0}{5}
-\beamer@subsectionintoc {5}{2}{R\IeC {\'e}sultats}{26}{0}{5}
-\beamer@sectionintoc {6}{Conclusion}{27}{0}{6}
+\beamer@subsectionintoc {2}{2}{Barbosa, 2010}{13}{0}{2}
+\beamer@subsectionintoc {2}{3}{Autres}{14}{0}{2}
+\beamer@sectionintoc {3}{M\IeC {\'e}thode}{16}{0}{3}
+\beamer@subsectionintoc {3}{1}{M\IeC {\'e}thodologie}{16}{0}{3}
+\beamer@subsectionintoc {3}{2}{Les traits}{17}{0}{3}
+\beamer@subsectionintoc {3}{3}{M\IeC {\'e}thodes de classification}{20}{0}{3}
+\beamer@sectionintoc {4}{Pr\IeC {\'e}sentation des donn\IeC {\'e}es}{22}{0}{4}
+\beamer@sectionintoc {5}{Exp\IeC {\'e}rimentations}{26}{0}{5}
+\beamer@subsectionintoc {5}{1}{Param\IeC {\`e}tres exp\IeC {\'e}rimentaux}{26}{0}{5}
+\beamer@subsectionintoc {5}{2}{R\IeC {\'e}sultats}{27}{0}{5}
+\beamer@sectionintoc {6}{Conclusion}{28}{0}{6}
